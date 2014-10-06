@@ -32,6 +32,8 @@ var search = function (searchTerm, res) {
         pluginCallback: function (err, result) {
             var elem = document.getElementById(result.name);
             if (elem) {
+                elem.innerHTML='';
+
                 if (err) {
                     elem.textContent = err.message;
                 } else {
@@ -60,4 +62,34 @@ var search = function (searchTerm, res) {
     amalgamatic.search(options);
 };
 
-search('medicine');
+var searchTermsRegExp = new RegExp("[\\?&]q=([^&#]*)");
+var searchTermsMatch = searchTermsRegExp.exec(window.location.search);
+
+var searchTerms;
+
+if (searchTermsMatch) {
+    searchTerms = decodeURIComponent(searchTermsMatch[1].replace(/\+/g, " "));
+}
+
+if (searchTerms) {
+    document.addEventListener('DOMContentLoaded', function () {
+        var i,l;
+
+        search(searchTerms);
+
+        var resultIds = Object.keys(realDomain);
+        var progress = document.createElement('progress');
+        var resultElem;
+        for (i=0, l=resultIds.length; i<l; i++) {
+            resultElem = document.getElementById(resultIds[i]);
+            if (resultElem) {
+                resultElem.appendChild(progress);
+            }
+        }
+
+        var searchInputs = document.getElementsByClassName('amalgamatic-search');
+        for (i=0, l=searchInputs.length; i<l; i++) {
+            searchInputs[i].setAttribute('value', searchTerms);
+        }
+    });
+}
