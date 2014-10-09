@@ -1,24 +1,35 @@
 var amalgamatic = require('amalgamatic');
+
 var sfx = require('amalgamatic-sfx');
-    // var millennium = require('amalgamatic-millennium');
-    // var libguides = require('amalgamatic-libguides');
-    // var pubmed = require('amalgamatic-pubmed');
-    // var drupal6 = require('amalgamatic-drupal6');
-    // var dbs = require('amalgamatic-ucsflibdbs');
-
-amalgamatic.add('sfx', sfx);
-// amalgamatic.add('millennium', millennium);
-// amalgamatic.add('libguides', libguides);
-// amalgamatic.add('pubmed', pubmed);
-// amalgamatic.add('drupal6', drupal6);
-// amalgamatic.add('dbs', dbs);
-
 sfx.setOptions({
     host: 'cors-anywhere.herokuapp.com',
     port: 80,
     path: '/ucelinks.cdlib.org:8888/sfx_ucsf/az',
     withCredentials: false
 });
+amalgamatic.add('sfx', sfx);
+
+var drupal6 = require('amalgamatic-drupal6');
+drupal6.setOptions({
+    host: 'cors-anywhere.herokuapp.com',
+    path: '/www.library.ucsf.edu/search/node',
+    withCredentials: false
+})
+amalgamatic.add('drupal6', drupal6);
+
+
+
+    // var millennium = require('amalgamatic-millennium');
+    // var libguides = require('amalgamatic-libguides');
+    // var pubmed = require('amalgamatic-pubmed');
+    // var dbs = require('amalgamatic-ucsflibdbs');
+
+// amalgamatic.add('millennium', millennium);
+// amalgamatic.add('libguides', libguides);
+// amalgamatic.add('pubmed', pubmed);
+// amalgamatic.add('dbs', dbs);
+
+
 
 var realDomain = {
     sfx: 'http://ucelinks.cdlib.org:8888'

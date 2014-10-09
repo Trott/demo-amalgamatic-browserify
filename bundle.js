@@ -1,25 +1,36 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var amalgamatic = require('amalgamatic');
+
 var sfx = require('amalgamatic-sfx');
-    // var millennium = require('amalgamatic-millennium');
-    // var libguides = require('amalgamatic-libguides');
-    // var pubmed = require('amalgamatic-pubmed');
-    // var drupal6 = require('amalgamatic-drupal6');
-    // var dbs = require('amalgamatic-ucsflibdbs');
-
-amalgamatic.add('sfx', sfx);
-// amalgamatic.add('millennium', millennium);
-// amalgamatic.add('libguides', libguides);
-// amalgamatic.add('pubmed', pubmed);
-// amalgamatic.add('drupal6', drupal6);
-// amalgamatic.add('dbs', dbs);
-
 sfx.setOptions({
     host: 'cors-anywhere.herokuapp.com',
     port: 80,
     path: '/ucelinks.cdlib.org:8888/sfx_ucsf/az',
     withCredentials: false
 });
+amalgamatic.add('sfx', sfx);
+
+var drupal6 = require('amalgamatic-drupal6');
+drupal6.setOptions({
+    host: 'cors-anywhere.herokuapp.com',
+    path: '/www.library.ucsf.edu/search/node',
+    withCredentials: false
+})
+amalgamatic.add('drupal6', drupal6);
+
+
+
+    // var millennium = require('amalgamatic-millennium');
+    // var libguides = require('amalgamatic-libguides');
+    // var pubmed = require('amalgamatic-pubmed');
+    // var dbs = require('amalgamatic-ucsflibdbs');
+
+// amalgamatic.add('millennium', millennium);
+// amalgamatic.add('libguides', libguides);
+// amalgamatic.add('pubmed', pubmed);
+// amalgamatic.add('dbs', dbs);
+
+
 
 var realDomain = {
     sfx: 'http://ucelinks.cdlib.org:8888'
@@ -95,16 +106,14 @@ if (searchTerms) {
     });
 }
 
-},{"amalgamatic":74,"amalgamatic-sfx":2}],2:[function(require,module,exports){
-var querystring = require('querystring');
+},{"amalgamatic":146,"amalgamatic-drupal6":2,"amalgamatic-sfx":74}],2:[function(require,module,exports){
 var cheerio = require('cheerio');
 var http = require('http');
 var extend = require('util-extend');
 
 var options = {
-    host: 'ucelinks.cdlib.org',
-    port: 8888,
-    path: '/sfx_ucsf/az'
+    host: 'www.library.ucsf.edu',
+    path: '/search/node'
 };
 
 exports.setOptions = function (newOptions) {
@@ -117,48 +126,35 @@ exports.setOptions = function (newOptions) {
 exports.search = function (query, callback) {
     'use strict';
 
-    var myOptions = options;
-
     if (! query || ! query.searchTerm) {
         callback(null, {data: []});
         return;
     }
 
-    myOptions.path = myOptions.path + '?param_textSearchType_value=startsWith&' +
-            querystring.stringify({param_pattern_value: query.searchTerm});
+    var myOptions = options;
 
-    var port = myOptions.port;
-    var hostname = myOptions.hostname || myOptions.host;
+    myOptions.path = myOptions.path + '/' + encodeURIComponent(query.searchTerm);
 
-    http.get(myOptions, function (resp) {
+    http.get(myOptions, function (res) {
         var rawData = '';
 
-        resp.on('data', function (chunk) {
+        res.on('data', function (chunk) {
             rawData += chunk;
         });
 
-        resp.on('end', function () {
+        res.on('end', function () {
             var $ = cheerio.load(rawData);
             var result = [];
-            $('a.Results').each(function () {
-                var url = $(this).attr('href');
-                if (typeof url === 'string') {
-                    url = url.trim();
-                    
-                    if (! url.match(/^(https?:)?\/\/.+/)) {
-                        var fqdn = 'http://' + hostname;
-                        if (port) {
-                            fqdn = fqdn + ':' + port;
-                        }
-                        url = fqdn + url;
-                    }
 
-                    result.push({
-                        name: $(this).text(),
-                        url: url
-                    });
-                }
+            var rawResults = $('.search-results .title a');
+
+            rawResults.each(function () {
+                result.push({
+                    name: $(this).text(),
+                    url: $(this).attr('href')
+                });
             });
+            
 
             callback(null, {data: result});
         });
@@ -166,7 +162,7 @@ exports.search = function (query, callback) {
         callback(e);
     });
 };
-},{"cheerio":3,"http":82,"querystring":93,"util-extend":73}],3:[function(require,module,exports){
+},{"cheerio":3,"http":154,"util-extend":73}],3:[function(require,module,exports){
 /**
  * Export cheerio (with )
  */
@@ -1546,7 +1542,7 @@ var isNode = function(obj) {
   return obj.name || obj.type === 'text' || obj.type === 'comment';
 };
 
-},{"./api/attributes":4,"./api/css":5,"./api/manipulation":6,"./api/traversing":7,"./parse":9,"./static":10,"lodash":71,"path":88}],9:[function(require,module,exports){
+},{"./api/attributes":4,"./api/css":5,"./api/manipulation":6,"./api/traversing":7,"./parse":9,"./static":10,"lodash":71,"path":160}],9:[function(require,module,exports){
 (function (Buffer){
 /*
   Module Dependencies
@@ -1643,7 +1639,7 @@ var update = exports.update = function(arr, parent) {
 // module.exports = $.extend(exports);
 
 }).call(this,require("buffer").Buffer)
-},{"./utils":11,"buffer":77,"htmlparser2":46}],10:[function(require,module,exports){
+},{"./utils":11,"buffer":149,"htmlparser2":46}],10:[function(require,module,exports){
 /**
  * Module dependencies
  */
@@ -3568,7 +3564,7 @@ function renderComment(elem) {
 
 },{"domelementtype":30,"entities":31}],30:[function(require,module,exports){
 module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],31:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],31:[function(require,module,exports){
 var encode = require("./lib/encode.js"),
     decode = require("./lib/decode.js");
 
@@ -3942,7 +3938,7 @@ FeedHandler.prototype.onend = function() {
 
 module.exports = FeedHandler;
 
-},{"./index.js":46,"util":109}],41:[function(require,module,exports){
+},{"./index.js":46,"util":181}],41:[function(require,module,exports){
 var Tokenizer = require("./Tokenizer.js");
 
 /*
@@ -4281,7 +4277,7 @@ Parser.prototype.done = Parser.prototype.end;
 
 module.exports = Parser;
 
-},{"./Tokenizer.js":44,"events":81,"util":109}],42:[function(require,module,exports){
+},{"./Tokenizer.js":44,"events":153,"util":181}],42:[function(require,module,exports){
 module.exports = ProxyHandler;
 
 function ProxyHandler(cbs){
@@ -4345,7 +4341,7 @@ Object.keys(EVENTS).forEach(function(name){
 		throw Error("wrong number of arguments!");
 	}
 });
-},{"../":46,"./WritableStream.js":45,"util":109}],44:[function(require,module,exports){
+},{"../":46,"./WritableStream.js":45,"util":181}],44:[function(require,module,exports){
 module.exports = Tokenizer;
 
 var decodeCodePoint = require("entities/lib/decode_codepoint.js"),
@@ -5266,7 +5262,7 @@ WritableStream.prototype._write = function(chunk, encoding, cb){
 	this._parser.write(chunk);
 	cb();
 };
-},{"./Parser.js":41,"readable-stream":70,"stream":105,"util":109}],46:[function(require,module,exports){
+},{"./Parser.js":41,"readable-stream":70,"stream":177,"util":181}],46:[function(require,module,exports){
 var Parser = require("./Parser.js"),
     DomHandler = require("domhandler");
 
@@ -5338,7 +5334,7 @@ module.exports = {
 
 },{"./CollectingHandler.js":39,"./FeedHandler.js":40,"./Parser.js":41,"./ProxyHandler.js":42,"./Stream.js":43,"./Tokenizer.js":44,"./WritableStream.js":45,"domelementtype":47,"domhandler":48,"domutils":49}],47:[function(require,module,exports){
 module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],48:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],48:[function(require,module,exports){
 var ElementType = require("domelementtype");
 
 var re_whitespace = /\s+/g;
@@ -5553,7 +5549,7 @@ module.exports = DomHandler;
 
 },{"domelementtype":47}],49:[function(require,module,exports){
 arguments[4][21][0].apply(exports,arguments)
-},{"./lib/helpers":50,"./lib/legacy":51,"./lib/manipulation":52,"./lib/querying":53,"./lib/stringify":54,"./lib/traversal":55,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],50:[function(require,module,exports){
+},{"./lib/helpers":50,"./lib/legacy":51,"./lib/manipulation":52,"./lib/querying":53,"./lib/stringify":54,"./lib/traversal":55,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],50:[function(require,module,exports){
 // removeSubsets
 // Given an array of nodes, remove any member that is contained by another.
 exports.removeSubsets = function(nodes) {
@@ -5698,25 +5694,25 @@ exports.uniqueSort = function(nodes) {
 
 },{}],51:[function(require,module,exports){
 module.exports=require(23)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":47}],52:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":47}],52:[function(require,module,exports){
 module.exports=require(24)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],53:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],53:[function(require,module,exports){
 module.exports=require(25)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":47}],54:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":47}],54:[function(require,module,exports){
 module.exports=require(26)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":47}],55:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":47}],55:[function(require,module,exports){
 module.exports=require(27)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],56:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],56:[function(require,module,exports){
 module.exports=require(33)
-},{"../maps/decode.json":57,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],57:[function(require,module,exports){
+},{"../maps/decode.json":57,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],57:[function(require,module,exports){
 module.exports=require(35)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],58:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],58:[function(require,module,exports){
 module.exports=require(36)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],59:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],59:[function(require,module,exports){
 module.exports=require(37)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],60:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],60:[function(require,module,exports){
 module.exports=require(38)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],61:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],61:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5809,7 +5805,7 @@ function forEach (xs, f) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_readable":63,"./_stream_writable":65,"_process":89,"core-util-is":66,"inherits":67}],62:[function(require,module,exports){
+},{"./_stream_readable":63,"./_stream_writable":65,"_process":161,"core-util-is":66,"inherits":67}],62:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6812,7 +6808,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":61,"_process":89,"buffer":77,"core-util-is":66,"events":81,"inherits":67,"isarray":68,"stream":105,"string_decoder/":69,"util":76}],64:[function(require,module,exports){
+},{"./_stream_duplex":61,"_process":161,"buffer":149,"core-util-is":66,"events":153,"inherits":67,"isarray":68,"stream":177,"string_decoder/":69,"util":148}],64:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7504,7 +7500,7 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":61,"_process":89,"buffer":77,"core-util-is":66,"inherits":67,"stream":105}],66:[function(require,module,exports){
+},{"./_stream_duplex":61,"_process":161,"buffer":149,"core-util-is":66,"inherits":67,"stream":177}],66:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -7614,7 +7610,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 }).call(this,require("buffer").Buffer)
-},{"buffer":77}],67:[function(require,module,exports){
+},{"buffer":149}],67:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -7867,7 +7863,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":77}],70:[function(require,module,exports){
+},{"buffer":149}],70:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = require('stream');
 exports.Readable = exports;
@@ -7876,7 +7872,7 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":61,"./lib/_stream_passthrough.js":62,"./lib/_stream_readable.js":63,"./lib/_stream_transform.js":64,"./lib/_stream_writable.js":65,"stream":105}],71:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":61,"./lib/_stream_passthrough.js":62,"./lib/_stream_readable.js":63,"./lib/_stream_transform.js":64,"./lib/_stream_writable.js":65,"stream":177}],71:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -14777,6 +14773,219 @@ function extend(origin, add) {
 }
 
 },{}],74:[function(require,module,exports){
+var querystring = require('querystring');
+var cheerio = require('cheerio');
+var http = require('http');
+var extend = require('util-extend');
+
+var options = {
+    host: 'ucelinks.cdlib.org',
+    port: 8888,
+    path: '/sfx_ucsf/az'
+};
+
+exports.setOptions = function (newOptions) {
+    options = extend(options, newOptions);
+    if (newOptions.host) {
+        options.hostname = newOptions.host;
+    }
+};
+
+exports.search = function (query, callback) {
+    'use strict';
+
+    var myOptions = options;
+
+    if (! query || ! query.searchTerm) {
+        callback(null, {data: []});
+        return;
+    }
+
+    myOptions.path = myOptions.path + '?param_textSearchType_value=startsWith&' +
+            querystring.stringify({param_pattern_value: query.searchTerm});
+
+    var port = myOptions.port;
+    var hostname = myOptions.hostname || myOptions.host;
+
+    http.get(myOptions, function (resp) {
+        var rawData = '';
+
+        resp.on('data', function (chunk) {
+            rawData += chunk;
+        });
+
+        resp.on('end', function () {
+            var $ = cheerio.load(rawData);
+            var result = [];
+            $('a.Results').each(function () {
+                var url = $(this).attr('href');
+                if (typeof url === 'string') {
+                    url = url.trim();
+                    
+                    if (! url.match(/^(https?:)?\/\/.+/)) {
+                        var fqdn = 'http://' + hostname;
+                        if (port) {
+                            fqdn = fqdn + ':' + port;
+                        }
+                        url = fqdn + url;
+                    }
+
+                    result.push({
+                        name: $(this).text(),
+                        url: url
+                    });
+                }
+            });
+
+            callback(null, {data: result});
+        });
+    }).on('error', function (e) {
+        callback(e);
+    });
+};
+},{"cheerio":75,"http":154,"querystring":165,"util-extend":145}],75:[function(require,module,exports){
+module.exports=require(3)
+},{"./lib/cheerio":80,"./package":144,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/index.js":3}],76:[function(require,module,exports){
+module.exports=require(4)
+},{"../utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/attributes.js":4,"lodash":143}],77:[function(require,module,exports){
+module.exports=require(5)
+},{"../utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/css.js":5,"lodash":143}],78:[function(require,module,exports){
+module.exports=require(6)
+},{"../parse":81,"../static":82,"../utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/manipulation.js":6,"lodash":143}],79:[function(require,module,exports){
+module.exports=require(7)
+},{"../utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/traversing.js":7,"CSSselect":84,"htmlparser2":118,"lodash":143}],80:[function(require,module,exports){
+module.exports=require(8)
+},{"./api/attributes":76,"./api/css":77,"./api/manipulation":78,"./api/traversing":79,"./parse":81,"./static":82,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/cheerio.js":8,"lodash":143,"path":160}],81:[function(require,module,exports){
+module.exports=require(9)
+},{"./utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/parse.js":9,"buffer":149,"htmlparser2":118}],82:[function(require,module,exports){
+module.exports=require(10)
+},{"./cheerio":80,"./parse":81,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/static.js":10,"CSSselect":84,"dom-serializer":101,"lodash":143}],83:[function(require,module,exports){
+module.exports=require(11)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/utils.js":11}],84:[function(require,module,exports){
+module.exports=require(12)
+},{"./lib/basefunctions.js":86,"./lib/compile.js":87,"./lib/pseudos.js":90,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/index.js":12,"domutils":93}],85:[function(require,module,exports){
+module.exports=require(13)
+},{"./basefunctions.js":86,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/attributes.js":13,"domutils":93}],86:[function(require,module,exports){
+module.exports=require(14)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/basefunctions.js":14}],87:[function(require,module,exports){
+module.exports=require(15)
+},{"./basefunctions.js":86,"./general.js":88,"./pseudos.js":90,"./sort.js":91,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/compile.js":15,"CSSwhat":92,"domutils":93}],88:[function(require,module,exports){
+module.exports=require(16)
+},{"./attributes.js":85,"./pseudos.js":90,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/general.js":16,"domutils":93}],89:[function(require,module,exports){
+module.exports=require(17)
+},{"./basefunctions.js":86,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/nth-check.js":17}],90:[function(require,module,exports){
+module.exports=require(18)
+},{"./attributes.js":85,"./basefunctions.js":86,"./nth-check.js":89,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/pseudos.js":18,"domutils":93}],91:[function(require,module,exports){
+module.exports=require(19)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/sort.js":19}],92:[function(require,module,exports){
+module.exports=require(20)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/CSSwhat/index.js":20}],93:[function(require,module,exports){
+module.exports=require(21)
+},{"./lib/helpers":94,"./lib/legacy":95,"./lib/manipulation":96,"./lib/querying":97,"./lib/stringify":98,"./lib/traversal":99,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],94:[function(require,module,exports){
+module.exports=require(22)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/helpers.js":22}],95:[function(require,module,exports){
+module.exports=require(23)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":100}],96:[function(require,module,exports){
+module.exports=require(24)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],97:[function(require,module,exports){
+module.exports=require(25)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":100}],98:[function(require,module,exports){
+module.exports=require(26)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":100}],99:[function(require,module,exports){
+module.exports=require(27)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],100:[function(require,module,exports){
+module.exports=require(28)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],101:[function(require,module,exports){
+module.exports=require(29)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/dom-serializer/index.js":29,"domelementtype":102,"entities":103}],102:[function(require,module,exports){
+module.exports=require(28)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],103:[function(require,module,exports){
+module.exports=require(31)
+},{"./lib/decode.js":104,"./lib/encode.js":106,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/index.js":31}],104:[function(require,module,exports){
+module.exports=require(32)
+},{"../maps/entities.json":108,"../maps/legacy.json":109,"../maps/xml.json":110,"./decode_codepoint.js":105,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode.js":32}],105:[function(require,module,exports){
+module.exports=require(33)
+},{"../maps/decode.json":107,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],106:[function(require,module,exports){
+module.exports=require(34)
+},{"../maps/entities.json":108,"../maps/xml.json":110,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/encode.js":34}],107:[function(require,module,exports){
+module.exports=require(35)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],108:[function(require,module,exports){
+module.exports=require(36)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],109:[function(require,module,exports){
+module.exports=require(37)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],110:[function(require,module,exports){
+module.exports=require(38)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],111:[function(require,module,exports){
+module.exports=require(39)
+},{"./":118,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/CollectingHandler.js":39}],112:[function(require,module,exports){
+module.exports=require(40)
+},{"./index.js":118,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/FeedHandler.js":40,"util":181}],113:[function(require,module,exports){
+module.exports=require(41)
+},{"./Tokenizer.js":116,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Parser.js":41,"events":153,"util":181}],114:[function(require,module,exports){
+module.exports=require(42)
+},{"./":118,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/ProxyHandler.js":42}],115:[function(require,module,exports){
+module.exports=require(43)
+},{"../":118,"./WritableStream.js":117,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Stream.js":43,"util":181}],116:[function(require,module,exports){
+module.exports=require(44)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Tokenizer.js":44,"entities/lib/decode_codepoint.js":128,"entities/maps/entities.json":130,"entities/maps/legacy.json":131,"entities/maps/xml.json":132}],117:[function(require,module,exports){
+module.exports=require(45)
+},{"./Parser.js":113,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/WritableStream.js":45,"readable-stream":142,"stream":177,"util":181}],118:[function(require,module,exports){
+module.exports=require(46)
+},{"./CollectingHandler.js":111,"./FeedHandler.js":112,"./Parser.js":113,"./ProxyHandler.js":114,"./Stream.js":115,"./Tokenizer.js":116,"./WritableStream.js":117,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/index.js":46,"domelementtype":119,"domhandler":120,"domutils":121}],119:[function(require,module,exports){
+module.exports=require(28)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],120:[function(require,module,exports){
+module.exports=require(48)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domhandler/index.js":48,"domelementtype":119}],121:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"./lib/helpers":122,"./lib/legacy":123,"./lib/manipulation":124,"./lib/querying":125,"./lib/stringify":126,"./lib/traversal":127,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],122:[function(require,module,exports){
+module.exports=require(50)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domutils/lib/helpers.js":50}],123:[function(require,module,exports){
+module.exports=require(23)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":119}],124:[function(require,module,exports){
+module.exports=require(24)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],125:[function(require,module,exports){
+module.exports=require(25)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":119}],126:[function(require,module,exports){
+module.exports=require(26)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":119}],127:[function(require,module,exports){
+module.exports=require(27)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],128:[function(require,module,exports){
+module.exports=require(33)
+},{"../maps/decode.json":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],129:[function(require,module,exports){
+module.exports=require(35)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],130:[function(require,module,exports){
+module.exports=require(36)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],131:[function(require,module,exports){
+module.exports=require(37)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],132:[function(require,module,exports){
+module.exports=require(38)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],133:[function(require,module,exports){
+module.exports=require(61)
+},{"./_stream_readable":135,"./_stream_writable":137,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":161,"core-util-is":138,"inherits":139}],134:[function(require,module,exports){
+module.exports=require(62)
+},{"./_stream_transform":136,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":138,"inherits":139}],135:[function(require,module,exports){
+module.exports=require(63)
+},{"./_stream_duplex":133,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_readable.js":63,"_process":161,"buffer":149,"core-util-is":138,"events":153,"inherits":139,"isarray":140,"stream":177,"string_decoder/":141,"util":148}],136:[function(require,module,exports){
+module.exports=require(64)
+},{"./_stream_duplex":133,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_transform.js":64,"core-util-is":138,"inherits":139}],137:[function(require,module,exports){
+module.exports=require(65)
+},{"./_stream_duplex":133,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_writable.js":65,"_process":161,"buffer":149,"core-util-is":138,"inherits":139,"stream":177}],138:[function(require,module,exports){
+module.exports=require(66)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":149}],139:[function(require,module,exports){
+module.exports=require(67)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],140:[function(require,module,exports){
+module.exports=require(68)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],141:[function(require,module,exports){
+module.exports=require(69)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":149}],142:[function(require,module,exports){
+module.exports=require(70)
+},{"./lib/_stream_duplex.js":133,"./lib/_stream_passthrough.js":134,"./lib/_stream_readable.js":135,"./lib/_stream_transform.js":136,"./lib/_stream_writable.js":137,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/readable.js":70,"stream":177}],143:[function(require,module,exports){
+module.exports=require(71)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/lodash/dist/lodash.js":71}],144:[function(require,module,exports){
+module.exports=require(72)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/package.json":72}],145:[function(require,module,exports){
+module.exports=require(73)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/util-extend/extend.js":73}],146:[function(require,module,exports){
 var async = require('async');
 
 var collections = {};
@@ -14844,7 +15053,7 @@ exports.add = function (name, plugin) {
   
   collections[name] = plugin;
 };
-},{"async":75}],75:[function(require,module,exports){
+},{"async":147}],147:[function(require,module,exports){
 (function (process){
 /*!
  * async
@@ -15971,9 +16180,9 @@ exports.add = function (name, plugin) {
 }());
 
 }).call(this,require('_process'))
-},{"_process":89}],76:[function(require,module,exports){
+},{"_process":161}],148:[function(require,module,exports){
 
-},{}],77:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -17025,7 +17234,7 @@ function decodeUtf8Char (str) {
   }
 }
 
-},{"base64-js":78,"ieee754":79,"is-array":80}],78:[function(require,module,exports){
+},{"base64-js":150,"ieee754":151,"is-array":152}],150:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -17147,7 +17356,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],79:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 exports.read = function(buffer, offset, isLE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -17233,7 +17442,7 @@ exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],80:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 
 /**
  * isArray
@@ -17268,7 +17477,7 @@ module.exports = isArray || function (val) {
   return !! val && '[object Array]' == str.call(val);
 };
 
-},{}],81:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -17571,7 +17780,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],82:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 var http = module.exports;
 var EventEmitter = require('events').EventEmitter;
 var Request = require('./lib/request');
@@ -17717,7 +17926,7 @@ http.STATUS_CODES = {
     510 : 'Not Extended',               // RFC 2774
     511 : 'Network Authentication Required' // RFC 6585
 };
-},{"./lib/request":83,"events":81,"url":107}],83:[function(require,module,exports){
+},{"./lib/request":155,"events":153,"url":179}],155:[function(require,module,exports){
 var Stream = require('stream');
 var Response = require('./response');
 var Base64 = require('Base64');
@@ -17928,7 +18137,7 @@ var isXHR2Compatible = function (obj) {
     if (typeof FormData !== 'undefined' && obj instanceof FormData) return true;
 };
 
-},{"./response":84,"Base64":85,"inherits":86,"stream":105}],84:[function(require,module,exports){
+},{"./response":156,"Base64":157,"inherits":158,"stream":177}],156:[function(require,module,exports){
 var Stream = require('stream');
 var util = require('util');
 
@@ -18050,7 +18259,7 @@ var isArray = Array.isArray || function (xs) {
     return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{"stream":105,"util":109}],85:[function(require,module,exports){
+},{"stream":177,"util":181}],157:[function(require,module,exports){
 ;(function () {
 
   var object = typeof exports != 'undefined' ? exports : this; // #8: web workers
@@ -18112,11 +18321,11 @@ var isArray = Array.isArray || function (xs) {
 
 }());
 
-},{}],86:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 module.exports=require(67)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],87:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],159:[function(require,module,exports){
 module.exports=require(68)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],88:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],160:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -18344,7 +18553,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":89}],89:[function(require,module,exports){
+},{"_process":161}],161:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -18432,7 +18641,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],90:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 (function (global){
 /*! http://mths.be/punycode v1.2.4 by @mathias */
 ;(function(root) {
@@ -18943,7 +19152,7 @@ process.chdir = function (dir) {
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],91:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -19029,7 +19238,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],92:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -19116,20 +19325,20 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],93:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":91,"./encode":92}],94:[function(require,module,exports){
+},{"./decode":163,"./encode":164}],166:[function(require,module,exports){
 module.exports = require("./lib/_stream_duplex.js")
 
-},{"./lib/_stream_duplex.js":95}],95:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":167}],167:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
-},{"./_stream_readable":97,"./_stream_writable":99,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":89,"core-util-is":100,"inherits":86}],96:[function(require,module,exports){
+},{"./_stream_readable":169,"./_stream_writable":171,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":161,"core-util-is":172,"inherits":158}],168:[function(require,module,exports){
 arguments[4][62][0].apply(exports,arguments)
-},{"./_stream_transform":98,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":100,"inherits":86}],97:[function(require,module,exports){
+},{"./_stream_transform":170,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":172,"inherits":158}],169:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -20115,7 +20324,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"_process":89,"buffer":77,"core-util-is":100,"events":81,"inherits":86,"isarray":87,"stream":105,"string_decoder/":106}],98:[function(require,module,exports){
+},{"_process":161,"buffer":149,"core-util-is":172,"events":153,"inherits":158,"isarray":159,"stream":177,"string_decoder/":178}],170:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -20327,7 +20536,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"./_stream_duplex":95,"core-util-is":100,"inherits":86}],99:[function(require,module,exports){
+},{"./_stream_duplex":167,"core-util-is":172,"inherits":158}],171:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -20717,12 +20926,12 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":95,"_process":89,"buffer":77,"core-util-is":100,"inherits":86,"stream":105}],100:[function(require,module,exports){
+},{"./_stream_duplex":167,"_process":161,"buffer":149,"core-util-is":172,"inherits":158,"stream":177}],172:[function(require,module,exports){
 module.exports=require(66)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":77}],101:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":149}],173:[function(require,module,exports){
 module.exports = require("./lib/_stream_passthrough.js")
 
-},{"./lib/_stream_passthrough.js":96}],102:[function(require,module,exports){
+},{"./lib/_stream_passthrough.js":168}],174:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Readable = exports;
 exports.Writable = require('./lib/_stream_writable.js');
@@ -20730,13 +20939,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":95,"./lib/_stream_passthrough.js":96,"./lib/_stream_readable.js":97,"./lib/_stream_transform.js":98,"./lib/_stream_writable.js":99}],103:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":167,"./lib/_stream_passthrough.js":168,"./lib/_stream_readable.js":169,"./lib/_stream_transform.js":170,"./lib/_stream_writable.js":171}],175:[function(require,module,exports){
 module.exports = require("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":98}],104:[function(require,module,exports){
+},{"./lib/_stream_transform.js":170}],176:[function(require,module,exports){
 module.exports = require("./lib/_stream_writable.js")
 
-},{"./lib/_stream_writable.js":99}],105:[function(require,module,exports){
+},{"./lib/_stream_writable.js":171}],177:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -20865,9 +21074,9 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":81,"inherits":86,"readable-stream/duplex.js":94,"readable-stream/passthrough.js":101,"readable-stream/readable.js":102,"readable-stream/transform.js":103,"readable-stream/writable.js":104}],106:[function(require,module,exports){
+},{"events":153,"inherits":158,"readable-stream/duplex.js":166,"readable-stream/passthrough.js":173,"readable-stream/readable.js":174,"readable-stream/transform.js":175,"readable-stream/writable.js":176}],178:[function(require,module,exports){
 module.exports=require(69)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-sfx/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":77}],107:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":149}],179:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -21576,14 +21785,14 @@ function isNullOrUndefined(arg) {
   return  arg == null;
 }
 
-},{"punycode":90,"querystring":93}],108:[function(require,module,exports){
+},{"punycode":162,"querystring":165}],180:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],109:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -22173,4 +22382,4 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":108,"_process":89,"inherits":86}]},{},[1]);
+},{"./support/isBuffer":180,"_process":161,"inherits":158}]},{},[1]);
