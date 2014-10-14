@@ -15,16 +15,17 @@ drupal6.setOptions({
 
 amalgamatic.add('drupal6', drupal6);
 
+var pubmed = require('amalgamatic-pubmed');
+amalgamatic.add('pubmed', pubmed);
+
 
 
     // var millennium = require('amalgamatic-millennium');
     // var libguides = require('amalgamatic-libguides');
-    // var pubmed = require('amalgamatic-pubmed');
     // var dbs = require('amalgamatic-ucsflibdbs');
 
 // amalgamatic.add('millennium', millennium);
 // amalgamatic.add('libguides', libguides);
-// amalgamatic.add('pubmed', pubmed);
 // amalgamatic.add('dbs', dbs);
 
 
@@ -103,7 +104,7 @@ if (searchTerms) {
     });
 }
 
-},{"amalgamatic":146,"amalgamatic-drupal6":2,"amalgamatic-sfx":74}],2:[function(require,module,exports){
+},{"amalgamatic":192,"amalgamatic-drupal6":2,"amalgamatic-pubmed":74,"amalgamatic-sfx":120}],2:[function(require,module,exports){
 var cheerio = require('cheerio');
 var http = require('http');
 var extend = require('util-extend');
@@ -159,7 +160,7 @@ exports.search = function (query, callback) {
         callback(e);
     });
 };
-},{"cheerio":3,"http":154,"url":179,"util-extend":73}],3:[function(require,module,exports){
+},{"cheerio":3,"http":200,"url":225,"util-extend":73}],3:[function(require,module,exports){
 /**
  * Export cheerio (with )
  */
@@ -1539,7 +1540,7 @@ var isNode = function(obj) {
   return obj.name || obj.type === 'text' || obj.type === 'comment';
 };
 
-},{"./api/attributes":4,"./api/css":5,"./api/manipulation":6,"./api/traversing":7,"./parse":9,"./static":10,"lodash":71,"path":160}],9:[function(require,module,exports){
+},{"./api/attributes":4,"./api/css":5,"./api/manipulation":6,"./api/traversing":7,"./parse":9,"./static":10,"lodash":71,"path":206}],9:[function(require,module,exports){
 (function (Buffer){
 /*
   Module Dependencies
@@ -1636,7 +1637,7 @@ var update = exports.update = function(arr, parent) {
 // module.exports = $.extend(exports);
 
 }).call(this,require("buffer").Buffer)
-},{"./utils":11,"buffer":149,"htmlparser2":46}],10:[function(require,module,exports){
+},{"./utils":11,"buffer":195,"htmlparser2":46}],10:[function(require,module,exports){
 /**
  * Module dependencies
  */
@@ -3935,7 +3936,7 @@ FeedHandler.prototype.onend = function() {
 
 module.exports = FeedHandler;
 
-},{"./index.js":46,"util":181}],41:[function(require,module,exports){
+},{"./index.js":46,"util":227}],41:[function(require,module,exports){
 var Tokenizer = require("./Tokenizer.js");
 
 /*
@@ -4274,7 +4275,7 @@ Parser.prototype.done = Parser.prototype.end;
 
 module.exports = Parser;
 
-},{"./Tokenizer.js":44,"events":153,"util":181}],42:[function(require,module,exports){
+},{"./Tokenizer.js":44,"events":199,"util":227}],42:[function(require,module,exports){
 module.exports = ProxyHandler;
 
 function ProxyHandler(cbs){
@@ -4338,7 +4339,7 @@ Object.keys(EVENTS).forEach(function(name){
 		throw Error("wrong number of arguments!");
 	}
 });
-},{"../":46,"./WritableStream.js":45,"util":181}],44:[function(require,module,exports){
+},{"../":46,"./WritableStream.js":45,"util":227}],44:[function(require,module,exports){
 module.exports = Tokenizer;
 
 var decodeCodePoint = require("entities/lib/decode_codepoint.js"),
@@ -5259,7 +5260,7 @@ WritableStream.prototype._write = function(chunk, encoding, cb){
 	this._parser.write(chunk);
 	cb();
 };
-},{"./Parser.js":41,"readable-stream":70,"stream":177,"util":181}],46:[function(require,module,exports){
+},{"./Parser.js":41,"readable-stream":70,"stream":223,"util":227}],46:[function(require,module,exports){
 var Parser = require("./Parser.js"),
     DomHandler = require("domhandler");
 
@@ -5802,7 +5803,7 @@ function forEach (xs, f) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_readable":63,"./_stream_writable":65,"_process":161,"core-util-is":66,"inherits":67}],62:[function(require,module,exports){
+},{"./_stream_readable":63,"./_stream_writable":65,"_process":207,"core-util-is":66,"inherits":67}],62:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6805,7 +6806,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":61,"_process":161,"buffer":149,"core-util-is":66,"events":153,"inherits":67,"isarray":68,"stream":177,"string_decoder/":69,"util":148}],64:[function(require,module,exports){
+},{"./_stream_duplex":61,"_process":207,"buffer":195,"core-util-is":66,"events":199,"inherits":67,"isarray":68,"stream":223,"string_decoder/":69,"util":194}],64:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7497,7 +7498,7 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":61,"_process":161,"buffer":149,"core-util-is":66,"inherits":67,"stream":177}],66:[function(require,module,exports){
+},{"./_stream_duplex":61,"_process":207,"buffer":195,"core-util-is":66,"inherits":67,"stream":223}],66:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -7607,7 +7608,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 }).call(this,require("buffer").Buffer)
-},{"buffer":149}],67:[function(require,module,exports){
+},{"buffer":195}],67:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -7860,7 +7861,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":149}],70:[function(require,module,exports){
+},{"buffer":195}],70:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = require('stream');
 exports.Readable = exports;
@@ -7869,7 +7870,7 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":61,"./lib/_stream_passthrough.js":62,"./lib/_stream_readable.js":63,"./lib/_stream_transform.js":64,"./lib/_stream_writable.js":65,"stream":177}],71:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":61,"./lib/_stream_passthrough.js":62,"./lib/_stream_readable.js":63,"./lib/_stream_transform.js":64,"./lib/_stream_writable.js":65,"stream":223}],71:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -14771,13 +14772,21 @@ function extend(origin, add) {
 
 },{}],74:[function(require,module,exports){
 var querystring = require('querystring');
-var cheerio = require('cheerio');
 var http = require('http');
+var parseString = require('xml2js').parseString;
 var extend = require('util-extend');
+var async = require('async');
 var url = require('url');
 
 var options = {
-    url: 'http://ucelinks.cdlib.org:8888/sfx_ucsf/az'
+    tool: 'cdl',
+    otool: 'cdlotool'
+};
+
+var makeBrowserifyOptions = function (myUrl) {
+    var myOptions = url.parse(myUrl);
+    myOptions.withCredentials = false;
+    return myOptions;
 };
 
 exports.setOptions = function (newOptions) {
@@ -14788,257 +14797,134 @@ exports.search = function (query, callback) {
     'use strict';
 
     if (! query || ! query.searchTerm) {
-        callback(null, {data: []});
+        callback(null, {data: [], suggestedTerms: []});
         return;
     }
 
-    var myUrl = options.url + '?param_textSearchType_value=startsWith&' +
-            querystring.stringify({param_pattern_value: query.searchTerm});
+    var dataTask = function (done) {
 
-    var myOptions = url.parse(myUrl);
-    myOptions.withCredentials = false;
+        var myUrl = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?retmode=json&' +
+                querystring.stringify({term: query.searchTerm});
 
-    http.get(myOptions, function (resp) {
-        var rawData = '';
+        var httpCallback = function (res) {
+            var rawData = '';
 
-        resp.on('data', function (chunk) {
-            rawData += chunk;
-        });
-
-        resp.on('end', function () {
-            var $ = cheerio.load(rawData);
-            var result = [];
-            $('a.Results').each(function () {
-                var href = $(this).attr('href');
-                if (typeof href === 'string') {
-                    href = href.trim();
-                    
-                    href = url.resolve(myUrl, href);
-
-                    result.push({
-                        name: $(this).text(),
-                        url: href
-                    });
-                }
+            res.on('data', function (chunk) {
+                rawData += chunk;
             });
 
-            callback(null, {data: result, url: myUrl});
+            res.on('end', function () {
+                var $;
+                try {
+                    $ = JSON.parse(rawData).esearchresult || {};
+                } catch (e) {
+                    callback(e);
+                    return;
+                }
+
+                var uids;
+                if ($.idlist instanceof Array && $.idlist.length) {
+                    uids = $.idlist.join(',');
+                } else {
+                    done(null, []);
+                    return;
+                }
+
+                var myUrl = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&' +
+                        querystring.stringify( {id: uids} );
+
+                http.get(makeBrowserifyOptions(myUrl), function (res) {
+                    var rawData = '';
+                    var result = [];
+
+                    res.on('data', function (chunk) {
+                        rawData += chunk;
+                    });
+
+                    res.on('end', function () {
+                        var $;
+                        try {
+                            $ = JSON.parse(rawData).result || {};
+                        } catch (e) {
+                            callback(e);
+                            return;
+                        }
+                        if ($.uids instanceof Array) {
+                            $.uids.forEach(function (id) {
+                                if ($[id]) {
+                                    var name = $[id].title || $[id].booktitle;
+
+                                    // Sometimes PubMed returns extraneous HTML entities. See https://github.com/ucsf-ckm/amalgamatic-pubmed/issues/9
+                                    name = name.replace(/&lt;.*?&gt;/g, '');
+
+                                    result.push({
+                                        name: name,
+                                        url: 'http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=Retrieve&dopt=AbstractPlus&query_hl=2&itool=pubmed_docsum&' +
+                                            querystring.stringify(options) + '&' +
+                                            querystring.stringify({ list_uids: id })
+                                    });
+                                }
+                            });
+                        }
+
+                        done(null, result);
+                        return;
+
+                    });
+                })
+                .on('error', function (e) {
+                    done(e);
+                    return;
+                });
+            });
+        };
+
+        http.get(makeBrowserifyOptions(myUrl), httpCallback)
+        .on('error', function (e) {
+            done(e);
+            return;
         });
-    }).on('error', function (e) {
-        callback(e);
+    };
+
+    var suggestedTermsTask = function (done) {
+        var suggestionUrl = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/espell.fcgi?' +
+                querystring.stringify( {term: query.searchTerm} );
+
+        http.get(makeBrowserifyOptions(suggestionUrl), function (res) {
+            var xml = '';
+
+            res.on('data', function (chunk) {
+                xml += chunk;
+            });
+
+            res.on('end', function () {
+                parseString(xml, function (err, result) {
+                    var suggestedTerms;
+                    if (result && result.eSpellResult && result.eSpellResult.CorrectedQuery) {
+                        suggestedTerms = result.eSpellResult.CorrectedQuery;
+                    } else {
+                        suggestedTerms = [];
+                    }
+
+                    // suggested terms are not essential, so let's not blow up with errors
+                    done(null, suggestedTerms);
+                });
+            });
+        })
+        .on('error', function () {
+            // suggested terms are not essential, so let's not blow up the whole thing
+            done(null, []);
+        });
+    };
+
+    async.parallel({data: dataTask, suggestedTerms: suggestedTermsTask}, function (err, results) {
+        results.url = 'http://www.ncbi.nlm.nih.gov/pubmed?' +
+            querystring.stringify(options) + '&' +
+            querystring.stringify({ cmd: 'search', term: query.searchTerm});
+        callback(err, results);
     });
 };
-},{"cheerio":75,"http":154,"querystring":165,"url":179,"util-extend":145}],75:[function(require,module,exports){
-module.exports=require(3)
-},{"./lib/cheerio":80,"./package":144,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/index.js":3}],76:[function(require,module,exports){
-module.exports=require(4)
-},{"../utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/attributes.js":4,"lodash":143}],77:[function(require,module,exports){
-module.exports=require(5)
-},{"../utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/css.js":5,"lodash":143}],78:[function(require,module,exports){
-module.exports=require(6)
-},{"../parse":81,"../static":82,"../utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/manipulation.js":6,"lodash":143}],79:[function(require,module,exports){
-module.exports=require(7)
-},{"../utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/traversing.js":7,"CSSselect":84,"htmlparser2":118,"lodash":143}],80:[function(require,module,exports){
-module.exports=require(8)
-},{"./api/attributes":76,"./api/css":77,"./api/manipulation":78,"./api/traversing":79,"./parse":81,"./static":82,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/cheerio.js":8,"lodash":143,"path":160}],81:[function(require,module,exports){
-module.exports=require(9)
-},{"./utils":83,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/parse.js":9,"buffer":149,"htmlparser2":118}],82:[function(require,module,exports){
-module.exports=require(10)
-},{"./cheerio":80,"./parse":81,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/static.js":10,"CSSselect":84,"dom-serializer":101,"lodash":143}],83:[function(require,module,exports){
-module.exports=require(11)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/utils.js":11}],84:[function(require,module,exports){
-module.exports=require(12)
-},{"./lib/basefunctions.js":86,"./lib/compile.js":87,"./lib/pseudos.js":90,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/index.js":12,"domutils":93}],85:[function(require,module,exports){
-module.exports=require(13)
-},{"./basefunctions.js":86,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/attributes.js":13,"domutils":93}],86:[function(require,module,exports){
-module.exports=require(14)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/basefunctions.js":14}],87:[function(require,module,exports){
-module.exports=require(15)
-},{"./basefunctions.js":86,"./general.js":88,"./pseudos.js":90,"./sort.js":91,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/compile.js":15,"CSSwhat":92,"domutils":93}],88:[function(require,module,exports){
-module.exports=require(16)
-},{"./attributes.js":85,"./pseudos.js":90,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/general.js":16,"domutils":93}],89:[function(require,module,exports){
-module.exports=require(17)
-},{"./basefunctions.js":86,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/nth-check.js":17}],90:[function(require,module,exports){
-module.exports=require(18)
-},{"./attributes.js":85,"./basefunctions.js":86,"./nth-check.js":89,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/pseudos.js":18,"domutils":93}],91:[function(require,module,exports){
-module.exports=require(19)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/sort.js":19}],92:[function(require,module,exports){
-module.exports=require(20)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/CSSwhat/index.js":20}],93:[function(require,module,exports){
-module.exports=require(21)
-},{"./lib/helpers":94,"./lib/legacy":95,"./lib/manipulation":96,"./lib/querying":97,"./lib/stringify":98,"./lib/traversal":99,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],94:[function(require,module,exports){
-module.exports=require(22)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/helpers.js":22}],95:[function(require,module,exports){
-module.exports=require(23)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":100}],96:[function(require,module,exports){
-module.exports=require(24)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],97:[function(require,module,exports){
-module.exports=require(25)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":100}],98:[function(require,module,exports){
-module.exports=require(26)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":100}],99:[function(require,module,exports){
-module.exports=require(27)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],100:[function(require,module,exports){
-module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],101:[function(require,module,exports){
-module.exports=require(29)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/dom-serializer/index.js":29,"domelementtype":102,"entities":103}],102:[function(require,module,exports){
-module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],103:[function(require,module,exports){
-module.exports=require(31)
-},{"./lib/decode.js":104,"./lib/encode.js":106,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/index.js":31}],104:[function(require,module,exports){
-module.exports=require(32)
-},{"../maps/entities.json":108,"../maps/legacy.json":109,"../maps/xml.json":110,"./decode_codepoint.js":105,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode.js":32}],105:[function(require,module,exports){
-module.exports=require(33)
-},{"../maps/decode.json":107,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],106:[function(require,module,exports){
-module.exports=require(34)
-},{"../maps/entities.json":108,"../maps/xml.json":110,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/encode.js":34}],107:[function(require,module,exports){
-module.exports=require(35)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],108:[function(require,module,exports){
-module.exports=require(36)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],109:[function(require,module,exports){
-module.exports=require(37)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],110:[function(require,module,exports){
-module.exports=require(38)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],111:[function(require,module,exports){
-module.exports=require(39)
-},{"./":118,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/CollectingHandler.js":39}],112:[function(require,module,exports){
-module.exports=require(40)
-},{"./index.js":118,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/FeedHandler.js":40,"util":181}],113:[function(require,module,exports){
-module.exports=require(41)
-},{"./Tokenizer.js":116,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Parser.js":41,"events":153,"util":181}],114:[function(require,module,exports){
-module.exports=require(42)
-},{"./":118,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/ProxyHandler.js":42}],115:[function(require,module,exports){
-module.exports=require(43)
-},{"../":118,"./WritableStream.js":117,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Stream.js":43,"util":181}],116:[function(require,module,exports){
-module.exports=require(44)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Tokenizer.js":44,"entities/lib/decode_codepoint.js":128,"entities/maps/entities.json":130,"entities/maps/legacy.json":131,"entities/maps/xml.json":132}],117:[function(require,module,exports){
-module.exports=require(45)
-},{"./Parser.js":113,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/WritableStream.js":45,"readable-stream":142,"stream":177,"util":181}],118:[function(require,module,exports){
-module.exports=require(46)
-},{"./CollectingHandler.js":111,"./FeedHandler.js":112,"./Parser.js":113,"./ProxyHandler.js":114,"./Stream.js":115,"./Tokenizer.js":116,"./WritableStream.js":117,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/index.js":46,"domelementtype":119,"domhandler":120,"domutils":121}],119:[function(require,module,exports){
-module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],120:[function(require,module,exports){
-module.exports=require(48)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domhandler/index.js":48,"domelementtype":119}],121:[function(require,module,exports){
-arguments[4][21][0].apply(exports,arguments)
-},{"./lib/helpers":122,"./lib/legacy":123,"./lib/manipulation":124,"./lib/querying":125,"./lib/stringify":126,"./lib/traversal":127,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],122:[function(require,module,exports){
-module.exports=require(50)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domutils/lib/helpers.js":50}],123:[function(require,module,exports){
-module.exports=require(23)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":119}],124:[function(require,module,exports){
-module.exports=require(24)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],125:[function(require,module,exports){
-module.exports=require(25)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":119}],126:[function(require,module,exports){
-module.exports=require(26)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":119}],127:[function(require,module,exports){
-module.exports=require(27)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],128:[function(require,module,exports){
-module.exports=require(33)
-},{"../maps/decode.json":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],129:[function(require,module,exports){
-module.exports=require(35)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],130:[function(require,module,exports){
-module.exports=require(36)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],131:[function(require,module,exports){
-module.exports=require(37)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],132:[function(require,module,exports){
-module.exports=require(38)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],133:[function(require,module,exports){
-module.exports=require(61)
-},{"./_stream_readable":135,"./_stream_writable":137,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":161,"core-util-is":138,"inherits":139}],134:[function(require,module,exports){
-module.exports=require(62)
-},{"./_stream_transform":136,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":138,"inherits":139}],135:[function(require,module,exports){
-module.exports=require(63)
-},{"./_stream_duplex":133,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_readable.js":63,"_process":161,"buffer":149,"core-util-is":138,"events":153,"inherits":139,"isarray":140,"stream":177,"string_decoder/":141,"util":148}],136:[function(require,module,exports){
-module.exports=require(64)
-},{"./_stream_duplex":133,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_transform.js":64,"core-util-is":138,"inherits":139}],137:[function(require,module,exports){
-module.exports=require(65)
-},{"./_stream_duplex":133,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_writable.js":65,"_process":161,"buffer":149,"core-util-is":138,"inherits":139,"stream":177}],138:[function(require,module,exports){
-module.exports=require(66)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":149}],139:[function(require,module,exports){
-module.exports=require(67)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],140:[function(require,module,exports){
-module.exports=require(68)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],141:[function(require,module,exports){
-module.exports=require(69)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":149}],142:[function(require,module,exports){
-module.exports=require(70)
-},{"./lib/_stream_duplex.js":133,"./lib/_stream_passthrough.js":134,"./lib/_stream_readable.js":135,"./lib/_stream_transform.js":136,"./lib/_stream_writable.js":137,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/readable.js":70,"stream":177}],143:[function(require,module,exports){
-module.exports=require(71)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/lodash/dist/lodash.js":71}],144:[function(require,module,exports){
-module.exports=require(72)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/package.json":72}],145:[function(require,module,exports){
-module.exports=require(73)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/util-extend/extend.js":73}],146:[function(require,module,exports){
-var async = require('async');
-
-var collections = {};
-
-exports.search = function (query, callback) {
-  'use strict';
-
-  var requestedCollections;
-  if (! query.collections || ! query.collections instanceof Array) {
-    requestedCollections = Object.keys(collections);
-  } else {
-    requestedCollections = query.collections;
-  }
-
-  var maxResults = query.maxResults;
-
-  var pluginCallback = query.pluginCallback;
-
-  var results = [];
-
-  var iterator = function (collection, done) {
-    if (collection in collections) {
-      collections[collection].search(query, function (err, value) {
-        if (maxResults && value && value.data instanceof Array) {
-          value.data = value.data.slice(0, maxResults);
-        }
-
-        if (value) {
-          value.name = collection;
-          results.push(value);
-        }
-
-        if (pluginCallback) {
-          if (err) {
-            pluginCallback(err);
-          } else {
-            pluginCallback(null, value);
-          }
-        }
-
-        done(err);
-      });
-    } else {
-      done(new Error('Collection "' + collection + '" does not exist'));
-    }
-  };
-
-  if (typeof callback !== 'function') {
-    callback = function () {};
-  }
-  
-  var wrappedCallback = function (err) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, results);
-    }
-  };
-
-  async.each(requestedCollections, iterator, wrappedCallback);
-};
-
-exports.add = function (name, plugin) {
-  'use strict';
-  
-  collections[name] = plugin;
-};
-},{"async":147}],147:[function(require,module,exports){
+},{"async":75,"http":200,"querystring":211,"url":225,"util-extend":76,"xml2js":79}],75:[function(require,module,exports){
 (function (process){
 /*!
  * async
@@ -16165,9 +16051,4895 @@ exports.add = function (name, plugin) {
 }());
 
 }).call(this,require('_process'))
-},{"_process":161}],148:[function(require,module,exports){
+},{"_process":207}],76:[function(require,module,exports){
+module.exports=require(73)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/util-extend/extend.js":73}],77:[function(require,module,exports){
+// Generated by CoffeeScript 1.7.1
+(function() {
+  var xml2js;
 
-},{}],149:[function(require,module,exports){
+  xml2js = require('../lib/xml2js');
+
+  exports.stripBOM = function(str) {
+    if (str[0] === '\uFEFF') {
+      return str.substring(1);
+    } else {
+      return str;
+    }
+  };
+
+}).call(this);
+
+},{"../lib/xml2js":79}],78:[function(require,module,exports){
+// Generated by CoffeeScript 1.7.1
+(function() {
+  var prefixMatch;
+
+  prefixMatch = new RegExp(/(?!xmlns)^.*:/);
+
+  exports.normalize = function(str) {
+    return str.toLowerCase();
+  };
+
+  exports.firstCharLowerCase = function(str) {
+    return str.charAt(0).toLowerCase() + str.slice(1);
+  };
+
+  exports.stripPrefix = function(str) {
+    return str.replace(prefixMatch, '');
+  };
+
+}).call(this);
+
+},{}],79:[function(require,module,exports){
+(function (process){
+// Generated by CoffeeScript 1.7.1
+(function() {
+  var bom, builder, events, isEmpty, processName, processors, sax,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  sax = require('sax');
+
+  events = require('events');
+
+  builder = require('xmlbuilder');
+
+  bom = require('./bom');
+
+  processors = require('./processors');
+
+  isEmpty = function(thing) {
+    return typeof thing === "object" && (thing != null) && Object.keys(thing).length === 0;
+  };
+
+  processName = function(processors, processedName) {
+    var process, _i, _len;
+    for (_i = 0, _len = processors.length; _i < _len; _i++) {
+      process = processors[_i];
+      processedName = process(processedName);
+    }
+    return processedName;
+  };
+
+  exports.processors = processors;
+
+  exports.defaults = {
+    "0.1": {
+      explicitCharkey: false,
+      trim: true,
+      normalize: true,
+      normalizeTags: false,
+      attrkey: "@",
+      charkey: "#",
+      explicitArray: false,
+      ignoreAttrs: false,
+      mergeAttrs: false,
+      explicitRoot: false,
+      validator: null,
+      xmlns: false,
+      explicitChildren: false,
+      childkey: '@@',
+      charsAsChildren: false,
+      async: false,
+      strict: true,
+      attrNameProcessors: null,
+      tagNameProcessors: null
+    },
+    "0.2": {
+      explicitCharkey: false,
+      trim: false,
+      normalize: false,
+      normalizeTags: false,
+      attrkey: "$",
+      charkey: "_",
+      explicitArray: true,
+      ignoreAttrs: false,
+      mergeAttrs: false,
+      explicitRoot: true,
+      validator: null,
+      xmlns: false,
+      explicitChildren: false,
+      childkey: '$$',
+      charsAsChildren: false,
+      async: false,
+      strict: true,
+      attrNameProcessors: null,
+      tagNameProcessors: null,
+      rootName: 'root',
+      xmldec: {
+        'version': '1.0',
+        'encoding': 'UTF-8',
+        'standalone': true
+      },
+      doctype: null,
+      renderOpts: {
+        'pretty': true,
+        'indent': '  ',
+        'newline': '\n'
+      },
+      headless: false
+    }
+  };
+
+  exports.ValidationError = (function(_super) {
+    __extends(ValidationError, _super);
+
+    function ValidationError(message) {
+      this.message = message;
+    }
+
+    return ValidationError;
+
+  })(Error);
+
+  exports.Builder = (function() {
+    function Builder(opts) {
+      var key, value, _ref;
+      this.options = {};
+      _ref = exports.defaults["0.2"];
+      for (key in _ref) {
+        if (!__hasProp.call(_ref, key)) continue;
+        value = _ref[key];
+        this.options[key] = value;
+      }
+      for (key in opts) {
+        if (!__hasProp.call(opts, key)) continue;
+        value = opts[key];
+        this.options[key] = value;
+      }
+    }
+
+    Builder.prototype.buildObject = function(rootObj) {
+      var attrkey, charkey, render, rootElement, rootName;
+      attrkey = this.options.attrkey;
+      charkey = this.options.charkey;
+      if ((Object.keys(rootObj).length === 1) && (this.options.rootName === exports.defaults['0.2'].rootName)) {
+        rootName = Object.keys(rootObj)[0];
+        rootObj = rootObj[rootName];
+      } else {
+        rootName = this.options.rootName;
+      }
+      render = function(element, obj) {
+        var attr, child, entry, index, key, value, _ref, _ref1;
+        if (typeof obj !== 'object') {
+          element.txt(obj);
+        } else {
+          for (key in obj) {
+            if (!__hasProp.call(obj, key)) continue;
+            child = obj[key];
+            if (key === attrkey) {
+              if (typeof child === "object") {
+                for (attr in child) {
+                  value = child[attr];
+                  element = element.att(attr, value);
+                }
+              }
+            } else if (key === charkey) {
+              element = element.txt(child);
+            } else if (typeof child === 'object' && ((child != null ? child.constructor : void 0) != null) && ((child != null ? (_ref = child.constructor) != null ? _ref.name : void 0 : void 0) != null) && (child != null ? (_ref1 = child.constructor) != null ? _ref1.name : void 0 : void 0) === 'Array') {
+              for (index in child) {
+                if (!__hasProp.call(child, index)) continue;
+                entry = child[index];
+                if (typeof entry === 'string') {
+                  element = element.ele(key, entry).up();
+                } else {
+                  element = arguments.callee(element.ele(key), entry).up();
+                }
+              }
+            } else if (typeof child === "object") {
+              element = arguments.callee(element.ele(key), child).up();
+            } else {
+              element = element.ele(key, child.toString()).up();
+            }
+          }
+        }
+        return element;
+      };
+      rootElement = builder.create(rootName, this.options.xmldec, this.options.doctype, {
+        headless: this.options.headless
+      });
+      return render(rootElement, rootObj).end(this.options.renderOpts);
+    };
+
+    return Builder;
+
+  })();
+
+  exports.Parser = (function(_super) {
+    __extends(Parser, _super);
+
+    function Parser(opts) {
+      this.parseString = __bind(this.parseString, this);
+      this.reset = __bind(this.reset, this);
+      this.assignOrPush = __bind(this.assignOrPush, this);
+      var key, value, _ref;
+      if (!(this instanceof exports.Parser)) {
+        return new exports.Parser(opts);
+      }
+      this.options = {};
+      _ref = exports.defaults["0.2"];
+      for (key in _ref) {
+        if (!__hasProp.call(_ref, key)) continue;
+        value = _ref[key];
+        this.options[key] = value;
+      }
+      for (key in opts) {
+        if (!__hasProp.call(opts, key)) continue;
+        value = opts[key];
+        this.options[key] = value;
+      }
+      if (this.options.xmlns) {
+        this.options.xmlnskey = this.options.attrkey + "ns";
+      }
+      if (this.options.normalizeTags) {
+        if (!this.options.tagNameProcessors) {
+          this.options.tagNameProcessors = [];
+        }
+        this.options.tagNameProcessors.unshift(processors.normalize);
+      }
+      this.reset();
+    }
+
+    Parser.prototype.assignOrPush = function(obj, key, newValue) {
+      if (!(key in obj)) {
+        if (!this.options.explicitArray) {
+          return obj[key] = newValue;
+        } else {
+          return obj[key] = [newValue];
+        }
+      } else {
+        if (!(obj[key] instanceof Array)) {
+          obj[key] = [obj[key]];
+        }
+        return obj[key].push(newValue);
+      }
+    };
+
+    Parser.prototype.reset = function() {
+      var attrkey, charkey, ontext, stack;
+      this.removeAllListeners();
+      this.saxParser = sax.parser(this.options.strict, {
+        trim: false,
+        normalize: false,
+        xmlns: this.options.xmlns
+      });
+      this.saxParser.errThrown = false;
+      this.saxParser.onerror = (function(_this) {
+        return function(error) {
+          _this.saxParser.resume();
+          if (!_this.saxParser.errThrown) {
+            _this.saxParser.errThrown = true;
+            return _this.emit("error", error);
+          }
+        };
+      })(this);
+      this.saxParser.ended = false;
+      this.EXPLICIT_CHARKEY = this.options.explicitCharkey;
+      this.resultObject = null;
+      stack = [];
+      attrkey = this.options.attrkey;
+      charkey = this.options.charkey;
+      this.saxParser.onopentag = (function(_this) {
+        return function(node) {
+          var key, newValue, obj, processedKey, _ref;
+          obj = {};
+          obj[charkey] = "";
+          if (!_this.options.ignoreAttrs) {
+            _ref = node.attributes;
+            for (key in _ref) {
+              if (!__hasProp.call(_ref, key)) continue;
+              if (!(attrkey in obj) && !_this.options.mergeAttrs) {
+                obj[attrkey] = {};
+              }
+              newValue = node.attributes[key];
+              processedKey = _this.options.attrNameProcessors ? processName(_this.options.attrNameProcessors, key) : key;
+              if (_this.options.mergeAttrs) {
+                _this.assignOrPush(obj, processedKey, newValue);
+              } else {
+                obj[attrkey][processedKey] = newValue;
+              }
+            }
+          }
+          obj["#name"] = _this.options.tagNameProcessors ? processName(_this.options.tagNameProcessors, node.name) : node.name;
+          if (_this.options.xmlns) {
+            obj[_this.options.xmlnskey] = {
+              uri: node.uri,
+              local: node.local
+            };
+          }
+          return stack.push(obj);
+        };
+      })(this);
+      this.saxParser.onclosetag = (function(_this) {
+        return function() {
+          var cdata, emptyStr, err, node, nodeName, obj, old, s, xpath;
+          obj = stack.pop();
+          nodeName = obj["#name"];
+          delete obj["#name"];
+          cdata = obj.cdata;
+          delete obj.cdata;
+          s = stack[stack.length - 1];
+          if (obj[charkey].match(/^\s*$/) && !cdata) {
+            emptyStr = obj[charkey];
+            delete obj[charkey];
+          } else {
+            if (_this.options.trim) {
+              obj[charkey] = obj[charkey].trim();
+            }
+            if (_this.options.normalize) {
+              obj[charkey] = obj[charkey].replace(/\s{2,}/g, " ").trim();
+            }
+            if (Object.keys(obj).length === 1 && charkey in obj && !_this.EXPLICIT_CHARKEY) {
+              obj = obj[charkey];
+            }
+          }
+          if (isEmpty(obj)) {
+            obj = _this.options.emptyTag !== void 0 ? _this.options.emptyTag : emptyStr;
+          }
+          if (_this.options.validator != null) {
+            xpath = "/" + ((function() {
+              var _i, _len, _results;
+              _results = [];
+              for (_i = 0, _len = stack.length; _i < _len; _i++) {
+                node = stack[_i];
+                _results.push(node["#name"]);
+              }
+              return _results;
+            })()).concat(nodeName).join("/");
+            try {
+              obj = _this.options.validator(xpath, s && s[nodeName], obj);
+            } catch (_error) {
+              err = _error;
+              _this.emit("error", err);
+            }
+          }
+          if (_this.options.explicitChildren && !_this.options.mergeAttrs && typeof obj === 'object') {
+            node = {};
+            if (_this.options.attrkey in obj) {
+              node[_this.options.attrkey] = obj[_this.options.attrkey];
+              delete obj[_this.options.attrkey];
+            }
+            if (!_this.options.charsAsChildren && _this.options.charkey in obj) {
+              node[_this.options.charkey] = obj[_this.options.charkey];
+              delete obj[_this.options.charkey];
+            }
+            if (Object.getOwnPropertyNames(obj).length > 0) {
+              node[_this.options.childkey] = obj;
+            }
+            obj = node;
+          }
+          if (stack.length > 0) {
+            return _this.assignOrPush(s, nodeName, obj);
+          } else {
+            if (_this.options.explicitRoot) {
+              old = obj;
+              obj = {};
+              obj[nodeName] = old;
+            }
+            _this.resultObject = obj;
+            _this.saxParser.ended = true;
+            return _this.emit("end", _this.resultObject);
+          }
+        };
+      })(this);
+      ontext = (function(_this) {
+        return function(text) {
+          var s;
+          s = stack[stack.length - 1];
+          if (s) {
+            s[charkey] += text;
+            return s;
+          }
+        };
+      })(this);
+      this.saxParser.ontext = ontext;
+      return this.saxParser.oncdata = (function(_this) {
+        return function(text) {
+          var s;
+          s = ontext(text);
+          if (s) {
+            return s.cdata = true;
+          }
+        };
+      })(this);
+    };
+
+    Parser.prototype.parseString = function(str, cb) {
+      var err;
+      if ((cb != null) && typeof cb === "function") {
+        this.on("end", function(result) {
+          this.reset();
+          if (this.options.async) {
+            return process.nextTick(function() {
+              return cb(null, result);
+            });
+          } else {
+            return cb(null, result);
+          }
+        });
+        this.on("error", function(err) {
+          this.reset();
+          if (this.options.async) {
+            return process.nextTick(function() {
+              return cb(err);
+            });
+          } else {
+            return cb(err);
+          }
+        });
+      }
+      if (str.toString().trim() === '') {
+        this.emit("end", null);
+        return true;
+      }
+      try {
+        return this.saxParser.write(bom.stripBOM(str.toString())).close();
+      } catch (_error) {
+        err = _error;
+        if (!(this.saxParser.errThrown || this.saxParser.ended)) {
+          this.emit('error', err);
+          return this.saxParser.errThrown = true;
+        }
+      }
+    };
+
+    return Parser;
+
+  })(events.EventEmitter);
+
+  exports.parseString = function(str, a, b) {
+    var cb, options, parser;
+    if (b != null) {
+      if (typeof b === 'function') {
+        cb = b;
+      }
+      if (typeof a === 'object') {
+        options = a;
+      }
+    } else {
+      if (typeof a === 'function') {
+        cb = a;
+      }
+      options = {};
+    }
+    parser = new exports.Parser(options);
+    return parser.parseString(str, cb);
+  };
+
+}).call(this);
+
+}).call(this,require('_process'))
+},{"./bom":77,"./processors":78,"_process":207,"events":199,"sax":80,"xmlbuilder":97}],80:[function(require,module,exports){
+(function (Buffer){
+// wrapper for non-node envs
+;(function (sax) {
+
+sax.parser = function (strict, opt) { return new SAXParser(strict, opt) }
+sax.SAXParser = SAXParser
+sax.SAXStream = SAXStream
+sax.createStream = createStream
+
+// When we pass the MAX_BUFFER_LENGTH position, start checking for buffer overruns.
+// When we check, schedule the next check for MAX_BUFFER_LENGTH - (max(buffer lengths)),
+// since that's the earliest that a buffer overrun could occur.  This way, checks are
+// as rare as required, but as often as necessary to ensure never crossing this bound.
+// Furthermore, buffers are only tested at most once per write(), so passing a very
+// large string into write() might have undesirable effects, but this is manageable by
+// the caller, so it is assumed to be safe.  Thus, a call to write() may, in the extreme
+// edge case, result in creating at most one complete copy of the string passed in.
+// Set to Infinity to have unlimited buffers.
+sax.MAX_BUFFER_LENGTH = 64 * 1024
+
+var buffers = [
+  "comment", "sgmlDecl", "textNode", "tagName", "doctype",
+  "procInstName", "procInstBody", "entity", "attribName",
+  "attribValue", "cdata", "script"
+]
+
+sax.EVENTS = // for discoverability.
+  [ "text"
+  , "processinginstruction"
+  , "sgmldeclaration"
+  , "doctype"
+  , "comment"
+  , "attribute"
+  , "opentag"
+  , "closetag"
+  , "opencdata"
+  , "cdata"
+  , "closecdata"
+  , "error"
+  , "end"
+  , "ready"
+  , "script"
+  , "opennamespace"
+  , "closenamespace"
+  ]
+
+function SAXParser (strict, opt) {
+  if (!(this instanceof SAXParser)) return new SAXParser(strict, opt)
+
+  var parser = this
+  clearBuffers(parser)
+  parser.q = parser.c = ""
+  parser.bufferCheckPosition = sax.MAX_BUFFER_LENGTH
+  parser.opt = opt || {}
+  parser.opt.lowercase = parser.opt.lowercase || parser.opt.lowercasetags
+  parser.looseCase = parser.opt.lowercase ? "toLowerCase" : "toUpperCase"
+  parser.tags = []
+  parser.closed = parser.closedRoot = parser.sawRoot = false
+  parser.tag = parser.error = null
+  parser.strict = !!strict
+  parser.noscript = !!(strict || parser.opt.noscript)
+  parser.state = S.BEGIN
+  parser.ENTITIES = Object.create(sax.ENTITIES)
+  parser.attribList = []
+
+  // namespaces form a prototype chain.
+  // it always points at the current tag,
+  // which protos to its parent tag.
+  if (parser.opt.xmlns) parser.ns = Object.create(rootNS)
+
+  // mostly just for error reporting
+  parser.trackPosition = parser.opt.position !== false
+  if (parser.trackPosition) {
+    parser.position = parser.line = parser.column = 0
+  }
+  emit(parser, "onready")
+}
+
+if (!Object.create) Object.create = function (o) {
+  function f () { this.__proto__ = o }
+  f.prototype = o
+  return new f
+}
+
+if (!Object.getPrototypeOf) Object.getPrototypeOf = function (o) {
+  return o.__proto__
+}
+
+if (!Object.keys) Object.keys = function (o) {
+  var a = []
+  for (var i in o) if (o.hasOwnProperty(i)) a.push(i)
+  return a
+}
+
+function checkBufferLength (parser) {
+  var maxAllowed = Math.max(sax.MAX_BUFFER_LENGTH, 10)
+    , maxActual = 0
+  for (var i = 0, l = buffers.length; i < l; i ++) {
+    var len = parser[buffers[i]].length
+    if (len > maxAllowed) {
+      // Text/cdata nodes can get big, and since they're buffered,
+      // we can get here under normal conditions.
+      // Avoid issues by emitting the text node now,
+      // so at least it won't get any bigger.
+      switch (buffers[i]) {
+        case "textNode":
+          closeText(parser)
+        break
+
+        case "cdata":
+          emitNode(parser, "oncdata", parser.cdata)
+          parser.cdata = ""
+        break
+
+        case "script":
+          emitNode(parser, "onscript", parser.script)
+          parser.script = ""
+        break
+
+        default:
+          error(parser, "Max buffer length exceeded: "+buffers[i])
+      }
+    }
+    maxActual = Math.max(maxActual, len)
+  }
+  // schedule the next check for the earliest possible buffer overrun.
+  parser.bufferCheckPosition = (sax.MAX_BUFFER_LENGTH - maxActual)
+                             + parser.position
+}
+
+function clearBuffers (parser) {
+  for (var i = 0, l = buffers.length; i < l; i ++) {
+    parser[buffers[i]] = ""
+  }
+}
+
+function flushBuffers (parser) {
+  closeText(parser)
+  if (parser.cdata !== "") {
+    emitNode(parser, "oncdata", parser.cdata)
+    parser.cdata = ""
+  }
+  if (parser.script !== "") {
+    emitNode(parser, "onscript", parser.script)
+    parser.script = ""
+  }
+}
+
+SAXParser.prototype =
+  { end: function () { end(this) }
+  , write: write
+  , resume: function () { this.error = null; return this }
+  , close: function () { return this.write(null) }
+  , flush: function () { flushBuffers(this) }
+  }
+
+try {
+  var Stream = require("stream").Stream
+} catch (ex) {
+  var Stream = function () {}
+}
+
+
+var streamWraps = sax.EVENTS.filter(function (ev) {
+  return ev !== "error" && ev !== "end"
+})
+
+function createStream (strict, opt) {
+  return new SAXStream(strict, opt)
+}
+
+function SAXStream (strict, opt) {
+  if (!(this instanceof SAXStream)) return new SAXStream(strict, opt)
+
+  Stream.apply(this)
+
+  this._parser = new SAXParser(strict, opt)
+  this.writable = true
+  this.readable = true
+
+
+  var me = this
+
+  this._parser.onend = function () {
+    me.emit("end")
+  }
+
+  this._parser.onerror = function (er) {
+    me.emit("error", er)
+
+    // if didn't throw, then means error was handled.
+    // go ahead and clear error, so we can write again.
+    me._parser.error = null
+  }
+
+  this._decoder = null;
+
+  streamWraps.forEach(function (ev) {
+    Object.defineProperty(me, "on" + ev, {
+      get: function () { return me._parser["on" + ev] },
+      set: function (h) {
+        if (!h) {
+          me.removeAllListeners(ev)
+          return me._parser["on"+ev] = h
+        }
+        me.on(ev, h)
+      },
+      enumerable: true,
+      configurable: false
+    })
+  })
+}
+
+SAXStream.prototype = Object.create(Stream.prototype,
+  { constructor: { value: SAXStream } })
+
+SAXStream.prototype.write = function (data) {
+  if (typeof Buffer === 'function' &&
+      typeof Buffer.isBuffer === 'function' &&
+      Buffer.isBuffer(data)) {
+    if (!this._decoder) {
+      var SD = require('string_decoder').StringDecoder
+      this._decoder = new SD('utf8')
+    }
+    data = this._decoder.write(data);
+  }
+
+  this._parser.write(data.toString())
+  this.emit("data", data)
+  return true
+}
+
+SAXStream.prototype.end = function (chunk) {
+  if (chunk && chunk.length) this.write(chunk)
+  this._parser.end()
+  return true
+}
+
+SAXStream.prototype.on = function (ev, handler) {
+  var me = this
+  if (!me._parser["on"+ev] && streamWraps.indexOf(ev) !== -1) {
+    me._parser["on"+ev] = function () {
+      var args = arguments.length === 1 ? [arguments[0]]
+               : Array.apply(null, arguments)
+      args.splice(0, 0, ev)
+      me.emit.apply(me, args)
+    }
+  }
+
+  return Stream.prototype.on.call(me, ev, handler)
+}
+
+
+
+// character classes and tokens
+var whitespace = "\r\n\t "
+  // this really needs to be replaced with character classes.
+  // XML allows all manner of ridiculous numbers and digits.
+  , number = "0124356789"
+  , letter = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  // (Letter | "_" | ":")
+  , quote = "'\""
+  , entity = number+letter+"#"
+  , attribEnd = whitespace + ">"
+  , CDATA = "[CDATA["
+  , DOCTYPE = "DOCTYPE"
+  , XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace"
+  , XMLNS_NAMESPACE = "http://www.w3.org/2000/xmlns/"
+  , rootNS = { xml: XML_NAMESPACE, xmlns: XMLNS_NAMESPACE }
+
+// turn all the string character sets into character class objects.
+whitespace = charClass(whitespace)
+number = charClass(number)
+letter = charClass(letter)
+
+// http://www.w3.org/TR/REC-xml/#NT-NameStartChar
+// This implementation works on strings, a single character at a time
+// as such, it cannot ever support astral-plane characters (10000-EFFFF)
+// without a significant breaking change to either this  parser, or the
+// JavaScript language.  Implementation of an emoji-capable xml parser
+// is left as an exercise for the reader.
+var nameStart = /[:_A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]/
+
+var nameBody = /[:_A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\u00B7\u0300-\u036F\u203F-\u2040\.\d-]/
+
+quote = charClass(quote)
+entity = charClass(entity)
+attribEnd = charClass(attribEnd)
+
+function charClass (str) {
+  return str.split("").reduce(function (s, c) {
+    s[c] = true
+    return s
+  }, {})
+}
+
+function isRegExp (c) {
+  return Object.prototype.toString.call(c) === '[object RegExp]'
+}
+
+function is (charclass, c) {
+  return isRegExp(charclass) ? !!c.match(charclass) : charclass[c]
+}
+
+function not (charclass, c) {
+  return !is(charclass, c)
+}
+
+var S = 0
+sax.STATE =
+{ BEGIN                     : S++
+, TEXT                      : S++ // general stuff
+, TEXT_ENTITY               : S++ // &amp and such.
+, OPEN_WAKA                 : S++ // <
+, SGML_DECL                 : S++ // <!BLARG
+, SGML_DECL_QUOTED          : S++ // <!BLARG foo "bar
+, DOCTYPE                   : S++ // <!DOCTYPE
+, DOCTYPE_QUOTED            : S++ // <!DOCTYPE "//blah
+, DOCTYPE_DTD               : S++ // <!DOCTYPE "//blah" [ ...
+, DOCTYPE_DTD_QUOTED        : S++ // <!DOCTYPE "//blah" [ "foo
+, COMMENT_STARTING          : S++ // <!-
+, COMMENT                   : S++ // <!--
+, COMMENT_ENDING            : S++ // <!-- blah -
+, COMMENT_ENDED             : S++ // <!-- blah --
+, CDATA                     : S++ // <![CDATA[ something
+, CDATA_ENDING              : S++ // ]
+, CDATA_ENDING_2            : S++ // ]]
+, PROC_INST                 : S++ // <?hi
+, PROC_INST_BODY            : S++ // <?hi there
+, PROC_INST_ENDING          : S++ // <?hi "there" ?
+, OPEN_TAG                  : S++ // <strong
+, OPEN_TAG_SLASH            : S++ // <strong /
+, ATTRIB                    : S++ // <a
+, ATTRIB_NAME               : S++ // <a foo
+, ATTRIB_NAME_SAW_WHITE     : S++ // <a foo _
+, ATTRIB_VALUE              : S++ // <a foo=
+, ATTRIB_VALUE_QUOTED       : S++ // <a foo="bar
+, ATTRIB_VALUE_CLOSED       : S++ // <a foo="bar"
+, ATTRIB_VALUE_UNQUOTED     : S++ // <a foo=bar
+, ATTRIB_VALUE_ENTITY_Q     : S++ // <foo bar="&quot;"
+, ATTRIB_VALUE_ENTITY_U     : S++ // <foo bar=&quot;
+, CLOSE_TAG                 : S++ // </a
+, CLOSE_TAG_SAW_WHITE       : S++ // </a   >
+, SCRIPT                    : S++ // <script> ...
+, SCRIPT_ENDING             : S++ // <script> ... <
+}
+
+sax.ENTITIES =
+{ "amp" : "&"
+, "gt" : ">"
+, "lt" : "<"
+, "quot" : "\""
+, "apos" : "'"
+, "AElig" : 198
+, "Aacute" : 193
+, "Acirc" : 194
+, "Agrave" : 192
+, "Aring" : 197
+, "Atilde" : 195
+, "Auml" : 196
+, "Ccedil" : 199
+, "ETH" : 208
+, "Eacute" : 201
+, "Ecirc" : 202
+, "Egrave" : 200
+, "Euml" : 203
+, "Iacute" : 205
+, "Icirc" : 206
+, "Igrave" : 204
+, "Iuml" : 207
+, "Ntilde" : 209
+, "Oacute" : 211
+, "Ocirc" : 212
+, "Ograve" : 210
+, "Oslash" : 216
+, "Otilde" : 213
+, "Ouml" : 214
+, "THORN" : 222
+, "Uacute" : 218
+, "Ucirc" : 219
+, "Ugrave" : 217
+, "Uuml" : 220
+, "Yacute" : 221
+, "aacute" : 225
+, "acirc" : 226
+, "aelig" : 230
+, "agrave" : 224
+, "aring" : 229
+, "atilde" : 227
+, "auml" : 228
+, "ccedil" : 231
+, "eacute" : 233
+, "ecirc" : 234
+, "egrave" : 232
+, "eth" : 240
+, "euml" : 235
+, "iacute" : 237
+, "icirc" : 238
+, "igrave" : 236
+, "iuml" : 239
+, "ntilde" : 241
+, "oacute" : 243
+, "ocirc" : 244
+, "ograve" : 242
+, "oslash" : 248
+, "otilde" : 245
+, "ouml" : 246
+, "szlig" : 223
+, "thorn" : 254
+, "uacute" : 250
+, "ucirc" : 251
+, "ugrave" : 249
+, "uuml" : 252
+, "yacute" : 253
+, "yuml" : 255
+, "copy" : 169
+, "reg" : 174
+, "nbsp" : 160
+, "iexcl" : 161
+, "cent" : 162
+, "pound" : 163
+, "curren" : 164
+, "yen" : 165
+, "brvbar" : 166
+, "sect" : 167
+, "uml" : 168
+, "ordf" : 170
+, "laquo" : 171
+, "not" : 172
+, "shy" : 173
+, "macr" : 175
+, "deg" : 176
+, "plusmn" : 177
+, "sup1" : 185
+, "sup2" : 178
+, "sup3" : 179
+, "acute" : 180
+, "micro" : 181
+, "para" : 182
+, "middot" : 183
+, "cedil" : 184
+, "ordm" : 186
+, "raquo" : 187
+, "frac14" : 188
+, "frac12" : 189
+, "frac34" : 190
+, "iquest" : 191
+, "times" : 215
+, "divide" : 247
+, "OElig" : 338
+, "oelig" : 339
+, "Scaron" : 352
+, "scaron" : 353
+, "Yuml" : 376
+, "fnof" : 402
+, "circ" : 710
+, "tilde" : 732
+, "Alpha" : 913
+, "Beta" : 914
+, "Gamma" : 915
+, "Delta" : 916
+, "Epsilon" : 917
+, "Zeta" : 918
+, "Eta" : 919
+, "Theta" : 920
+, "Iota" : 921
+, "Kappa" : 922
+, "Lambda" : 923
+, "Mu" : 924
+, "Nu" : 925
+, "Xi" : 926
+, "Omicron" : 927
+, "Pi" : 928
+, "Rho" : 929
+, "Sigma" : 931
+, "Tau" : 932
+, "Upsilon" : 933
+, "Phi" : 934
+, "Chi" : 935
+, "Psi" : 936
+, "Omega" : 937
+, "alpha" : 945
+, "beta" : 946
+, "gamma" : 947
+, "delta" : 948
+, "epsilon" : 949
+, "zeta" : 950
+, "eta" : 951
+, "theta" : 952
+, "iota" : 953
+, "kappa" : 954
+, "lambda" : 955
+, "mu" : 956
+, "nu" : 957
+, "xi" : 958
+, "omicron" : 959
+, "pi" : 960
+, "rho" : 961
+, "sigmaf" : 962
+, "sigma" : 963
+, "tau" : 964
+, "upsilon" : 965
+, "phi" : 966
+, "chi" : 967
+, "psi" : 968
+, "omega" : 969
+, "thetasym" : 977
+, "upsih" : 978
+, "piv" : 982
+, "ensp" : 8194
+, "emsp" : 8195
+, "thinsp" : 8201
+, "zwnj" : 8204
+, "zwj" : 8205
+, "lrm" : 8206
+, "rlm" : 8207
+, "ndash" : 8211
+, "mdash" : 8212
+, "lsquo" : 8216
+, "rsquo" : 8217
+, "sbquo" : 8218
+, "ldquo" : 8220
+, "rdquo" : 8221
+, "bdquo" : 8222
+, "dagger" : 8224
+, "Dagger" : 8225
+, "bull" : 8226
+, "hellip" : 8230
+, "permil" : 8240
+, "prime" : 8242
+, "Prime" : 8243
+, "lsaquo" : 8249
+, "rsaquo" : 8250
+, "oline" : 8254
+, "frasl" : 8260
+, "euro" : 8364
+, "image" : 8465
+, "weierp" : 8472
+, "real" : 8476
+, "trade" : 8482
+, "alefsym" : 8501
+, "larr" : 8592
+, "uarr" : 8593
+, "rarr" : 8594
+, "darr" : 8595
+, "harr" : 8596
+, "crarr" : 8629
+, "lArr" : 8656
+, "uArr" : 8657
+, "rArr" : 8658
+, "dArr" : 8659
+, "hArr" : 8660
+, "forall" : 8704
+, "part" : 8706
+, "exist" : 8707
+, "empty" : 8709
+, "nabla" : 8711
+, "isin" : 8712
+, "notin" : 8713
+, "ni" : 8715
+, "prod" : 8719
+, "sum" : 8721
+, "minus" : 8722
+, "lowast" : 8727
+, "radic" : 8730
+, "prop" : 8733
+, "infin" : 8734
+, "ang" : 8736
+, "and" : 8743
+, "or" : 8744
+, "cap" : 8745
+, "cup" : 8746
+, "int" : 8747
+, "there4" : 8756
+, "sim" : 8764
+, "cong" : 8773
+, "asymp" : 8776
+, "ne" : 8800
+, "equiv" : 8801
+, "le" : 8804
+, "ge" : 8805
+, "sub" : 8834
+, "sup" : 8835
+, "nsub" : 8836
+, "sube" : 8838
+, "supe" : 8839
+, "oplus" : 8853
+, "otimes" : 8855
+, "perp" : 8869
+, "sdot" : 8901
+, "lceil" : 8968
+, "rceil" : 8969
+, "lfloor" : 8970
+, "rfloor" : 8971
+, "lang" : 9001
+, "rang" : 9002
+, "loz" : 9674
+, "spades" : 9824
+, "clubs" : 9827
+, "hearts" : 9829
+, "diams" : 9830
+}
+
+Object.keys(sax.ENTITIES).forEach(function (key) {
+    var e = sax.ENTITIES[key]
+    var s = typeof e === 'number' ? String.fromCharCode(e) : e
+    sax.ENTITIES[key] = s
+})
+
+for (var S in sax.STATE) sax.STATE[sax.STATE[S]] = S
+
+// shorthand
+S = sax.STATE
+
+function emit (parser, event, data) {
+  parser[event] && parser[event](data)
+}
+
+function emitNode (parser, nodeType, data) {
+  if (parser.textNode) closeText(parser)
+  emit(parser, nodeType, data)
+}
+
+function closeText (parser) {
+  parser.textNode = textopts(parser.opt, parser.textNode)
+  if (parser.textNode) emit(parser, "ontext", parser.textNode)
+  parser.textNode = ""
+}
+
+function textopts (opt, text) {
+  if (opt.trim) text = text.trim()
+  if (opt.normalize) text = text.replace(/\s+/g, " ")
+  return text
+}
+
+function error (parser, er) {
+  closeText(parser)
+  if (parser.trackPosition) {
+    er += "\nLine: "+parser.line+
+          "\nColumn: "+parser.column+
+          "\nChar: "+parser.c
+  }
+  er = new Error(er)
+  parser.error = er
+  emit(parser, "onerror", er)
+  return parser
+}
+
+function end (parser) {
+  if (!parser.closedRoot) strictFail(parser, "Unclosed root tag")
+  if ((parser.state !== S.BEGIN) && (parser.state !== S.TEXT)) error(parser, "Unexpected end")
+  closeText(parser)
+  parser.c = ""
+  parser.closed = true
+  emit(parser, "onend")
+  SAXParser.call(parser, parser.strict, parser.opt)
+  return parser
+}
+
+function strictFail (parser, message) {
+  if (typeof parser !== 'object' || !(parser instanceof SAXParser))
+    throw new Error('bad call to strictFail');
+  if (parser.strict) error(parser, message)
+}
+
+function newTag (parser) {
+  if (!parser.strict) parser.tagName = parser.tagName[parser.looseCase]()
+  var parent = parser.tags[parser.tags.length - 1] || parser
+    , tag = parser.tag = { name : parser.tagName, attributes : {} }
+
+  // will be overridden if tag contails an xmlns="foo" or xmlns:foo="bar"
+  if (parser.opt.xmlns) tag.ns = parent.ns
+  parser.attribList.length = 0
+}
+
+function qname (name, attribute) {
+  var i = name.indexOf(":")
+    , qualName = i < 0 ? [ "", name ] : name.split(":")
+    , prefix = qualName[0]
+    , local = qualName[1]
+
+  // <x "xmlns"="http://foo">
+  if (attribute && name === "xmlns") {
+    prefix = "xmlns"
+    local = ""
+  }
+
+  return { prefix: prefix, local: local }
+}
+
+function attrib (parser) {
+  if (!parser.strict) parser.attribName = parser.attribName[parser.looseCase]()
+
+  if (parser.attribList.indexOf(parser.attribName) !== -1 ||
+      parser.tag.attributes.hasOwnProperty(parser.attribName)) {
+    return parser.attribName = parser.attribValue = ""
+  }
+
+  if (parser.opt.xmlns) {
+    var qn = qname(parser.attribName, true)
+      , prefix = qn.prefix
+      , local = qn.local
+
+    if (prefix === "xmlns") {
+      // namespace binding attribute; push the binding into scope
+      if (local === "xml" && parser.attribValue !== XML_NAMESPACE) {
+        strictFail( parser
+                  , "xml: prefix must be bound to " + XML_NAMESPACE + "\n"
+                  + "Actual: " + parser.attribValue )
+      } else if (local === "xmlns" && parser.attribValue !== XMLNS_NAMESPACE) {
+        strictFail( parser
+                  , "xmlns: prefix must be bound to " + XMLNS_NAMESPACE + "\n"
+                  + "Actual: " + parser.attribValue )
+      } else {
+        var tag = parser.tag
+          , parent = parser.tags[parser.tags.length - 1] || parser
+        if (tag.ns === parent.ns) {
+          tag.ns = Object.create(parent.ns)
+        }
+        tag.ns[local] = parser.attribValue
+      }
+    }
+
+    // defer onattribute events until all attributes have been seen
+    // so any new bindings can take effect; preserve attribute order
+    // so deferred events can be emitted in document order
+    parser.attribList.push([parser.attribName, parser.attribValue])
+  } else {
+    // in non-xmlns mode, we can emit the event right away
+    parser.tag.attributes[parser.attribName] = parser.attribValue
+    emitNode( parser
+            , "onattribute"
+            , { name: parser.attribName
+              , value: parser.attribValue } )
+  }
+
+  parser.attribName = parser.attribValue = ""
+}
+
+function openTag (parser, selfClosing) {
+  if (parser.opt.xmlns) {
+    // emit namespace binding events
+    var tag = parser.tag
+
+    // add namespace info to tag
+    var qn = qname(parser.tagName)
+    tag.prefix = qn.prefix
+    tag.local = qn.local
+    tag.uri = tag.ns[qn.prefix] || ""
+
+    if (tag.prefix && !tag.uri) {
+      strictFail(parser, "Unbound namespace prefix: "
+                       + JSON.stringify(parser.tagName))
+      tag.uri = qn.prefix
+    }
+
+    var parent = parser.tags[parser.tags.length - 1] || parser
+    if (tag.ns && parent.ns !== tag.ns) {
+      Object.keys(tag.ns).forEach(function (p) {
+        emitNode( parser
+                , "onopennamespace"
+                , { prefix: p , uri: tag.ns[p] } )
+      })
+    }
+
+    // handle deferred onattribute events
+    // Note: do not apply default ns to attributes:
+    //   http://www.w3.org/TR/REC-xml-names/#defaulting
+    for (var i = 0, l = parser.attribList.length; i < l; i ++) {
+      var nv = parser.attribList[i]
+      var name = nv[0]
+        , value = nv[1]
+        , qualName = qname(name, true)
+        , prefix = qualName.prefix
+        , local = qualName.local
+        , uri = prefix == "" ? "" : (tag.ns[prefix] || "")
+        , a = { name: name
+              , value: value
+              , prefix: prefix
+              , local: local
+              , uri: uri
+              }
+
+      // if there's any attributes with an undefined namespace,
+      // then fail on them now.
+      if (prefix && prefix != "xmlns" && !uri) {
+        strictFail(parser, "Unbound namespace prefix: "
+                         + JSON.stringify(prefix))
+        a.uri = prefix
+      }
+      parser.tag.attributes[name] = a
+      emitNode(parser, "onattribute", a)
+    }
+    parser.attribList.length = 0
+  }
+
+  parser.tag.isSelfClosing = !!selfClosing
+
+  // process the tag
+  parser.sawRoot = true
+  parser.tags.push(parser.tag)
+  emitNode(parser, "onopentag", parser.tag)
+  if (!selfClosing) {
+    // special case for <script> in non-strict mode.
+    if (!parser.noscript && parser.tagName.toLowerCase() === "script") {
+      parser.state = S.SCRIPT
+    } else {
+      parser.state = S.TEXT
+    }
+    parser.tag = null
+    parser.tagName = ""
+  }
+  parser.attribName = parser.attribValue = ""
+  parser.attribList.length = 0
+}
+
+function closeTag (parser) {
+  if (!parser.tagName) {
+    strictFail(parser, "Weird empty close tag.")
+    parser.textNode += "</>"
+    parser.state = S.TEXT
+    return
+  }
+
+  if (parser.script) {
+    if (parser.tagName !== "script") {
+      parser.script += "</" + parser.tagName + ">"
+      parser.tagName = ""
+      parser.state = S.SCRIPT
+      return
+    }
+    emitNode(parser, "onscript", parser.script)
+    parser.script = ""
+  }
+
+  // first make sure that the closing tag actually exists.
+  // <a><b></c></b></a> will close everything, otherwise.
+  var t = parser.tags.length
+  var tagName = parser.tagName
+  if (!parser.strict) tagName = tagName[parser.looseCase]()
+  var closeTo = tagName
+  while (t --) {
+    var close = parser.tags[t]
+    if (close.name !== closeTo) {
+      // fail the first time in strict mode
+      strictFail(parser, "Unexpected close tag")
+    } else break
+  }
+
+  // didn't find it.  we already failed for strict, so just abort.
+  if (t < 0) {
+    strictFail(parser, "Unmatched closing tag: "+parser.tagName)
+    parser.textNode += "</" + parser.tagName + ">"
+    parser.state = S.TEXT
+    return
+  }
+  parser.tagName = tagName
+  var s = parser.tags.length
+  while (s --> t) {
+    var tag = parser.tag = parser.tags.pop()
+    parser.tagName = parser.tag.name
+    emitNode(parser, "onclosetag", parser.tagName)
+
+    var x = {}
+    for (var i in tag.ns) x[i] = tag.ns[i]
+
+    var parent = parser.tags[parser.tags.length - 1] || parser
+    if (parser.opt.xmlns && tag.ns !== parent.ns) {
+      // remove namespace bindings introduced by tag
+      Object.keys(tag.ns).forEach(function (p) {
+        var n = tag.ns[p]
+        emitNode(parser, "onclosenamespace", { prefix: p, uri: n })
+      })
+    }
+  }
+  if (t === 0) parser.closedRoot = true
+  parser.tagName = parser.attribValue = parser.attribName = ""
+  parser.attribList.length = 0
+  parser.state = S.TEXT
+}
+
+function parseEntity (parser) {
+  var entity = parser.entity
+    , entityLC = entity.toLowerCase()
+    , num
+    , numStr = ""
+  if (parser.ENTITIES[entity])
+    return parser.ENTITIES[entity]
+  if (parser.ENTITIES[entityLC])
+    return parser.ENTITIES[entityLC]
+  entity = entityLC
+  if (entity.charAt(0) === "#") {
+    if (entity.charAt(1) === "x") {
+      entity = entity.slice(2)
+      num = parseInt(entity, 16)
+      numStr = num.toString(16)
+    } else {
+      entity = entity.slice(1)
+      num = parseInt(entity, 10)
+      numStr = num.toString(10)
+    }
+  }
+  entity = entity.replace(/^0+/, "")
+  if (numStr.toLowerCase() !== entity) {
+    strictFail(parser, "Invalid character entity")
+    return "&"+parser.entity + ";"
+  }
+
+  return String.fromCodePoint(num)
+}
+
+function write (chunk) {
+  var parser = this
+  if (this.error) throw this.error
+  if (parser.closed) return error(parser,
+    "Cannot write after close. Assign an onready handler.")
+  if (chunk === null) return end(parser)
+  var i = 0, c = ""
+  while (parser.c = c = chunk.charAt(i++)) {
+    if (parser.trackPosition) {
+      parser.position ++
+      if (c === "\n") {
+        parser.line ++
+        parser.column = 0
+      } else parser.column ++
+    }
+    switch (parser.state) {
+
+      case S.BEGIN:
+        if (c === "<") {
+          parser.state = S.OPEN_WAKA
+          parser.startTagPosition = parser.position
+        } else if (not(whitespace,c)) {
+          // have to process this as a text node.
+          // weird, but happens.
+          strictFail(parser, "Non-whitespace before first tag.")
+          parser.textNode = c
+          parser.state = S.TEXT
+        }
+      continue
+
+      case S.TEXT:
+        if (parser.sawRoot && !parser.closedRoot) {
+          var starti = i-1
+          while (c && c!=="<" && c!=="&") {
+            c = chunk.charAt(i++)
+            if (c && parser.trackPosition) {
+              parser.position ++
+              if (c === "\n") {
+                parser.line ++
+                parser.column = 0
+              } else parser.column ++
+            }
+          }
+          parser.textNode += chunk.substring(starti, i-1)
+        }
+        if (c === "<") {
+          parser.state = S.OPEN_WAKA
+          parser.startTagPosition = parser.position
+        } else {
+          if (not(whitespace, c) && (!parser.sawRoot || parser.closedRoot))
+            strictFail(parser, "Text data outside of root node.")
+          if (c === "&") parser.state = S.TEXT_ENTITY
+          else parser.textNode += c
+        }
+      continue
+
+      case S.SCRIPT:
+        // only non-strict
+        if (c === "<") {
+          parser.state = S.SCRIPT_ENDING
+        } else parser.script += c
+      continue
+
+      case S.SCRIPT_ENDING:
+        if (c === "/") {
+          parser.state = S.CLOSE_TAG
+        } else {
+          parser.script += "<" + c
+          parser.state = S.SCRIPT
+        }
+      continue
+
+      case S.OPEN_WAKA:
+        // either a /, ?, !, or text is coming next.
+        if (c === "!") {
+          parser.state = S.SGML_DECL
+          parser.sgmlDecl = ""
+        } else if (is(whitespace, c)) {
+          // wait for it...
+        } else if (is(nameStart,c)) {
+          parser.state = S.OPEN_TAG
+          parser.tagName = c
+        } else if (c === "/") {
+          parser.state = S.CLOSE_TAG
+          parser.tagName = ""
+        } else if (c === "?") {
+          parser.state = S.PROC_INST
+          parser.procInstName = parser.procInstBody = ""
+        } else {
+          strictFail(parser, "Unencoded <")
+          // if there was some whitespace, then add that in.
+          if (parser.startTagPosition + 1 < parser.position) {
+            var pad = parser.position - parser.startTagPosition
+            c = new Array(pad).join(" ") + c
+          }
+          parser.textNode += "<" + c
+          parser.state = S.TEXT
+        }
+      continue
+
+      case S.SGML_DECL:
+        if ((parser.sgmlDecl+c).toUpperCase() === CDATA) {
+          emitNode(parser, "onopencdata")
+          parser.state = S.CDATA
+          parser.sgmlDecl = ""
+          parser.cdata = ""
+        } else if (parser.sgmlDecl+c === "--") {
+          parser.state = S.COMMENT
+          parser.comment = ""
+          parser.sgmlDecl = ""
+        } else if ((parser.sgmlDecl+c).toUpperCase() === DOCTYPE) {
+          parser.state = S.DOCTYPE
+          if (parser.doctype || parser.sawRoot) strictFail(parser,
+            "Inappropriately located doctype declaration")
+          parser.doctype = ""
+          parser.sgmlDecl = ""
+        } else if (c === ">") {
+          emitNode(parser, "onsgmldeclaration", parser.sgmlDecl)
+          parser.sgmlDecl = ""
+          parser.state = S.TEXT
+        } else if (is(quote, c)) {
+          parser.state = S.SGML_DECL_QUOTED
+          parser.sgmlDecl += c
+        } else parser.sgmlDecl += c
+      continue
+
+      case S.SGML_DECL_QUOTED:
+        if (c === parser.q) {
+          parser.state = S.SGML_DECL
+          parser.q = ""
+        }
+        parser.sgmlDecl += c
+      continue
+
+      case S.DOCTYPE:
+        if (c === ">") {
+          parser.state = S.TEXT
+          emitNode(parser, "ondoctype", parser.doctype)
+          parser.doctype = true // just remember that we saw it.
+        } else {
+          parser.doctype += c
+          if (c === "[") parser.state = S.DOCTYPE_DTD
+          else if (is(quote, c)) {
+            parser.state = S.DOCTYPE_QUOTED
+            parser.q = c
+          }
+        }
+      continue
+
+      case S.DOCTYPE_QUOTED:
+        parser.doctype += c
+        if (c === parser.q) {
+          parser.q = ""
+          parser.state = S.DOCTYPE
+        }
+      continue
+
+      case S.DOCTYPE_DTD:
+        parser.doctype += c
+        if (c === "]") parser.state = S.DOCTYPE
+        else if (is(quote,c)) {
+          parser.state = S.DOCTYPE_DTD_QUOTED
+          parser.q = c
+        }
+      continue
+
+      case S.DOCTYPE_DTD_QUOTED:
+        parser.doctype += c
+        if (c === parser.q) {
+          parser.state = S.DOCTYPE_DTD
+          parser.q = ""
+        }
+      continue
+
+      case S.COMMENT:
+        if (c === "-") parser.state = S.COMMENT_ENDING
+        else parser.comment += c
+      continue
+
+      case S.COMMENT_ENDING:
+        if (c === "-") {
+          parser.state = S.COMMENT_ENDED
+          parser.comment = textopts(parser.opt, parser.comment)
+          if (parser.comment) emitNode(parser, "oncomment", parser.comment)
+          parser.comment = ""
+        } else {
+          parser.comment += "-" + c
+          parser.state = S.COMMENT
+        }
+      continue
+
+      case S.COMMENT_ENDED:
+        if (c !== ">") {
+          strictFail(parser, "Malformed comment")
+          // allow <!-- blah -- bloo --> in non-strict mode,
+          // which is a comment of " blah -- bloo "
+          parser.comment += "--" + c
+          parser.state = S.COMMENT
+        } else parser.state = S.TEXT
+      continue
+
+      case S.CDATA:
+        if (c === "]") parser.state = S.CDATA_ENDING
+        else parser.cdata += c
+      continue
+
+      case S.CDATA_ENDING:
+        if (c === "]") parser.state = S.CDATA_ENDING_2
+        else {
+          parser.cdata += "]" + c
+          parser.state = S.CDATA
+        }
+      continue
+
+      case S.CDATA_ENDING_2:
+        if (c === ">") {
+          if (parser.cdata) emitNode(parser, "oncdata", parser.cdata)
+          emitNode(parser, "onclosecdata")
+          parser.cdata = ""
+          parser.state = S.TEXT
+        } else if (c === "]") {
+          parser.cdata += "]"
+        } else {
+          parser.cdata += "]]" + c
+          parser.state = S.CDATA
+        }
+      continue
+
+      case S.PROC_INST:
+        if (c === "?") parser.state = S.PROC_INST_ENDING
+        else if (is(whitespace, c)) parser.state = S.PROC_INST_BODY
+        else parser.procInstName += c
+      continue
+
+      case S.PROC_INST_BODY:
+        if (!parser.procInstBody && is(whitespace, c)) continue
+        else if (c === "?") parser.state = S.PROC_INST_ENDING
+        else parser.procInstBody += c
+      continue
+
+      case S.PROC_INST_ENDING:
+        if (c === ">") {
+          emitNode(parser, "onprocessinginstruction", {
+            name : parser.procInstName,
+            body : parser.procInstBody
+          })
+          parser.procInstName = parser.procInstBody = ""
+          parser.state = S.TEXT
+        } else {
+          parser.procInstBody += "?" + c
+          parser.state = S.PROC_INST_BODY
+        }
+      continue
+
+      case S.OPEN_TAG:
+        if (is(nameBody, c)) parser.tagName += c
+        else {
+          newTag(parser)
+          if (c === ">") openTag(parser)
+          else if (c === "/") parser.state = S.OPEN_TAG_SLASH
+          else {
+            if (not(whitespace, c)) strictFail(
+              parser, "Invalid character in tag name")
+            parser.state = S.ATTRIB
+          }
+        }
+      continue
+
+      case S.OPEN_TAG_SLASH:
+        if (c === ">") {
+          openTag(parser, true)
+          closeTag(parser)
+        } else {
+          strictFail(parser, "Forward-slash in opening tag not followed by >")
+          parser.state = S.ATTRIB
+        }
+      continue
+
+      case S.ATTRIB:
+        // haven't read the attribute name yet.
+        if (is(whitespace, c)) continue
+        else if (c === ">") openTag(parser)
+        else if (c === "/") parser.state = S.OPEN_TAG_SLASH
+        else if (is(nameStart, c)) {
+          parser.attribName = c
+          parser.attribValue = ""
+          parser.state = S.ATTRIB_NAME
+        } else strictFail(parser, "Invalid attribute name")
+      continue
+
+      case S.ATTRIB_NAME:
+        if (c === "=") parser.state = S.ATTRIB_VALUE
+        else if (c === ">") {
+          strictFail(parser, "Attribute without value")
+          parser.attribValue = parser.attribName
+          attrib(parser)
+          openTag(parser)
+        }
+        else if (is(whitespace, c)) parser.state = S.ATTRIB_NAME_SAW_WHITE
+        else if (is(nameBody, c)) parser.attribName += c
+        else strictFail(parser, "Invalid attribute name")
+      continue
+
+      case S.ATTRIB_NAME_SAW_WHITE:
+        if (c === "=") parser.state = S.ATTRIB_VALUE
+        else if (is(whitespace, c)) continue
+        else {
+          strictFail(parser, "Attribute without value")
+          parser.tag.attributes[parser.attribName] = ""
+          parser.attribValue = ""
+          emitNode(parser, "onattribute",
+                   { name : parser.attribName, value : "" })
+          parser.attribName = ""
+          if (c === ">") openTag(parser)
+          else if (is(nameStart, c)) {
+            parser.attribName = c
+            parser.state = S.ATTRIB_NAME
+          } else {
+            strictFail(parser, "Invalid attribute name")
+            parser.state = S.ATTRIB
+          }
+        }
+      continue
+
+      case S.ATTRIB_VALUE:
+        if (is(whitespace, c)) continue
+        else if (is(quote, c)) {
+          parser.q = c
+          parser.state = S.ATTRIB_VALUE_QUOTED
+        } else {
+          strictFail(parser, "Unquoted attribute value")
+          parser.state = S.ATTRIB_VALUE_UNQUOTED
+          parser.attribValue = c
+        }
+      continue
+
+      case S.ATTRIB_VALUE_QUOTED:
+        if (c !== parser.q) {
+          if (c === "&") parser.state = S.ATTRIB_VALUE_ENTITY_Q
+          else parser.attribValue += c
+          continue
+        }
+        attrib(parser)
+        parser.q = ""
+        parser.state = S.ATTRIB_VALUE_CLOSED
+      continue
+
+      case S.ATTRIB_VALUE_CLOSED:
+        if (is(whitespace, c)) {
+          parser.state = S.ATTRIB
+        } else if (c === ">") openTag(parser)
+        else if (c === "/") parser.state = S.OPEN_TAG_SLASH
+        else if (is(nameStart, c)) {
+          strictFail(parser, "No whitespace between attributes")
+          parser.attribName = c
+          parser.attribValue = ""
+          parser.state = S.ATTRIB_NAME
+        } else strictFail(parser, "Invalid attribute name")
+      continue
+
+      case S.ATTRIB_VALUE_UNQUOTED:
+        if (not(attribEnd,c)) {
+          if (c === "&") parser.state = S.ATTRIB_VALUE_ENTITY_U
+          else parser.attribValue += c
+          continue
+        }
+        attrib(parser)
+        if (c === ">") openTag(parser)
+        else parser.state = S.ATTRIB
+      continue
+
+      case S.CLOSE_TAG:
+        if (!parser.tagName) {
+          if (is(whitespace, c)) continue
+          else if (not(nameStart, c)) {
+            if (parser.script) {
+              parser.script += "</" + c
+              parser.state = S.SCRIPT
+            } else {
+              strictFail(parser, "Invalid tagname in closing tag.")
+            }
+          } else parser.tagName = c
+        }
+        else if (c === ">") closeTag(parser)
+        else if (is(nameBody, c)) parser.tagName += c
+        else if (parser.script) {
+          parser.script += "</" + parser.tagName
+          parser.tagName = ""
+          parser.state = S.SCRIPT
+        } else {
+          if (not(whitespace, c)) strictFail(parser,
+            "Invalid tagname in closing tag")
+          parser.state = S.CLOSE_TAG_SAW_WHITE
+        }
+      continue
+
+      case S.CLOSE_TAG_SAW_WHITE:
+        if (is(whitespace, c)) continue
+        if (c === ">") closeTag(parser)
+        else strictFail(parser, "Invalid characters in closing tag")
+      continue
+
+      case S.TEXT_ENTITY:
+      case S.ATTRIB_VALUE_ENTITY_Q:
+      case S.ATTRIB_VALUE_ENTITY_U:
+        switch(parser.state) {
+          case S.TEXT_ENTITY:
+            var returnState = S.TEXT, buffer = "textNode"
+          break
+
+          case S.ATTRIB_VALUE_ENTITY_Q:
+            var returnState = S.ATTRIB_VALUE_QUOTED, buffer = "attribValue"
+          break
+
+          case S.ATTRIB_VALUE_ENTITY_U:
+            var returnState = S.ATTRIB_VALUE_UNQUOTED, buffer = "attribValue"
+          break
+        }
+        if (c === ";") {
+          parser[buffer] += parseEntity(parser)
+          parser.entity = ""
+          parser.state = returnState
+        }
+        else if (is(entity, c)) parser.entity += c
+        else {
+          strictFail(parser, "Invalid character entity")
+          parser[buffer] += "&" + parser.entity + c
+          parser.entity = ""
+          parser.state = returnState
+        }
+      continue
+
+      default:
+        throw new Error(parser, "Unknown state: " + parser.state)
+    }
+  } // while
+  // cdata blocks can get very big under normal conditions. emit and move on.
+  // if (parser.state === S.CDATA && parser.cdata) {
+  //   emitNode(parser, "oncdata", parser.cdata)
+  //   parser.cdata = ""
+  // }
+  if (parser.position >= parser.bufferCheckPosition) checkBufferLength(parser)
+  return parser
+}
+
+/*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
+if (!String.fromCodePoint) {
+        (function() {
+                var stringFromCharCode = String.fromCharCode;
+                var floor = Math.floor;
+                var fromCodePoint = function() {
+                        var MAX_SIZE = 0x4000;
+                        var codeUnits = [];
+                        var highSurrogate;
+                        var lowSurrogate;
+                        var index = -1;
+                        var length = arguments.length;
+                        if (!length) {
+                                return '';
+                        }
+                        var result = '';
+                        while (++index < length) {
+                                var codePoint = Number(arguments[index]);
+                                if (
+                                        !isFinite(codePoint) || // `NaN`, `+Infinity`, or `-Infinity`
+                                        codePoint < 0 || // not a valid Unicode code point
+                                        codePoint > 0x10FFFF || // not a valid Unicode code point
+                                        floor(codePoint) != codePoint // not an integer
+                                ) {
+                                        throw RangeError('Invalid code point: ' + codePoint);
+                                }
+                                if (codePoint <= 0xFFFF) { // BMP code point
+                                        codeUnits.push(codePoint);
+                                } else { // Astral code point; split in surrogate halves
+                                        // http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
+                                        codePoint -= 0x10000;
+                                        highSurrogate = (codePoint >> 10) + 0xD800;
+                                        lowSurrogate = (codePoint % 0x400) + 0xDC00;
+                                        codeUnits.push(highSurrogate, lowSurrogate);
+                                }
+                                if (index + 1 == length || codeUnits.length > MAX_SIZE) {
+                                        result += stringFromCharCode.apply(null, codeUnits);
+                                        codeUnits.length = 0;
+                                }
+                        }
+                        return result;
+                };
+                if (Object.defineProperty) {
+                        Object.defineProperty(String, 'fromCodePoint', {
+                                'value': fromCodePoint,
+                                'configurable': true,
+                                'writable': true
+                        });
+                } else {
+                        String.fromCodePoint = fromCodePoint;
+                }
+        }());
+}
+
+})(typeof exports === "undefined" ? sax = {} : exports);
+
+}).call(this,require("buffer").Buffer)
+},{"buffer":195,"stream":223,"string_decoder":224}],81:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLAttribute, create;
+
+  create = require('lodash-node/modern/objects/create');
+
+  module.exports = XMLAttribute = (function() {
+    function XMLAttribute(parent, name, value) {
+      this.stringify = parent.stringify;
+      if (name == null) {
+        throw new Error("Missing attribute name");
+      }
+      if (value == null) {
+        throw new Error("Missing attribute value");
+      }
+      this.name = this.stringify.attName(name);
+      this.value = this.stringify.attValue(value);
+    }
+
+    XMLAttribute.prototype.clone = function() {
+      return create(XMLAttribute.prototype, this);
+    };
+
+    XMLAttribute.prototype.toString = function(options, level) {
+      return ' ' + this.name + '="' + this.value + '"';
+    };
+
+    return XMLAttribute;
+
+  })();
+
+}).call(this);
+
+},{"lodash-node/modern/objects/create":110}],82:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLBuilder, XMLDeclaration, XMLDocType, XMLElement, XMLStringifier;
+
+  XMLStringifier = require('./XMLStringifier');
+
+  XMLDeclaration = require('./XMLDeclaration');
+
+  XMLDocType = require('./XMLDocType');
+
+  XMLElement = require('./XMLElement');
+
+  module.exports = XMLBuilder = (function() {
+    function XMLBuilder(name, options) {
+      var root, temp;
+      if (name == null) {
+        throw new Error("Root element needs a name");
+      }
+      if (options == null) {
+        options = {};
+      }
+      this.options = options;
+      this.stringify = new XMLStringifier(options);
+      temp = new XMLElement(this, 'doc');
+      root = temp.element(name);
+      root.isRoot = true;
+      root.documentObject = this;
+      this.rootObject = root;
+      if (!options.headless) {
+        root.declaration(options);
+        if ((options.pubID != null) || (options.sysID != null)) {
+          root.doctype(options);
+        }
+      }
+    }
+
+    XMLBuilder.prototype.root = function() {
+      return this.rootObject;
+    };
+
+    XMLBuilder.prototype.end = function(options) {
+      return this.toString(options);
+    };
+
+    XMLBuilder.prototype.toString = function(options) {
+      var indent, newline, offset, pretty, r, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      r = '';
+      if (this.xmldec != null) {
+        r += this.xmldec.toString(options);
+      }
+      if (this.doctype != null) {
+        r += this.doctype.toString(options);
+      }
+      r += this.rootObject.toString(options);
+      if (pretty && r.slice(-newline.length) === newline) {
+        r = r.slice(0, -newline.length);
+      }
+      return r;
+    };
+
+    return XMLBuilder;
+
+  })();
+
+}).call(this);
+
+},{"./XMLDeclaration":89,"./XMLDocType":90,"./XMLElement":91,"./XMLStringifier":95}],83:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLCData, XMLNode, create,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  create = require('lodash-node/modern/objects/create');
+
+  XMLNode = require('./XMLNode');
+
+  module.exports = XMLCData = (function(_super) {
+    __extends(XMLCData, _super);
+
+    function XMLCData(parent, text) {
+      XMLCData.__super__.constructor.call(this, parent);
+      if (text == null) {
+        throw new Error("Missing CDATA text");
+      }
+      this.text = this.stringify.cdata(text);
+    }
+
+    XMLCData.prototype.clone = function() {
+      return create(XMLCData.prototype, this);
+    };
+
+    XMLCData.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += '<![CDATA[' + this.text + ']]>';
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLCData;
+
+  })(XMLNode);
+
+}).call(this);
+
+},{"./XMLNode":92,"lodash-node/modern/objects/create":110}],84:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLComment, XMLNode, create,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  create = require('lodash-node/modern/objects/create');
+
+  XMLNode = require('./XMLNode');
+
+  module.exports = XMLComment = (function(_super) {
+    __extends(XMLComment, _super);
+
+    function XMLComment(parent, text) {
+      XMLComment.__super__.constructor.call(this, parent);
+      if (text == null) {
+        throw new Error("Missing comment text");
+      }
+      this.text = this.stringify.comment(text);
+    }
+
+    XMLComment.prototype.clone = function() {
+      return create(XMLComment.prototype, this);
+    };
+
+    XMLComment.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += '<!-- ' + this.text + ' -->';
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLComment;
+
+  })(XMLNode);
+
+}).call(this);
+
+},{"./XMLNode":92,"lodash-node/modern/objects/create":110}],85:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLDTDAttList, create;
+
+  create = require('lodash-node/modern/objects/create');
+
+  module.exports = XMLDTDAttList = (function() {
+    function XMLDTDAttList(parent, elementName, attributeName, attributeType, defaultValueType, defaultValue) {
+      this.stringify = parent.stringify;
+      if (elementName == null) {
+        throw new Error("Missing DTD element name");
+      }
+      if (attributeName == null) {
+        throw new Error("Missing DTD attribute name");
+      }
+      if (!attributeType) {
+        throw new Error("Missing DTD attribute type");
+      }
+      if (!defaultValueType) {
+        throw new Error("Missing DTD attribute default");
+      }
+      if (defaultValueType.indexOf('#') !== 0) {
+        defaultValueType = '#' + defaultValueType;
+      }
+      if (!defaultValueType.match(/^(#REQUIRED|#IMPLIED|#FIXED|#DEFAULT)$/)) {
+        throw new Error("Invalid default value type; expected: #REQUIRED, #IMPLIED, #FIXED or #DEFAULT");
+      }
+      if (defaultValue && !defaultValueType.match(/^(#FIXED|#DEFAULT)$/)) {
+        throw new Error("Default value only applies to #FIXED or #DEFAULT");
+      }
+      this.elementName = this.stringify.eleName(elementName);
+      this.attributeName = this.stringify.attName(attributeName);
+      this.attributeType = this.stringify.dtdAttType(attributeType);
+      this.defaultValue = this.stringify.dtdAttDefault(defaultValue);
+      this.defaultValueType = defaultValueType;
+    }
+
+    XMLDTDAttList.prototype.clone = function() {
+      return create(XMLDTDAttList.prototype, this);
+    };
+
+    XMLDTDAttList.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += '<!ATTLIST ' + this.elementName + ' ' + this.attributeName + ' ' + this.attributeType;
+      if (this.defaultValueType !== '#DEFAULT') {
+        r += ' ' + this.defaultValueType;
+      }
+      if (this.defaultValue) {
+        r += ' "' + this.defaultValue + '"';
+      }
+      r += '>';
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLDTDAttList;
+
+  })();
+
+}).call(this);
+
+},{"lodash-node/modern/objects/create":110}],86:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLDTDElement, create, isArray;
+
+  create = require('lodash-node/modern/objects/create');
+
+  isArray = require('lodash-node/modern/objects/isArray');
+
+  module.exports = XMLDTDElement = (function() {
+    function XMLDTDElement(parent, name, value) {
+      this.stringify = parent.stringify;
+      if (name == null) {
+        throw new Error("Missing DTD element name");
+      }
+      if (!value) {
+        value = '(#PCDATA)';
+      }
+      if (isArray(value)) {
+        value = '(' + value.join(',') + ')';
+      }
+      this.name = this.stringify.eleName(name);
+      this.value = this.stringify.dtdElementValue(value);
+    }
+
+    XMLDTDElement.prototype.clone = function() {
+      return create(XMLDTDElement.prototype, this);
+    };
+
+    XMLDTDElement.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += '<!ELEMENT ' + this.name + ' ' + this.value + '>';
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLDTDElement;
+
+  })();
+
+}).call(this);
+
+},{"lodash-node/modern/objects/create":110,"lodash-node/modern/objects/isArray":112}],87:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLDTDEntity, create, isObject;
+
+  create = require('lodash-node/modern/objects/create');
+
+  isObject = require('lodash-node/modern/objects/isObject');
+
+  module.exports = XMLDTDEntity = (function() {
+    function XMLDTDEntity(parent, pe, name, value) {
+      this.stringify = parent.stringify;
+      if (name == null) {
+        throw new Error("Missing entity name");
+      }
+      if (value == null) {
+        throw new Error("Missing entity value");
+      }
+      this.pe = !!pe;
+      this.name = this.stringify.eleName(name);
+      if (!isObject(value)) {
+        this.value = this.stringify.dtdEntityValue(value);
+      } else {
+        if (!value.pubID && !value.sysID) {
+          throw new Error("Public and/or system identifiers are required for an external entity");
+        }
+        if (value.pubID && !value.sysID) {
+          throw new Error("System identifier is required for a public external entity");
+        }
+        if (value.pubID != null) {
+          this.pubID = this.stringify.dtdPubID(value.pubID);
+        }
+        if (value.sysID != null) {
+          this.sysID = this.stringify.dtdSysID(value.sysID);
+        }
+        if (value.nData != null) {
+          this.nData = this.stringify.dtdNData(value.nData);
+        }
+        if (this.pe && this.nData) {
+          throw new Error("Notation declaration is not allowed in a parameter entity");
+        }
+      }
+    }
+
+    XMLDTDEntity.prototype.clone = function() {
+      return create(XMLDTDEntity.prototype, this);
+    };
+
+    XMLDTDEntity.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += '<!ENTITY';
+      if (this.pe) {
+        r += ' %';
+      }
+      r += ' ' + this.name;
+      if (this.value) {
+        r += ' "' + this.value + '"';
+      } else {
+        if (this.pubID && this.sysID) {
+          r += ' PUBLIC "' + this.pubID + '" "' + this.sysID + '"';
+        } else if (this.sysID) {
+          r += ' SYSTEM "' + this.sysID + '"';
+        }
+        if (this.nData) {
+          r += ' NDATA ' + this.nData;
+        }
+      }
+      r += '>';
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLDTDEntity;
+
+  })();
+
+}).call(this);
+
+},{"lodash-node/modern/objects/create":110,"lodash-node/modern/objects/isObject":115}],88:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLDTDNotation, create;
+
+  create = require('lodash-node/modern/objects/create');
+
+  module.exports = XMLDTDNotation = (function() {
+    function XMLDTDNotation(parent, name, value) {
+      this.stringify = parent.stringify;
+      if (name == null) {
+        throw new Error("Missing notation name");
+      }
+      if (!value.pubID && !value.sysID) {
+        throw new Error("Public or system identifiers are required for an external entity");
+      }
+      this.name = this.stringify.eleName(name);
+      if (value.pubID != null) {
+        this.pubID = this.stringify.dtdPubID(value.pubID);
+      }
+      if (value.sysID != null) {
+        this.sysID = this.stringify.dtdSysID(value.sysID);
+      }
+    }
+
+    XMLDTDNotation.prototype.clone = function() {
+      return create(XMLDTDNotation.prototype, this);
+    };
+
+    XMLDTDNotation.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += '<!NOTATION ' + this.name;
+      if (this.pubID && this.sysID) {
+        r += ' PUBLIC "' + this.pubID + '" "' + this.sysID + '"';
+      } else if (this.pubID) {
+        r += ' PUBLIC "' + this.pubID + '"';
+      } else if (this.sysID) {
+        r += ' SYSTEM "' + this.sysID + '"';
+      }
+      r += '>';
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLDTDNotation;
+
+  })();
+
+}).call(this);
+
+},{"lodash-node/modern/objects/create":110}],89:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLDeclaration, XMLNode, create, isObject,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  create = require('lodash-node/modern/objects/create');
+
+  isObject = require('lodash-node/modern/objects/isObject');
+
+  XMLNode = require('./XMLNode');
+
+  module.exports = XMLDeclaration = (function(_super) {
+    __extends(XMLDeclaration, _super);
+
+    function XMLDeclaration(parent, version, encoding, standalone) {
+      var _ref;
+      XMLDeclaration.__super__.constructor.call(this, parent);
+      if (isObject(version)) {
+        _ref = version, version = _ref.version, encoding = _ref.encoding, standalone = _ref.standalone;
+      }
+      if (!version) {
+        version = '1.0';
+      }
+      if (version != null) {
+        this.version = this.stringify.xmlVersion(version);
+      }
+      if (encoding != null) {
+        this.encoding = this.stringify.xmlEncoding(encoding);
+      }
+      if (standalone != null) {
+        this.standalone = this.stringify.xmlStandalone(standalone);
+      }
+    }
+
+    XMLDeclaration.prototype.clone = function() {
+      return create(XMLDeclaration.prototype, this);
+    };
+
+    XMLDeclaration.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += '<?xml';
+      if (this.version != null) {
+        r += ' version="' + this.version + '"';
+      }
+      if (this.encoding != null) {
+        r += ' encoding="' + this.encoding + '"';
+      }
+      if (this.standalone != null) {
+        r += ' standalone="' + this.standalone + '"';
+      }
+      r += '?>';
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLDeclaration;
+
+  })(XMLNode);
+
+}).call(this);
+
+},{"./XMLNode":92,"lodash-node/modern/objects/create":110,"lodash-node/modern/objects/isObject":115}],90:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLDocType, create, isObject;
+
+  create = require('lodash-node/modern/objects/create');
+
+  isObject = require('lodash-node/modern/objects/isObject');
+
+  module.exports = XMLDocType = (function() {
+    function XMLDocType(parent, pubID, sysID) {
+      var _ref, _ref1;
+      this.documentObject = parent;
+      this.stringify = this.documentObject.stringify;
+      this.children = [];
+      if (isObject(pubID)) {
+        _ref = pubID, pubID = _ref.pubID, sysID = _ref.sysID;
+      }
+      if (sysID == null) {
+        _ref1 = [pubID, sysID], sysID = _ref1[0], pubID = _ref1[1];
+      }
+      if (pubID != null) {
+        this.pubID = this.stringify.dtdPubID(pubID);
+      }
+      if (sysID != null) {
+        this.sysID = this.stringify.dtdSysID(sysID);
+      }
+    }
+
+    XMLDocType.prototype.clone = function() {
+      return create(XMLDocType.prototype, this);
+    };
+
+    XMLDocType.prototype.element = function(name, value) {
+      var XMLDTDElement, child;
+      XMLDTDElement = require('./XMLDTDElement');
+      child = new XMLDTDElement(this, name, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLDocType.prototype.attList = function(elementName, attributeName, attributeType, defaultValueType, defaultValue) {
+      var XMLDTDAttList, child;
+      XMLDTDAttList = require('./XMLDTDAttList');
+      child = new XMLDTDAttList(this, elementName, attributeName, attributeType, defaultValueType, defaultValue);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLDocType.prototype.entity = function(name, value) {
+      var XMLDTDEntity, child;
+      XMLDTDEntity = require('./XMLDTDEntity');
+      child = new XMLDTDEntity(this, false, name, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLDocType.prototype.pEntity = function(name, value) {
+      var XMLDTDEntity, child;
+      XMLDTDEntity = require('./XMLDTDEntity');
+      child = new XMLDTDEntity(this, true, name, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLDocType.prototype.notation = function(name, value) {
+      var XMLDTDNotation, child;
+      XMLDTDNotation = require('./XMLDTDNotation');
+      child = new XMLDTDNotation(this, name, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLDocType.prototype.cdata = function(value) {
+      var XMLCData, child;
+      XMLCData = require('./XMLCData');
+      child = new XMLCData(this, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLDocType.prototype.comment = function(value) {
+      var XMLComment, child;
+      XMLComment = require('./XMLComment');
+      child = new XMLComment(this, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLDocType.prototype.instruction = function(target, value) {
+      var XMLProcessingInstruction, child;
+      XMLProcessingInstruction = require('./XMLProcessingInstruction');
+      child = new XMLProcessingInstruction(this, target, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLDocType.prototype.root = function() {
+      return this.documentObject.root();
+    };
+
+    XMLDocType.prototype.document = function() {
+      return this.documentObject;
+    };
+
+    XMLDocType.prototype.toString = function(options, level) {
+      var child, indent, newline, offset, pretty, r, space, _i, _len, _ref, _ref1, _ref2, _ref3;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += '<!DOCTYPE ' + this.root().name;
+      if (this.pubID && this.sysID) {
+        r += ' PUBLIC "' + this.pubID + '" "' + this.sysID + '"';
+      } else if (this.sysID) {
+        r += ' SYSTEM "' + this.sysID + '"';
+      }
+      if (this.children.length > 0) {
+        r += ' [';
+        if (pretty) {
+          r += newline;
+        }
+        _ref3 = this.children;
+        for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+          child = _ref3[_i];
+          r += child.toString(options, level + 1);
+        }
+        r += ']';
+      }
+      r += '>';
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    XMLDocType.prototype.ele = function(name, value) {
+      return this.element(name, value);
+    };
+
+    XMLDocType.prototype.att = function(elementName, attributeName, attributeType, defaultValueType, defaultValue) {
+      return this.attList(elementName, attributeName, attributeType, defaultValueType, defaultValue);
+    };
+
+    XMLDocType.prototype.ent = function(name, value) {
+      return this.entity(name, value);
+    };
+
+    XMLDocType.prototype.pent = function(name, value) {
+      return this.pEntity(name, value);
+    };
+
+    XMLDocType.prototype.not = function(name, value) {
+      return this.notation(name, value);
+    };
+
+    XMLDocType.prototype.dat = function(value) {
+      return this.cdata(value);
+    };
+
+    XMLDocType.prototype.com = function(value) {
+      return this.comment(value);
+    };
+
+    XMLDocType.prototype.ins = function(target, value) {
+      return this.instruction(target, value);
+    };
+
+    XMLDocType.prototype.up = function() {
+      return this.root();
+    };
+
+    XMLDocType.prototype.doc = function() {
+      return this.document();
+    };
+
+    return XMLDocType;
+
+  })();
+
+}).call(this);
+
+},{"./XMLCData":83,"./XMLComment":84,"./XMLDTDAttList":85,"./XMLDTDElement":86,"./XMLDTDEntity":87,"./XMLDTDNotation":88,"./XMLProcessingInstruction":93,"lodash-node/modern/objects/create":110,"lodash-node/modern/objects/isObject":115}],91:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLAttribute, XMLElement, XMLNode, XMLProcessingInstruction, create, isArray, isFunction, isObject,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  create = require('lodash-node/modern/objects/create');
+
+  isObject = require('lodash-node/modern/objects/isObject');
+
+  isArray = require('lodash-node/modern/objects/isArray');
+
+  isFunction = require('lodash-node/modern/objects/isFunction');
+
+  XMLNode = require('./XMLNode');
+
+  XMLAttribute = require('./XMLAttribute');
+
+  XMLProcessingInstruction = require('./XMLProcessingInstruction');
+
+  module.exports = XMLElement = (function(_super) {
+    __extends(XMLElement, _super);
+
+    function XMLElement(parent, name, attributes) {
+      XMLElement.__super__.constructor.call(this, parent);
+      if (name == null) {
+        throw new Error("Missing element name");
+      }
+      this.name = this.stringify.eleName(name);
+      this.children = [];
+      this.instructions = [];
+      this.attributes = {};
+      if (attributes != null) {
+        this.attribute(attributes);
+      }
+    }
+
+    XMLElement.prototype.clone = function() {
+      var att, attName, clonedSelf, pi, _i, _len, _ref, _ref1;
+      clonedSelf = create(XMLElement.prototype, this);
+      clonedSelf.attributes = {};
+      _ref = this.attributes;
+      for (attName in _ref) {
+        if (!__hasProp.call(_ref, attName)) continue;
+        att = _ref[attName];
+        clonedSelf.attributes[attName] = att.clone();
+      }
+      clonedSelf.instructions = [];
+      _ref1 = this.instructions;
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        pi = _ref1[_i];
+        clonedSelf.instructions.push(pi.clone());
+      }
+      clonedSelf.children = [];
+      this.children.forEach(function(child) {
+        var clonedChild;
+        clonedChild = child.clone();
+        clonedChild.parent = clonedSelf;
+        return clonedSelf.children.push(clonedChild);
+      });
+      return clonedSelf;
+    };
+
+    XMLElement.prototype.attribute = function(name, value) {
+      var attName, attValue;
+      if (name != null) {
+        name = name.valueOf();
+      }
+      if (isObject(name)) {
+        for (attName in name) {
+          if (!__hasProp.call(name, attName)) continue;
+          attValue = name[attName];
+          this.attribute(attName, attValue);
+        }
+      } else {
+        if (isFunction(value)) {
+          value = value.apply();
+        }
+        if (!this.options.skipNullAttributes || (value != null)) {
+          this.attributes[name] = new XMLAttribute(this, name, value);
+        }
+      }
+      return this;
+    };
+
+    XMLElement.prototype.removeAttribute = function(name) {
+      var attName, _i, _len;
+      if (name == null) {
+        throw new Error("Missing attribute name");
+      }
+      name = name.valueOf();
+      if (isArray(name)) {
+        for (_i = 0, _len = name.length; _i < _len; _i++) {
+          attName = name[_i];
+          delete this.attributes[attName];
+        }
+      } else {
+        delete this.attributes[name];
+      }
+      return this;
+    };
+
+    XMLElement.prototype.instruction = function(target, value) {
+      var insTarget, insValue, instruction, _i, _len;
+      if (target != null) {
+        target = target.valueOf();
+      }
+      if (value != null) {
+        value = value.valueOf();
+      }
+      if (isArray(target)) {
+        for (_i = 0, _len = target.length; _i < _len; _i++) {
+          insTarget = target[_i];
+          this.instruction(insTarget);
+        }
+      } else if (isObject(target)) {
+        for (insTarget in target) {
+          if (!__hasProp.call(target, insTarget)) continue;
+          insValue = target[insTarget];
+          this.instruction(insTarget, insValue);
+        }
+      } else {
+        if (isFunction(value)) {
+          value = value.apply();
+        }
+        instruction = new XMLProcessingInstruction(this, target, value);
+        this.instructions.push(instruction);
+      }
+      return this;
+    };
+
+    XMLElement.prototype.toString = function(options, level) {
+      var att, child, indent, instruction, name, newline, offset, pretty, r, space, _i, _j, _len, _len1, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      _ref3 = this.instructions;
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        instruction = _ref3[_i];
+        r += instruction.toString(options, level + 1);
+      }
+      if (pretty) {
+        r += space;
+      }
+      r += '<' + this.name;
+      _ref4 = this.attributes;
+      for (name in _ref4) {
+        if (!__hasProp.call(_ref4, name)) continue;
+        att = _ref4[name];
+        r += att.toString(options);
+      }
+      if (this.children.length === 0) {
+        r += '/>';
+        if (pretty) {
+          r += newline;
+        }
+      } else if (pretty && this.children.length === 1 && (this.children[0].value != null)) {
+        r += '>';
+        r += this.children[0].value;
+        r += '</' + this.name + '>';
+        r += newline;
+      } else {
+        r += '>';
+        if (pretty) {
+          r += newline;
+        }
+        _ref5 = this.children;
+        for (_j = 0, _len1 = _ref5.length; _j < _len1; _j++) {
+          child = _ref5[_j];
+          r += child.toString(options, level + 1);
+        }
+        if (pretty) {
+          r += space;
+        }
+        r += '</' + this.name + '>';
+        if (pretty) {
+          r += newline;
+        }
+      }
+      return r;
+    };
+
+    XMLElement.prototype.att = function(name, value) {
+      return this.attribute(name, value);
+    };
+
+    XMLElement.prototype.ins = function(target, value) {
+      return this.instruction(target, value);
+    };
+
+    XMLElement.prototype.a = function(name, value) {
+      return this.attribute(name, value);
+    };
+
+    XMLElement.prototype.i = function(target, value) {
+      return this.instruction(target, value);
+    };
+
+    return XMLElement;
+
+  })(XMLNode);
+
+}).call(this);
+
+},{"./XMLAttribute":81,"./XMLNode":92,"./XMLProcessingInstruction":93,"lodash-node/modern/objects/create":110,"lodash-node/modern/objects/isArray":112,"lodash-node/modern/objects/isFunction":114,"lodash-node/modern/objects/isObject":115}],92:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLNode, isArray, isEmpty, isFunction, isObject,
+    __hasProp = {}.hasOwnProperty;
+
+  isObject = require('lodash-node/modern/objects/isObject');
+
+  isArray = require('lodash-node/modern/objects/isArray');
+
+  isFunction = require('lodash-node/modern/objects/isFunction');
+
+  isEmpty = require('lodash-node/modern/objects/isEmpty');
+
+  module.exports = XMLNode = (function() {
+    function XMLNode(parent) {
+      this.parent = parent;
+      this.options = this.parent.options;
+      this.stringify = this.parent.stringify;
+    }
+
+    XMLNode.prototype.clone = function() {
+      throw new Error("Cannot clone generic XMLNode");
+    };
+
+    XMLNode.prototype.element = function(name, attributes, text) {
+      var item, key, lastChild, val, _i, _len, _ref;
+      lastChild = null;
+      if (attributes == null) {
+        attributes = {};
+      }
+      attributes = attributes.valueOf();
+      if (!isObject(attributes)) {
+        _ref = [attributes, text], text = _ref[0], attributes = _ref[1];
+      }
+      if (name != null) {
+        name = name.valueOf();
+      }
+      if (isArray(name)) {
+        for (_i = 0, _len = name.length; _i < _len; _i++) {
+          item = name[_i];
+          lastChild = this.element(item);
+        }
+      } else if (isFunction(name)) {
+        lastChild = this.element(name.apply());
+      } else if (isObject(name)) {
+        for (key in name) {
+          if (!__hasProp.call(name, key)) continue;
+          val = name[key];
+          if (isFunction(val)) {
+            val = val.apply();
+          }
+          if ((isObject(val)) && (isEmpty(val))) {
+            val = null;
+          }
+          if (!this.options.ignoreDecorators && this.stringify.convertAttKey && key.indexOf(this.stringify.convertAttKey) === 0) {
+            lastChild = this.attribute(key.substr(this.stringify.convertAttKey.length), val);
+          } else if (!this.options.ignoreDecorators && this.stringify.convertPIKey && key.indexOf(this.stringify.convertPIKey) === 0) {
+            lastChild = this.instruction(key.substr(this.stringify.convertPIKey.length), val);
+          } else if (isObject(val)) {
+            if (!this.options.ignoreDecorators && this.stringify.convertListKey && key.indexOf(this.stringify.convertListKey) === 0 && isArray(val)) {
+              lastChild = this.element(val);
+            } else {
+              lastChild = this.element(key);
+              lastChild.element(val);
+            }
+          } else {
+            lastChild = this.element(key, val);
+          }
+        }
+      } else {
+        if (!this.options.ignoreDecorators && this.stringify.convertTextKey && name.indexOf(this.stringify.convertTextKey) === 0) {
+          lastChild = this.text(text);
+        } else if (!this.options.ignoreDecorators && this.stringify.convertCDataKey && name.indexOf(this.stringify.convertCDataKey) === 0) {
+          lastChild = this.cdata(text);
+        } else if (!this.options.ignoreDecorators && this.stringify.convertCommentKey && name.indexOf(this.stringify.convertCommentKey) === 0) {
+          lastChild = this.comment(text);
+        } else if (!this.options.ignoreDecorators && this.stringify.convertRawKey && name.indexOf(this.stringify.convertRawKey) === 0) {
+          lastChild = this.raw(text);
+        } else {
+          lastChild = this.node(name, attributes, text);
+        }
+      }
+      if (lastChild == null) {
+        throw new Error("Could not create any elements with: " + name);
+      }
+      return lastChild;
+    };
+
+    XMLNode.prototype.insertBefore = function(name, attributes, text) {
+      var child, i, removed;
+      if (this.isRoot) {
+        throw new Error("Cannot insert elements at root level");
+      }
+      i = this.parent.children.indexOf(this);
+      removed = this.parent.children.splice(i);
+      child = this.parent.element(name, attributes, text);
+      Array.prototype.push.apply(this.parent.children, removed);
+      return child;
+    };
+
+    XMLNode.prototype.insertAfter = function(name, attributes, text) {
+      var child, i, removed;
+      if (this.isRoot) {
+        throw new Error("Cannot insert elements at root level");
+      }
+      i = this.parent.children.indexOf(this);
+      removed = this.parent.children.splice(i + 1);
+      child = this.parent.element(name, attributes, text);
+      Array.prototype.push.apply(this.parent.children, removed);
+      return child;
+    };
+
+    XMLNode.prototype.remove = function() {
+      var i, _ref;
+      if (this.isRoot) {
+        throw new Error("Cannot remove the root element");
+      }
+      i = this.parent.children.indexOf(this);
+      [].splice.apply(this.parent.children, [i, i - i + 1].concat(_ref = [])), _ref;
+      return this.parent;
+    };
+
+    XMLNode.prototype.node = function(name, attributes, text) {
+      var XMLElement, child, _ref;
+      if (name != null) {
+        name = name.valueOf();
+      }
+      if (attributes == null) {
+        attributes = {};
+      }
+      attributes = attributes.valueOf();
+      if (!isObject(attributes)) {
+        _ref = [attributes, text], text = _ref[0], attributes = _ref[1];
+      }
+      XMLElement = require('./XMLElement');
+      child = new XMLElement(this, name, attributes);
+      if (text != null) {
+        child.text(text);
+      }
+      this.children.push(child);
+      return child;
+    };
+
+    XMLNode.prototype.text = function(value) {
+      var XMLText, child;
+      XMLText = require('./XMLText');
+      child = new XMLText(this, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLNode.prototype.cdata = function(value) {
+      var XMLCData, child;
+      XMLCData = require('./XMLCData');
+      child = new XMLCData(this, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLNode.prototype.comment = function(value) {
+      var XMLComment, child;
+      XMLComment = require('./XMLComment');
+      child = new XMLComment(this, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLNode.prototype.raw = function(value) {
+      var XMLRaw, child;
+      XMLRaw = require('./XMLRaw');
+      child = new XMLRaw(this, value);
+      this.children.push(child);
+      return this;
+    };
+
+    XMLNode.prototype.declaration = function(version, encoding, standalone) {
+      var XMLDeclaration, doc, xmldec;
+      doc = this.document();
+      XMLDeclaration = require('./XMLDeclaration');
+      xmldec = new XMLDeclaration(doc, version, encoding, standalone);
+      doc.xmldec = xmldec;
+      return doc.root();
+    };
+
+    XMLNode.prototype.doctype = function(pubID, sysID) {
+      var XMLDocType, doc, doctype;
+      doc = this.document();
+      XMLDocType = require('./XMLDocType');
+      doctype = new XMLDocType(doc, pubID, sysID);
+      doc.doctype = doctype;
+      return doctype;
+    };
+
+    XMLNode.prototype.up = function() {
+      if (this.isRoot) {
+        throw new Error("The root node has no parent. Use doc() if you need to get the document object.");
+      }
+      return this.parent;
+    };
+
+    XMLNode.prototype.root = function() {
+      var child;
+      if (this.isRoot) {
+        return this;
+      }
+      child = this.parent;
+      while (!child.isRoot) {
+        child = child.parent;
+      }
+      return child;
+    };
+
+    XMLNode.prototype.document = function() {
+      return this.root().documentObject;
+    };
+
+    XMLNode.prototype.end = function(options) {
+      return this.document().toString(options);
+    };
+
+    XMLNode.prototype.prev = function() {
+      var i;
+      if (this.isRoot) {
+        throw new Error("Root node has no siblings");
+      }
+      i = this.parent.children.indexOf(this);
+      if (i < 1) {
+        throw new Error("Already at the first node");
+      }
+      return this.parent.children[i - 1];
+    };
+
+    XMLNode.prototype.next = function() {
+      var i;
+      if (this.isRoot) {
+        throw new Error("Root node has no siblings");
+      }
+      i = this.parent.children.indexOf(this);
+      if (i === -1 || i === this.parent.children.length - 1) {
+        throw new Error("Already at the last node");
+      }
+      return this.parent.children[i + 1];
+    };
+
+    XMLNode.prototype.importXMLBuilder = function(xmlbuilder) {
+      var clonedRoot;
+      clonedRoot = xmlbuilder.root().clone();
+      clonedRoot.parent = this;
+      clonedRoot.isRoot = false;
+      this.children.push(clonedRoot);
+      return this;
+    };
+
+    XMLNode.prototype.ele = function(name, attributes, text) {
+      return this.element(name, attributes, text);
+    };
+
+    XMLNode.prototype.nod = function(name, attributes, text) {
+      return this.node(name, attributes, text);
+    };
+
+    XMLNode.prototype.txt = function(value) {
+      return this.text(value);
+    };
+
+    XMLNode.prototype.dat = function(value) {
+      return this.cdata(value);
+    };
+
+    XMLNode.prototype.com = function(value) {
+      return this.comment(value);
+    };
+
+    XMLNode.prototype.doc = function() {
+      return this.document();
+    };
+
+    XMLNode.prototype.dec = function(version, encoding, standalone) {
+      return this.declaration(version, encoding, standalone);
+    };
+
+    XMLNode.prototype.dtd = function(pubID, sysID) {
+      return this.doctype(pubID, sysID);
+    };
+
+    XMLNode.prototype.e = function(name, attributes, text) {
+      return this.element(name, attributes, text);
+    };
+
+    XMLNode.prototype.n = function(name, attributes, text) {
+      return this.node(name, attributes, text);
+    };
+
+    XMLNode.prototype.t = function(value) {
+      return this.text(value);
+    };
+
+    XMLNode.prototype.d = function(value) {
+      return this.cdata(value);
+    };
+
+    XMLNode.prototype.c = function(value) {
+      return this.comment(value);
+    };
+
+    XMLNode.prototype.r = function(value) {
+      return this.raw(value);
+    };
+
+    XMLNode.prototype.u = function() {
+      return this.up();
+    };
+
+    return XMLNode;
+
+  })();
+
+}).call(this);
+
+},{"./XMLCData":83,"./XMLComment":84,"./XMLDeclaration":89,"./XMLDocType":90,"./XMLElement":91,"./XMLRaw":94,"./XMLText":96,"lodash-node/modern/objects/isArray":112,"lodash-node/modern/objects/isEmpty":113,"lodash-node/modern/objects/isFunction":114,"lodash-node/modern/objects/isObject":115}],93:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLProcessingInstruction, create;
+
+  create = require('lodash-node/modern/objects/create');
+
+  module.exports = XMLProcessingInstruction = (function() {
+    function XMLProcessingInstruction(parent, target, value) {
+      this.stringify = parent.stringify;
+      if (target == null) {
+        throw new Error("Missing instruction target");
+      }
+      this.target = this.stringify.insTarget(target);
+      if (value) {
+        this.value = this.stringify.insValue(value);
+      }
+    }
+
+    XMLProcessingInstruction.prototype.clone = function() {
+      return create(XMLProcessingInstruction.prototype, this);
+    };
+
+    XMLProcessingInstruction.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += '<?';
+      r += this.target;
+      if (this.value) {
+        r += ' ' + this.value;
+      }
+      r += '?>';
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLProcessingInstruction;
+
+  })();
+
+}).call(this);
+
+},{"lodash-node/modern/objects/create":110}],94:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLNode, XMLRaw, create,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  create = require('lodash-node/modern/objects/create');
+
+  XMLNode = require('./XMLNode');
+
+  module.exports = XMLRaw = (function(_super) {
+    __extends(XMLRaw, _super);
+
+    function XMLRaw(parent, text) {
+      XMLRaw.__super__.constructor.call(this, parent);
+      if (text == null) {
+        throw new Error("Missing raw text");
+      }
+      this.value = this.stringify.raw(text);
+    }
+
+    XMLRaw.prototype.clone = function() {
+      return create(XMLRaw.prototype, this);
+    };
+
+    XMLRaw.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += this.value;
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLRaw;
+
+  })(XMLNode);
+
+}).call(this);
+
+},{"./XMLNode":92,"lodash-node/modern/objects/create":110}],95:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLStringifier,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty;
+
+  module.exports = XMLStringifier = (function() {
+    function XMLStringifier(options) {
+      this.assertLegalChar = __bind(this.assertLegalChar, this);
+      var key, value, _ref;
+      this.allowSurrogateChars = options != null ? options.allowSurrogateChars : void 0;
+      _ref = (options != null ? options.stringify : void 0) || {};
+      for (key in _ref) {
+        if (!__hasProp.call(_ref, key)) continue;
+        value = _ref[key];
+        this[key] = value;
+      }
+    }
+
+    XMLStringifier.prototype.eleName = function(val) {
+      val = '' + val || '';
+      return this.assertLegalChar(val);
+    };
+
+    XMLStringifier.prototype.eleText = function(val) {
+      val = '' + val || '';
+      return this.assertLegalChar(this.elEscape(val));
+    };
+
+    XMLStringifier.prototype.cdata = function(val) {
+      val = '' + val || '';
+      if (val.match(/]]>/)) {
+        throw new Error("Invalid CDATA text: " + val);
+      }
+      return this.assertLegalChar(val);
+    };
+
+    XMLStringifier.prototype.comment = function(val) {
+      val = '' + val || '';
+      if (val.match(/--/)) {
+        throw new Error("Comment text cannot contain double-hypen: " + val);
+      }
+      return this.assertLegalChar(val);
+    };
+
+    XMLStringifier.prototype.raw = function(val) {
+      return '' + val || '';
+    };
+
+    XMLStringifier.prototype.attName = function(val) {
+      return '' + val || '';
+    };
+
+    XMLStringifier.prototype.attValue = function(val) {
+      val = '' + val || '';
+      return this.attEscape(val);
+    };
+
+    XMLStringifier.prototype.insTarget = function(val) {
+      return '' + val || '';
+    };
+
+    XMLStringifier.prototype.insValue = function(val) {
+      val = '' + val || '';
+      if (val.match(/\?>/)) {
+        throw new Error("Invalid processing instruction value: " + val);
+      }
+      return val;
+    };
+
+    XMLStringifier.prototype.xmlVersion = function(val) {
+      val = '' + val || '';
+      if (!val.match(/1\.[0-9]+/)) {
+        throw new Error("Invalid version number: " + val);
+      }
+      return val;
+    };
+
+    XMLStringifier.prototype.xmlEncoding = function(val) {
+      val = '' + val || '';
+      if (!val.match(/[A-Za-z](?:[A-Za-z0-9._-]|-)*/)) {
+        throw new Error("Invalid encoding: " + options.val);
+      }
+      return val;
+    };
+
+    XMLStringifier.prototype.xmlStandalone = function(val) {
+      if (val) {
+        return "yes";
+      } else {
+        return "no";
+      }
+    };
+
+    XMLStringifier.prototype.dtdPubID = function(val) {
+      return '' + val || '';
+    };
+
+    XMLStringifier.prototype.dtdSysID = function(val) {
+      return '' + val || '';
+    };
+
+    XMLStringifier.prototype.dtdElementValue = function(val) {
+      return '' + val || '';
+    };
+
+    XMLStringifier.prototype.dtdAttType = function(val) {
+      return '' + val || '';
+    };
+
+    XMLStringifier.prototype.dtdAttDefault = function(val) {
+      if (val != null) {
+        return '' + val || '';
+      } else {
+        return val;
+      }
+    };
+
+    XMLStringifier.prototype.dtdEntityValue = function(val) {
+      return '' + val || '';
+    };
+
+    XMLStringifier.prototype.dtdNData = function(val) {
+      return '' + val || '';
+    };
+
+    XMLStringifier.prototype.convertAttKey = '@';
+
+    XMLStringifier.prototype.convertPIKey = '?';
+
+    XMLStringifier.prototype.convertTextKey = '#text';
+
+    XMLStringifier.prototype.convertCDataKey = '#cdata';
+
+    XMLStringifier.prototype.convertCommentKey = '#comment';
+
+    XMLStringifier.prototype.convertRawKey = '#raw';
+
+    XMLStringifier.prototype.convertListKey = '#list';
+
+    XMLStringifier.prototype.assertLegalChar = function(str) {
+      var chars, chr;
+      if (this.allowSurrogateChars) {
+        chars = /[\u0000-\u0008\u000B-\u000C\u000E-\u001F\uFFFE-\uFFFF]/;
+      } else {
+        chars = /[\u0000-\u0008\u000B-\u000C\u000E-\u001F\uD800-\uDFFF\uFFFE-\uFFFF]/;
+      }
+      chr = str.match(chars);
+      if (chr) {
+        throw new Error("Invalid character (" + chr + ") in string: " + str + " at index " + chr.index);
+      }
+      return str;
+    };
+
+    XMLStringifier.prototype.elEscape = function(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\r/g, '&#xD;');
+    };
+
+    XMLStringifier.prototype.attEscape = function(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/\t/g, '&#x9;').replace(/\n/g, '&#xA;').replace(/\r/g, '&#xD;');
+    };
+
+    return XMLStringifier;
+
+  })();
+
+}).call(this);
+
+},{}],96:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLNode, XMLText, create,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  create = require('lodash-node/modern/objects/create');
+
+  XMLNode = require('./XMLNode');
+
+  module.exports = XMLText = (function(_super) {
+    __extends(XMLText, _super);
+
+    function XMLText(parent, text) {
+      this.parent = parent;
+      XMLText.__super__.constructor.call(this, parent);
+      if (text == null) {
+        throw new Error("Missing element text");
+      }
+      this.value = this.stringify.eleText(text);
+    }
+
+    XMLText.prototype.clone = function() {
+      return create(XMLText.prototype, this);
+    };
+
+    XMLText.prototype.toString = function(options, level) {
+      var indent, newline, offset, pretty, r, space, _ref, _ref1, _ref2;
+      pretty = (options != null ? options.pretty : void 0) || false;
+      indent = (_ref = options != null ? options.indent : void 0) != null ? _ref : '  ';
+      offset = (_ref1 = options != null ? options.offset : void 0) != null ? _ref1 : 0;
+      newline = (_ref2 = options != null ? options.newline : void 0) != null ? _ref2 : '\n';
+      level || (level = 0);
+      space = new Array(level + offset + 1).join(indent);
+      r = '';
+      if (pretty) {
+        r += space;
+      }
+      r += this.value;
+      if (pretty) {
+        r += newline;
+      }
+      return r;
+    };
+
+    return XMLText;
+
+  })(XMLNode);
+
+}).call(this);
+
+},{"./XMLNode":92,"lodash-node/modern/objects/create":110}],97:[function(require,module,exports){
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var XMLBuilder, assign;
+
+  assign = require('lodash-node/modern/objects/assign');
+
+  XMLBuilder = require('./XMLBuilder');
+
+  module.exports.create = function(name, xmldec, doctype, options) {
+    options = assign({}, xmldec, doctype, options);
+    return new XMLBuilder(name, options).root();
+  };
+
+}).call(this);
+
+},{"./XMLBuilder":82,"lodash-node/modern/objects/assign":109}],98:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var createWrapper = require('../internals/createWrapper'),
+    slice = require('../internals/slice');
+
+/**
+ * Creates a function that, when called, invokes `func` with the `this`
+ * binding of `thisArg` and prepends any additional `bind` arguments to those
+ * provided to the bound function.
+ *
+ * @static
+ * @memberOf _
+ * @category Functions
+ * @param {Function} func The function to bind.
+ * @param {*} [thisArg] The `this` binding of `func`.
+ * @param {...*} [arg] Arguments to be partially applied.
+ * @returns {Function} Returns the new bound function.
+ * @example
+ *
+ * var func = function(greeting) {
+ *   return greeting + ' ' + this.name;
+ * };
+ *
+ * func = _.bind(func, { 'name': 'fred' }, 'hi');
+ * func();
+ * // => 'hi fred'
+ */
+function bind(func, thisArg) {
+  return arguments.length > 2
+    ? createWrapper(func, 17, slice(arguments, 2), null, thisArg)
+    : createWrapper(func, 1, null, null, thisArg);
+}
+
+module.exports = bind;
+
+},{"../internals/createWrapper":103,"../internals/slice":108}],99:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var baseCreate = require('./baseCreate'),
+    isObject = require('../objects/isObject'),
+    setBindData = require('./setBindData'),
+    slice = require('./slice');
+
+/**
+ * Used for `Array` method references.
+ *
+ * Normally `Array.prototype` would suffice, however, using an array literal
+ * avoids issues in Narwhal.
+ */
+var arrayRef = [];
+
+/** Native method shortcuts */
+var push = arrayRef.push;
+
+/**
+ * The base implementation of `_.bind` that creates the bound function and
+ * sets its meta data.
+ *
+ * @private
+ * @param {Array} bindData The bind data array.
+ * @returns {Function} Returns the new bound function.
+ */
+function baseBind(bindData) {
+  var func = bindData[0],
+      partialArgs = bindData[2],
+      thisArg = bindData[4];
+
+  function bound() {
+    // `Function#bind` spec
+    // http://es5.github.io/#x15.3.4.5
+    if (partialArgs) {
+      // avoid `arguments` object deoptimizations by using `slice` instead
+      // of `Array.prototype.slice.call` and not assigning `arguments` to a
+      // variable as a ternary expression
+      var args = slice(partialArgs);
+      push.apply(args, arguments);
+    }
+    // mimic the constructor's `return` behavior
+    // http://es5.github.io/#x13.2.2
+    if (this instanceof bound) {
+      // ensure `new bound` is an instance of `func`
+      var thisBinding = baseCreate(func.prototype),
+          result = func.apply(thisBinding, args || arguments);
+      return isObject(result) ? result : thisBinding;
+    }
+    return func.apply(thisArg, args || arguments);
+  }
+  setBindData(bound, bindData);
+  return bound;
+}
+
+module.exports = baseBind;
+
+},{"../objects/isObject":115,"./baseCreate":100,"./setBindData":106,"./slice":108}],100:[function(require,module,exports){
+(function (global){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var isNative = require('./isNative'),
+    isObject = require('../objects/isObject'),
+    noop = require('../utilities/noop');
+
+/* Native method shortcuts for methods with the same name as other `lodash` methods */
+var nativeCreate = isNative(nativeCreate = Object.create) && nativeCreate;
+
+/**
+ * The base implementation of `_.create` without support for assigning
+ * properties to the created object.
+ *
+ * @private
+ * @param {Object} prototype The object to inherit from.
+ * @returns {Object} Returns the new object.
+ */
+function baseCreate(prototype, properties) {
+  return isObject(prototype) ? nativeCreate(prototype) : {};
+}
+// fallback for browsers without `Object.create`
+if (!nativeCreate) {
+  baseCreate = (function() {
+    function Object() {}
+    return function(prototype) {
+      if (isObject(prototype)) {
+        Object.prototype = prototype;
+        var result = new Object;
+        Object.prototype = null;
+      }
+      return result || global.Object();
+    };
+  }());
+}
+
+module.exports = baseCreate;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../objects/isObject":115,"../utilities/noop":119,"./isNative":104}],101:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var bind = require('../functions/bind'),
+    identity = require('../utilities/identity'),
+    setBindData = require('./setBindData'),
+    support = require('../support');
+
+/** Used to detected named functions */
+var reFuncName = /^\s*function[ \n\r\t]+\w/;
+
+/** Used to detect functions containing a `this` reference */
+var reThis = /\bthis\b/;
+
+/** Native method shortcuts */
+var fnToString = Function.prototype.toString;
+
+/**
+ * The base implementation of `_.createCallback` without support for creating
+ * "_.pluck" or "_.where" style callbacks.
+ *
+ * @private
+ * @param {*} [func=identity] The value to convert to a callback.
+ * @param {*} [thisArg] The `this` binding of the created callback.
+ * @param {number} [argCount] The number of arguments the callback accepts.
+ * @returns {Function} Returns a callback function.
+ */
+function baseCreateCallback(func, thisArg, argCount) {
+  if (typeof func != 'function') {
+    return identity;
+  }
+  // exit early for no `thisArg` or already bound by `Function#bind`
+  if (typeof thisArg == 'undefined' || !('prototype' in func)) {
+    return func;
+  }
+  var bindData = func.__bindData__;
+  if (typeof bindData == 'undefined') {
+    if (support.funcNames) {
+      bindData = !func.name;
+    }
+    bindData = bindData || !support.funcDecomp;
+    if (!bindData) {
+      var source = fnToString.call(func);
+      if (!support.funcNames) {
+        bindData = !reFuncName.test(source);
+      }
+      if (!bindData) {
+        // checks if `func` references the `this` keyword and stores the result
+        bindData = reThis.test(source);
+        setBindData(func, bindData);
+      }
+    }
+  }
+  // exit early if there are no `this` references or `func` is bound
+  if (bindData === false || (bindData !== true && bindData[1] & 1)) {
+    return func;
+  }
+  switch (argCount) {
+    case 1: return function(value) {
+      return func.call(thisArg, value);
+    };
+    case 2: return function(a, b) {
+      return func.call(thisArg, a, b);
+    };
+    case 3: return function(value, index, collection) {
+      return func.call(thisArg, value, index, collection);
+    };
+    case 4: return function(accumulator, value, index, collection) {
+      return func.call(thisArg, accumulator, value, index, collection);
+    };
+  }
+  return bind(func, thisArg);
+}
+
+module.exports = baseCreateCallback;
+
+},{"../functions/bind":98,"../support":117,"../utilities/identity":118,"./setBindData":106}],102:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var baseCreate = require('./baseCreate'),
+    isObject = require('../objects/isObject'),
+    setBindData = require('./setBindData'),
+    slice = require('./slice');
+
+/**
+ * Used for `Array` method references.
+ *
+ * Normally `Array.prototype` would suffice, however, using an array literal
+ * avoids issues in Narwhal.
+ */
+var arrayRef = [];
+
+/** Native method shortcuts */
+var push = arrayRef.push;
+
+/**
+ * The base implementation of `createWrapper` that creates the wrapper and
+ * sets its meta data.
+ *
+ * @private
+ * @param {Array} bindData The bind data array.
+ * @returns {Function} Returns the new function.
+ */
+function baseCreateWrapper(bindData) {
+  var func = bindData[0],
+      bitmask = bindData[1],
+      partialArgs = bindData[2],
+      partialRightArgs = bindData[3],
+      thisArg = bindData[4],
+      arity = bindData[5];
+
+  var isBind = bitmask & 1,
+      isBindKey = bitmask & 2,
+      isCurry = bitmask & 4,
+      isCurryBound = bitmask & 8,
+      key = func;
+
+  function bound() {
+    var thisBinding = isBind ? thisArg : this;
+    if (partialArgs) {
+      var args = slice(partialArgs);
+      push.apply(args, arguments);
+    }
+    if (partialRightArgs || isCurry) {
+      args || (args = slice(arguments));
+      if (partialRightArgs) {
+        push.apply(args, partialRightArgs);
+      }
+      if (isCurry && args.length < arity) {
+        bitmask |= 16 & ~32;
+        return baseCreateWrapper([func, (isCurryBound ? bitmask : bitmask & ~3), args, null, thisArg, arity]);
+      }
+    }
+    args || (args = arguments);
+    if (isBindKey) {
+      func = thisBinding[key];
+    }
+    if (this instanceof bound) {
+      thisBinding = baseCreate(func.prototype);
+      var result = func.apply(thisBinding, args);
+      return isObject(result) ? result : thisBinding;
+    }
+    return func.apply(thisBinding, args);
+  }
+  setBindData(bound, bindData);
+  return bound;
+}
+
+module.exports = baseCreateWrapper;
+
+},{"../objects/isObject":115,"./baseCreate":100,"./setBindData":106,"./slice":108}],103:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var baseBind = require('./baseBind'),
+    baseCreateWrapper = require('./baseCreateWrapper'),
+    isFunction = require('../objects/isFunction'),
+    slice = require('./slice');
+
+/**
+ * Used for `Array` method references.
+ *
+ * Normally `Array.prototype` would suffice, however, using an array literal
+ * avoids issues in Narwhal.
+ */
+var arrayRef = [];
+
+/** Native method shortcuts */
+var push = arrayRef.push,
+    unshift = arrayRef.unshift;
+
+/**
+ * Creates a function that, when called, either curries or invokes `func`
+ * with an optional `this` binding and partially applied arguments.
+ *
+ * @private
+ * @param {Function|string} func The function or method name to reference.
+ * @param {number} bitmask The bitmask of method flags to compose.
+ *  The bitmask may be composed of the following flags:
+ *  1 - `_.bind`
+ *  2 - `_.bindKey`
+ *  4 - `_.curry`
+ *  8 - `_.curry` (bound)
+ *  16 - `_.partial`
+ *  32 - `_.partialRight`
+ * @param {Array} [partialArgs] An array of arguments to prepend to those
+ *  provided to the new function.
+ * @param {Array} [partialRightArgs] An array of arguments to append to those
+ *  provided to the new function.
+ * @param {*} [thisArg] The `this` binding of `func`.
+ * @param {number} [arity] The arity of `func`.
+ * @returns {Function} Returns the new function.
+ */
+function createWrapper(func, bitmask, partialArgs, partialRightArgs, thisArg, arity) {
+  var isBind = bitmask & 1,
+      isBindKey = bitmask & 2,
+      isCurry = bitmask & 4,
+      isCurryBound = bitmask & 8,
+      isPartial = bitmask & 16,
+      isPartialRight = bitmask & 32;
+
+  if (!isBindKey && !isFunction(func)) {
+    throw new TypeError;
+  }
+  if (isPartial && !partialArgs.length) {
+    bitmask &= ~16;
+    isPartial = partialArgs = false;
+  }
+  if (isPartialRight && !partialRightArgs.length) {
+    bitmask &= ~32;
+    isPartialRight = partialRightArgs = false;
+  }
+  var bindData = func && func.__bindData__;
+  if (bindData && bindData !== true) {
+    // clone `bindData`
+    bindData = slice(bindData);
+    if (bindData[2]) {
+      bindData[2] = slice(bindData[2]);
+    }
+    if (bindData[3]) {
+      bindData[3] = slice(bindData[3]);
+    }
+    // set `thisBinding` is not previously bound
+    if (isBind && !(bindData[1] & 1)) {
+      bindData[4] = thisArg;
+    }
+    // set if previously bound but not currently (subsequent curried functions)
+    if (!isBind && bindData[1] & 1) {
+      bitmask |= 8;
+    }
+    // set curried arity if not yet set
+    if (isCurry && !(bindData[1] & 4)) {
+      bindData[5] = arity;
+    }
+    // append partial left arguments
+    if (isPartial) {
+      push.apply(bindData[2] || (bindData[2] = []), partialArgs);
+    }
+    // append partial right arguments
+    if (isPartialRight) {
+      unshift.apply(bindData[3] || (bindData[3] = []), partialRightArgs);
+    }
+    // merge flags
+    bindData[1] |= bitmask;
+    return createWrapper.apply(null, bindData);
+  }
+  // fast path for `_.bind`
+  var creater = (bitmask == 1 || bitmask === 17) ? baseBind : baseCreateWrapper;
+  return creater([func, bitmask, partialArgs, partialRightArgs, thisArg, arity]);
+}
+
+module.exports = createWrapper;
+
+},{"../objects/isFunction":114,"./baseBind":99,"./baseCreateWrapper":102,"./slice":108}],104:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+
+/** Used for native method references */
+var objectProto = Object.prototype;
+
+/** Used to resolve the internal [[Class]] of values */
+var toString = objectProto.toString;
+
+/** Used to detect if a method is native */
+var reNative = RegExp('^' +
+  String(toString)
+    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    .replace(/toString| for [^\]]+/g, '.*?') + '$'
+);
+
+/**
+ * Checks if `value` is a native function.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if the `value` is a native function, else `false`.
+ */
+function isNative(value) {
+  return typeof value == 'function' && reNative.test(value);
+}
+
+module.exports = isNative;
+
+},{}],105:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+
+/** Used to determine if values are of the language type Object */
+var objectTypes = {
+  'boolean': false,
+  'function': true,
+  'object': true,
+  'number': false,
+  'string': false,
+  'undefined': false
+};
+
+module.exports = objectTypes;
+
+},{}],106:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var isNative = require('./isNative'),
+    noop = require('../utilities/noop');
+
+/** Used as the property descriptor for `__bindData__` */
+var descriptor = {
+  'configurable': false,
+  'enumerable': false,
+  'value': null,
+  'writable': false
+};
+
+/** Used to set meta data on functions */
+var defineProperty = (function() {
+  // IE 8 only accepts DOM elements
+  try {
+    var o = {},
+        func = isNative(func = Object.defineProperty) && func,
+        result = func(o, o, o) && func;
+  } catch(e) { }
+  return result;
+}());
+
+/**
+ * Sets `this` binding data on a given function.
+ *
+ * @private
+ * @param {Function} func The function to set data on.
+ * @param {Array} value The data array to set.
+ */
+var setBindData = !defineProperty ? noop : function(func, value) {
+  descriptor.value = value;
+  defineProperty(func, '__bindData__', descriptor);
+};
+
+module.exports = setBindData;
+
+},{"../utilities/noop":119,"./isNative":104}],107:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var objectTypes = require('./objectTypes');
+
+/** Used for native method references */
+var objectProto = Object.prototype;
+
+/** Native method shortcuts */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * A fallback implementation of `Object.keys` which produces an array of the
+ * given object's own enumerable property names.
+ *
+ * @private
+ * @type Function
+ * @param {Object} object The object to inspect.
+ * @returns {Array} Returns an array of property names.
+ */
+var shimKeys = function(object) {
+  var index, iterable = object, result = [];
+  if (!iterable) return result;
+  if (!(objectTypes[typeof object])) return result;
+    for (index in iterable) {
+      if (hasOwnProperty.call(iterable, index)) {
+        result.push(index);
+      }
+    }
+  return result
+};
+
+module.exports = shimKeys;
+
+},{"./objectTypes":105}],108:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+
+/**
+ * Slices the `collection` from the `start` index up to, but not including,
+ * the `end` index.
+ *
+ * Note: This function is used instead of `Array#slice` to support node lists
+ * in IE < 9 and to ensure dense arrays are returned.
+ *
+ * @private
+ * @param {Array|Object|string} collection The collection to slice.
+ * @param {number} start The start index.
+ * @param {number} end The end index.
+ * @returns {Array} Returns the new array.
+ */
+function slice(array, start, end) {
+  start || (start = 0);
+  if (typeof end == 'undefined') {
+    end = array ? array.length : 0;
+  }
+  var index = -1,
+      length = end - start || 0,
+      result = Array(length < 0 ? 0 : length);
+
+  while (++index < length) {
+    result[index] = array[start + index];
+  }
+  return result;
+}
+
+module.exports = slice;
+
+},{}],109:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var baseCreateCallback = require('../internals/baseCreateCallback'),
+    keys = require('./keys'),
+    objectTypes = require('../internals/objectTypes');
+
+/**
+ * Assigns own enumerable properties of source object(s) to the destination
+ * object. Subsequent sources will overwrite property assignments of previous
+ * sources. If a callback is provided it will be executed to produce the
+ * assigned values. The callback is bound to `thisArg` and invoked with two
+ * arguments; (objectValue, sourceValue).
+ *
+ * @static
+ * @memberOf _
+ * @type Function
+ * @alias extend
+ * @category Objects
+ * @param {Object} object The destination object.
+ * @param {...Object} [source] The source objects.
+ * @param {Function} [callback] The function to customize assigning values.
+ * @param {*} [thisArg] The `this` binding of `callback`.
+ * @returns {Object} Returns the destination object.
+ * @example
+ *
+ * _.assign({ 'name': 'fred' }, { 'employer': 'slate' });
+ * // => { 'name': 'fred', 'employer': 'slate' }
+ *
+ * var defaults = _.partialRight(_.assign, function(a, b) {
+ *   return typeof a == 'undefined' ? b : a;
+ * });
+ *
+ * var object = { 'name': 'barney' };
+ * defaults(object, { 'name': 'fred', 'employer': 'slate' });
+ * // => { 'name': 'barney', 'employer': 'slate' }
+ */
+var assign = function(object, source, guard) {
+  var index, iterable = object, result = iterable;
+  if (!iterable) return result;
+  var args = arguments,
+      argsIndex = 0,
+      argsLength = typeof guard == 'number' ? 2 : args.length;
+  if (argsLength > 3 && typeof args[argsLength - 2] == 'function') {
+    var callback = baseCreateCallback(args[--argsLength - 1], args[argsLength--], 2);
+  } else if (argsLength > 2 && typeof args[argsLength - 1] == 'function') {
+    callback = args[--argsLength];
+  }
+  while (++argsIndex < argsLength) {
+    iterable = args[argsIndex];
+    if (iterable && objectTypes[typeof iterable]) {
+    var ownIndex = -1,
+        ownProps = objectTypes[typeof iterable] && keys(iterable),
+        length = ownProps ? ownProps.length : 0;
+
+    while (++ownIndex < length) {
+      index = ownProps[ownIndex];
+      result[index] = callback ? callback(result[index], iterable[index]) : iterable[index];
+    }
+    }
+  }
+  return result
+};
+
+module.exports = assign;
+
+},{"../internals/baseCreateCallback":101,"../internals/objectTypes":105,"./keys":116}],110:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var assign = require('./assign'),
+    baseCreate = require('../internals/baseCreate');
+
+/**
+ * Creates an object that inherits from the given `prototype` object. If a
+ * `properties` object is provided its own enumerable properties are assigned
+ * to the created object.
+ *
+ * @static
+ * @memberOf _
+ * @category Objects
+ * @param {Object} prototype The object to inherit from.
+ * @param {Object} [properties] The properties to assign to the object.
+ * @returns {Object} Returns the new object.
+ * @example
+ *
+ * function Shape() {
+ *   this.x = 0;
+ *   this.y = 0;
+ * }
+ *
+ * function Circle() {
+ *   Shape.call(this);
+ * }
+ *
+ * Circle.prototype = _.create(Shape.prototype, { 'constructor': Circle });
+ *
+ * var circle = new Circle;
+ * circle instanceof Circle;
+ * // => true
+ *
+ * circle instanceof Shape;
+ * // => true
+ */
+function create(prototype, properties) {
+  var result = baseCreate(prototype);
+  return properties ? assign(result, properties) : result;
+}
+
+module.exports = create;
+
+},{"../internals/baseCreate":100,"./assign":109}],111:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var baseCreateCallback = require('../internals/baseCreateCallback'),
+    keys = require('./keys'),
+    objectTypes = require('../internals/objectTypes');
+
+/**
+ * Iterates over own enumerable properties of an object, executing the callback
+ * for each property. The callback is bound to `thisArg` and invoked with three
+ * arguments; (value, key, object). Callbacks may exit iteration early by
+ * explicitly returning `false`.
+ *
+ * @static
+ * @memberOf _
+ * @type Function
+ * @category Objects
+ * @param {Object} object The object to iterate over.
+ * @param {Function} [callback=identity] The function called per iteration.
+ * @param {*} [thisArg] The `this` binding of `callback`.
+ * @returns {Object} Returns `object`.
+ * @example
+ *
+ * _.forOwn({ '0': 'zero', '1': 'one', 'length': 2 }, function(num, key) {
+ *   console.log(key);
+ * });
+ * // => logs '0', '1', and 'length' (property order is not guaranteed across environments)
+ */
+var forOwn = function(collection, callback, thisArg) {
+  var index, iterable = collection, result = iterable;
+  if (!iterable) return result;
+  if (!objectTypes[typeof iterable]) return result;
+  callback = callback && typeof thisArg == 'undefined' ? callback : baseCreateCallback(callback, thisArg, 3);
+    var ownIndex = -1,
+        ownProps = objectTypes[typeof iterable] && keys(iterable),
+        length = ownProps ? ownProps.length : 0;
+
+    while (++ownIndex < length) {
+      index = ownProps[ownIndex];
+      if (callback(iterable[index], index, collection) === false) return result;
+    }
+  return result
+};
+
+module.exports = forOwn;
+
+},{"../internals/baseCreateCallback":101,"../internals/objectTypes":105,"./keys":116}],112:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var isNative = require('../internals/isNative');
+
+/** `Object#toString` result shortcuts */
+var arrayClass = '[object Array]';
+
+/** Used for native method references */
+var objectProto = Object.prototype;
+
+/** Used to resolve the internal [[Class]] of values */
+var toString = objectProto.toString;
+
+/* Native method shortcuts for methods with the same name as other `lodash` methods */
+var nativeIsArray = isNative(nativeIsArray = Array.isArray) && nativeIsArray;
+
+/**
+ * Checks if `value` is an array.
+ *
+ * @static
+ * @memberOf _
+ * @type Function
+ * @category Objects
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if the `value` is an array, else `false`.
+ * @example
+ *
+ * (function() { return _.isArray(arguments); })();
+ * // => false
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ */
+var isArray = nativeIsArray || function(value) {
+  return value && typeof value == 'object' && typeof value.length == 'number' &&
+    toString.call(value) == arrayClass || false;
+};
+
+module.exports = isArray;
+
+},{"../internals/isNative":104}],113:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var forOwn = require('./forOwn'),
+    isFunction = require('./isFunction');
+
+/** `Object#toString` result shortcuts */
+var argsClass = '[object Arguments]',
+    arrayClass = '[object Array]',
+    objectClass = '[object Object]',
+    stringClass = '[object String]';
+
+/** Used for native method references */
+var objectProto = Object.prototype;
+
+/** Used to resolve the internal [[Class]] of values */
+var toString = objectProto.toString;
+
+/**
+ * Checks if `value` is empty. Arrays, strings, or `arguments` objects with a
+ * length of `0` and objects with no own enumerable properties are considered
+ * "empty".
+ *
+ * @static
+ * @memberOf _
+ * @category Objects
+ * @param {Array|Object|string} value The value to inspect.
+ * @returns {boolean} Returns `true` if the `value` is empty, else `false`.
+ * @example
+ *
+ * _.isEmpty([1, 2, 3]);
+ * // => false
+ *
+ * _.isEmpty({});
+ * // => true
+ *
+ * _.isEmpty('');
+ * // => true
+ */
+function isEmpty(value) {
+  var result = true;
+  if (!value) {
+    return result;
+  }
+  var className = toString.call(value),
+      length = value.length;
+
+  if ((className == arrayClass || className == stringClass || className == argsClass ) ||
+      (className == objectClass && typeof length == 'number' && isFunction(value.splice))) {
+    return !length;
+  }
+  forOwn(value, function() {
+    return (result = false);
+  });
+  return result;
+}
+
+module.exports = isEmpty;
+
+},{"./forOwn":111,"./isFunction":114}],114:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+
+/**
+ * Checks if `value` is a function.
+ *
+ * @static
+ * @memberOf _
+ * @category Objects
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if the `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ */
+function isFunction(value) {
+  return typeof value == 'function';
+}
+
+module.exports = isFunction;
+
+},{}],115:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var objectTypes = require('../internals/objectTypes');
+
+/**
+ * Checks if `value` is the language type of Object.
+ * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @category Objects
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if the `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(1);
+ * // => false
+ */
+function isObject(value) {
+  // check if the value is the ECMAScript language type of Object
+  // http://es5.github.io/#x8
+  // and avoid a V8 bug
+  // http://code.google.com/p/v8/issues/detail?id=2291
+  return !!(value && objectTypes[typeof value]);
+}
+
+module.exports = isObject;
+
+},{"../internals/objectTypes":105}],116:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var isNative = require('../internals/isNative'),
+    isObject = require('./isObject'),
+    shimKeys = require('../internals/shimKeys');
+
+/* Native method shortcuts for methods with the same name as other `lodash` methods */
+var nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys;
+
+/**
+ * Creates an array composed of the own enumerable property names of an object.
+ *
+ * @static
+ * @memberOf _
+ * @category Objects
+ * @param {Object} object The object to inspect.
+ * @returns {Array} Returns an array of property names.
+ * @example
+ *
+ * _.keys({ 'one': 1, 'two': 2, 'three': 3 });
+ * // => ['one', 'two', 'three'] (property order is not guaranteed across environments)
+ */
+var keys = !nativeKeys ? shimKeys : function(object) {
+  if (!isObject(object)) {
+    return [];
+  }
+  return nativeKeys(object);
+};
+
+module.exports = keys;
+
+},{"../internals/isNative":104,"../internals/shimKeys":107,"./isObject":115}],117:[function(require,module,exports){
+(function (global){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var isNative = require('./internals/isNative');
+
+/** Used to detect functions containing a `this` reference */
+var reThis = /\bthis\b/;
+
+/**
+ * An object used to flag environments features.
+ *
+ * @static
+ * @memberOf _
+ * @type Object
+ */
+var support = {};
+
+/**
+ * Detect if functions can be decompiled by `Function#toString`
+ * (all but PS3 and older Opera mobile browsers & avoided in Windows 8 apps).
+ *
+ * @memberOf _.support
+ * @type boolean
+ */
+support.funcDecomp = !isNative(global.WinRTError) && reThis.test(function() { return this; });
+
+/**
+ * Detect if `Function#name` is supported (all but IE).
+ *
+ * @memberOf _.support
+ * @type boolean
+ */
+support.funcNames = typeof Function.name == 'string';
+
+module.exports = support;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./internals/isNative":104}],118:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+
+/**
+ * This method returns the first argument provided to it.
+ *
+ * @static
+ * @memberOf _
+ * @category Utilities
+ * @param {*} value Any value.
+ * @returns {*} Returns `value`.
+ * @example
+ *
+ * var object = { 'name': 'fred' };
+ * _.identity(object) === object;
+ * // => true
+ */
+function identity(value) {
+  return value;
+}
+
+module.exports = identity;
+
+},{}],119:[function(require,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="node" -o ./modern/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+
+/**
+ * A no-operation function.
+ *
+ * @static
+ * @memberOf _
+ * @category Utilities
+ * @example
+ *
+ * var object = { 'name': 'fred' };
+ * _.noop(object) === undefined;
+ * // => true
+ */
+function noop() {
+  // no operation performed
+}
+
+module.exports = noop;
+
+},{}],120:[function(require,module,exports){
+var querystring = require('querystring');
+var cheerio = require('cheerio');
+var http = require('http');
+var extend = require('util-extend');
+var url = require('url');
+
+var options = {
+    url: 'http://ucelinks.cdlib.org:8888/sfx_ucsf/az'
+};
+
+exports.setOptions = function (newOptions) {
+    options = extend(options, newOptions);
+};
+
+exports.search = function (query, callback) {
+    'use strict';
+
+    if (! query || ! query.searchTerm) {
+        callback(null, {data: []});
+        return;
+    }
+
+    var myUrl = options.url + '?param_textSearchType_value=startsWith&' +
+            querystring.stringify({param_pattern_value: query.searchTerm});
+
+    var myOptions = url.parse(myUrl);
+    myOptions.withCredentials = false;
+
+    http.get(myOptions, function (resp) {
+        var rawData = '';
+
+        resp.on('data', function (chunk) {
+            rawData += chunk;
+        });
+
+        resp.on('end', function () {
+            var $ = cheerio.load(rawData);
+            var result = [];
+            $('a.Results').each(function () {
+                var href = $(this).attr('href');
+                if (typeof href === 'string') {
+                    href = href.trim();
+                    
+                    href = url.resolve(myUrl, href);
+
+                    result.push({
+                        name: $(this).text(),
+                        url: href
+                    });
+                }
+            });
+
+            callback(null, {data: result, url: myUrl});
+        });
+    }).on('error', function (e) {
+        callback(e);
+    });
+};
+},{"cheerio":121,"http":200,"querystring":211,"url":225,"util-extend":191}],121:[function(require,module,exports){
+module.exports=require(3)
+},{"./lib/cheerio":126,"./package":190,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/index.js":3}],122:[function(require,module,exports){
+module.exports=require(4)
+},{"../utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/attributes.js":4,"lodash":189}],123:[function(require,module,exports){
+module.exports=require(5)
+},{"../utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/css.js":5,"lodash":189}],124:[function(require,module,exports){
+module.exports=require(6)
+},{"../parse":127,"../static":128,"../utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/manipulation.js":6,"lodash":189}],125:[function(require,module,exports){
+module.exports=require(7)
+},{"../utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/traversing.js":7,"CSSselect":130,"htmlparser2":164,"lodash":189}],126:[function(require,module,exports){
+module.exports=require(8)
+},{"./api/attributes":122,"./api/css":123,"./api/manipulation":124,"./api/traversing":125,"./parse":127,"./static":128,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/cheerio.js":8,"lodash":189,"path":206}],127:[function(require,module,exports){
+module.exports=require(9)
+},{"./utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/parse.js":9,"buffer":195,"htmlparser2":164}],128:[function(require,module,exports){
+module.exports=require(10)
+},{"./cheerio":126,"./parse":127,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/static.js":10,"CSSselect":130,"dom-serializer":147,"lodash":189}],129:[function(require,module,exports){
+module.exports=require(11)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/utils.js":11}],130:[function(require,module,exports){
+module.exports=require(12)
+},{"./lib/basefunctions.js":132,"./lib/compile.js":133,"./lib/pseudos.js":136,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/index.js":12,"domutils":139}],131:[function(require,module,exports){
+module.exports=require(13)
+},{"./basefunctions.js":132,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/attributes.js":13,"domutils":139}],132:[function(require,module,exports){
+module.exports=require(14)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/basefunctions.js":14}],133:[function(require,module,exports){
+module.exports=require(15)
+},{"./basefunctions.js":132,"./general.js":134,"./pseudos.js":136,"./sort.js":137,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/compile.js":15,"CSSwhat":138,"domutils":139}],134:[function(require,module,exports){
+module.exports=require(16)
+},{"./attributes.js":131,"./pseudos.js":136,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/general.js":16,"domutils":139}],135:[function(require,module,exports){
+module.exports=require(17)
+},{"./basefunctions.js":132,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/nth-check.js":17}],136:[function(require,module,exports){
+module.exports=require(18)
+},{"./attributes.js":131,"./basefunctions.js":132,"./nth-check.js":135,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/pseudos.js":18,"domutils":139}],137:[function(require,module,exports){
+module.exports=require(19)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/sort.js":19}],138:[function(require,module,exports){
+module.exports=require(20)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/CSSwhat/index.js":20}],139:[function(require,module,exports){
+module.exports=require(21)
+},{"./lib/helpers":140,"./lib/legacy":141,"./lib/manipulation":142,"./lib/querying":143,"./lib/stringify":144,"./lib/traversal":145,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],140:[function(require,module,exports){
+module.exports=require(22)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/helpers.js":22}],141:[function(require,module,exports){
+module.exports=require(23)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":146}],142:[function(require,module,exports){
+module.exports=require(24)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],143:[function(require,module,exports){
+module.exports=require(25)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":146}],144:[function(require,module,exports){
+module.exports=require(26)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":146}],145:[function(require,module,exports){
+module.exports=require(27)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],146:[function(require,module,exports){
+module.exports=require(28)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],147:[function(require,module,exports){
+module.exports=require(29)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/dom-serializer/index.js":29,"domelementtype":148,"entities":149}],148:[function(require,module,exports){
+module.exports=require(28)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],149:[function(require,module,exports){
+module.exports=require(31)
+},{"./lib/decode.js":150,"./lib/encode.js":152,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/index.js":31}],150:[function(require,module,exports){
+module.exports=require(32)
+},{"../maps/entities.json":154,"../maps/legacy.json":155,"../maps/xml.json":156,"./decode_codepoint.js":151,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode.js":32}],151:[function(require,module,exports){
+module.exports=require(33)
+},{"../maps/decode.json":153,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],152:[function(require,module,exports){
+module.exports=require(34)
+},{"../maps/entities.json":154,"../maps/xml.json":156,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/encode.js":34}],153:[function(require,module,exports){
+module.exports=require(35)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],154:[function(require,module,exports){
+module.exports=require(36)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],155:[function(require,module,exports){
+module.exports=require(37)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],156:[function(require,module,exports){
+module.exports=require(38)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],157:[function(require,module,exports){
+module.exports=require(39)
+},{"./":164,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/CollectingHandler.js":39}],158:[function(require,module,exports){
+module.exports=require(40)
+},{"./index.js":164,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/FeedHandler.js":40,"util":227}],159:[function(require,module,exports){
+module.exports=require(41)
+},{"./Tokenizer.js":162,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Parser.js":41,"events":199,"util":227}],160:[function(require,module,exports){
+module.exports=require(42)
+},{"./":164,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/ProxyHandler.js":42}],161:[function(require,module,exports){
+module.exports=require(43)
+},{"../":164,"./WritableStream.js":163,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Stream.js":43,"util":227}],162:[function(require,module,exports){
+module.exports=require(44)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Tokenizer.js":44,"entities/lib/decode_codepoint.js":174,"entities/maps/entities.json":176,"entities/maps/legacy.json":177,"entities/maps/xml.json":178}],163:[function(require,module,exports){
+module.exports=require(45)
+},{"./Parser.js":159,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/WritableStream.js":45,"readable-stream":188,"stream":223,"util":227}],164:[function(require,module,exports){
+module.exports=require(46)
+},{"./CollectingHandler.js":157,"./FeedHandler.js":158,"./Parser.js":159,"./ProxyHandler.js":160,"./Stream.js":161,"./Tokenizer.js":162,"./WritableStream.js":163,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/index.js":46,"domelementtype":165,"domhandler":166,"domutils":167}],165:[function(require,module,exports){
+module.exports=require(28)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],166:[function(require,module,exports){
+module.exports=require(48)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domhandler/index.js":48,"domelementtype":165}],167:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"./lib/helpers":168,"./lib/legacy":169,"./lib/manipulation":170,"./lib/querying":171,"./lib/stringify":172,"./lib/traversal":173,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],168:[function(require,module,exports){
+module.exports=require(50)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domutils/lib/helpers.js":50}],169:[function(require,module,exports){
+module.exports=require(23)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":165}],170:[function(require,module,exports){
+module.exports=require(24)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],171:[function(require,module,exports){
+module.exports=require(25)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":165}],172:[function(require,module,exports){
+module.exports=require(26)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":165}],173:[function(require,module,exports){
+module.exports=require(27)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],174:[function(require,module,exports){
+module.exports=require(33)
+},{"../maps/decode.json":175,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],175:[function(require,module,exports){
+module.exports=require(35)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],176:[function(require,module,exports){
+module.exports=require(36)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],177:[function(require,module,exports){
+module.exports=require(37)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],178:[function(require,module,exports){
+module.exports=require(38)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],179:[function(require,module,exports){
+module.exports=require(61)
+},{"./_stream_readable":181,"./_stream_writable":183,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":207,"core-util-is":184,"inherits":185}],180:[function(require,module,exports){
+module.exports=require(62)
+},{"./_stream_transform":182,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":184,"inherits":185}],181:[function(require,module,exports){
+module.exports=require(63)
+},{"./_stream_duplex":179,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_readable.js":63,"_process":207,"buffer":195,"core-util-is":184,"events":199,"inherits":185,"isarray":186,"stream":223,"string_decoder/":187,"util":194}],182:[function(require,module,exports){
+module.exports=require(64)
+},{"./_stream_duplex":179,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_transform.js":64,"core-util-is":184,"inherits":185}],183:[function(require,module,exports){
+module.exports=require(65)
+},{"./_stream_duplex":179,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_writable.js":65,"_process":207,"buffer":195,"core-util-is":184,"inherits":185,"stream":223}],184:[function(require,module,exports){
+module.exports=require(66)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":195}],185:[function(require,module,exports){
+module.exports=require(67)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],186:[function(require,module,exports){
+module.exports=require(68)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],187:[function(require,module,exports){
+module.exports=require(69)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":195}],188:[function(require,module,exports){
+module.exports=require(70)
+},{"./lib/_stream_duplex.js":179,"./lib/_stream_passthrough.js":180,"./lib/_stream_readable.js":181,"./lib/_stream_transform.js":182,"./lib/_stream_writable.js":183,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/readable.js":70,"stream":223}],189:[function(require,module,exports){
+module.exports=require(71)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/lodash/dist/lodash.js":71}],190:[function(require,module,exports){
+module.exports=require(72)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/package.json":72}],191:[function(require,module,exports){
+module.exports=require(73)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/util-extend/extend.js":73}],192:[function(require,module,exports){
+var async = require('async');
+
+var collections = {};
+
+exports.search = function (query, callback) {
+  'use strict';
+
+  var requestedCollections;
+  if (! query.collections || ! query.collections instanceof Array) {
+    requestedCollections = Object.keys(collections);
+  } else {
+    requestedCollections = query.collections;
+  }
+
+  var maxResults = query.maxResults;
+
+  var pluginCallback = query.pluginCallback;
+
+  var results = [];
+
+  var iterator = function (collection, done) {
+    if (collection in collections) {
+      collections[collection].search(query, function (err, value) {
+        if (maxResults && value && value.data instanceof Array) {
+          value.data = value.data.slice(0, maxResults);
+        }
+
+        if (value) {
+          value.name = collection;
+          results.push(value);
+        }
+
+        if (pluginCallback) {
+          if (err) {
+            pluginCallback(err);
+          } else {
+            pluginCallback(null, value);
+          }
+        }
+
+        done(err);
+      });
+    } else {
+      done(new Error('Collection "' + collection + '" does not exist'));
+    }
+  };
+
+  if (typeof callback !== 'function') {
+    callback = function () {};
+  }
+  
+  var wrappedCallback = function (err) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  };
+
+  async.each(requestedCollections, iterator, wrappedCallback);
+};
+
+exports.add = function (name, plugin) {
+  'use strict';
+  
+  collections[name] = plugin;
+};
+},{"async":193}],193:[function(require,module,exports){
+module.exports=require(75)
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-pubmed/node_modules/async/lib/async.js":75,"_process":207}],194:[function(require,module,exports){
+
+},{}],195:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -17219,7 +21991,7 @@ function decodeUtf8Char (str) {
   }
 }
 
-},{"base64-js":150,"ieee754":151,"is-array":152}],150:[function(require,module,exports){
+},{"base64-js":196,"ieee754":197,"is-array":198}],196:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -17341,7 +22113,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],151:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 exports.read = function(buffer, offset, isLE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -17427,7 +22199,7 @@ exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],152:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 
 /**
  * isArray
@@ -17462,7 +22234,7 @@ module.exports = isArray || function (val) {
   return !! val && '[object Array]' == str.call(val);
 };
 
-},{}],153:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -17765,7 +22537,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],154:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 var http = module.exports;
 var EventEmitter = require('events').EventEmitter;
 var Request = require('./lib/request');
@@ -17911,7 +22683,7 @@ http.STATUS_CODES = {
     510 : 'Not Extended',               // RFC 2774
     511 : 'Network Authentication Required' // RFC 6585
 };
-},{"./lib/request":155,"events":153,"url":179}],155:[function(require,module,exports){
+},{"./lib/request":201,"events":199,"url":225}],201:[function(require,module,exports){
 var Stream = require('stream');
 var Response = require('./response');
 var Base64 = require('Base64');
@@ -18122,7 +22894,7 @@ var isXHR2Compatible = function (obj) {
     if (typeof FormData !== 'undefined' && obj instanceof FormData) return true;
 };
 
-},{"./response":156,"Base64":157,"inherits":158,"stream":177}],156:[function(require,module,exports){
+},{"./response":202,"Base64":203,"inherits":204,"stream":223}],202:[function(require,module,exports){
 var Stream = require('stream');
 var util = require('util');
 
@@ -18244,7 +23016,7 @@ var isArray = Array.isArray || function (xs) {
     return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{"stream":177,"util":181}],157:[function(require,module,exports){
+},{"stream":223,"util":227}],203:[function(require,module,exports){
 ;(function () {
 
   var object = typeof exports != 'undefined' ? exports : this; // #8: web workers
@@ -18306,11 +23078,11 @@ var isArray = Array.isArray || function (xs) {
 
 }());
 
-},{}],158:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 module.exports=require(67)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],159:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],205:[function(require,module,exports){
 module.exports=require(68)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],160:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],206:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -18538,7 +23310,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":161}],161:[function(require,module,exports){
+},{"_process":207}],207:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -18626,7 +23398,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],162:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 (function (global){
 /*! http://mths.be/punycode v1.2.4 by @mathias */
 ;(function(root) {
@@ -19137,7 +23909,7 @@ process.chdir = function (dir) {
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],163:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -19223,7 +23995,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],164:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -19310,20 +24082,20 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],165:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":163,"./encode":164}],166:[function(require,module,exports){
+},{"./decode":209,"./encode":210}],212:[function(require,module,exports){
 module.exports = require("./lib/_stream_duplex.js")
 
-},{"./lib/_stream_duplex.js":167}],167:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":213}],213:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
-},{"./_stream_readable":169,"./_stream_writable":171,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":161,"core-util-is":172,"inherits":158}],168:[function(require,module,exports){
+},{"./_stream_readable":215,"./_stream_writable":217,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":207,"core-util-is":218,"inherits":204}],214:[function(require,module,exports){
 arguments[4][62][0].apply(exports,arguments)
-},{"./_stream_transform":170,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":172,"inherits":158}],169:[function(require,module,exports){
+},{"./_stream_transform":216,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":218,"inherits":204}],215:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -20309,7 +25081,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"_process":161,"buffer":149,"core-util-is":172,"events":153,"inherits":158,"isarray":159,"stream":177,"string_decoder/":178}],170:[function(require,module,exports){
+},{"_process":207,"buffer":195,"core-util-is":218,"events":199,"inherits":204,"isarray":205,"stream":223,"string_decoder/":224}],216:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -20521,7 +25293,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"./_stream_duplex":167,"core-util-is":172,"inherits":158}],171:[function(require,module,exports){
+},{"./_stream_duplex":213,"core-util-is":218,"inherits":204}],217:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -20911,12 +25683,12 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":167,"_process":161,"buffer":149,"core-util-is":172,"inherits":158,"stream":177}],172:[function(require,module,exports){
+},{"./_stream_duplex":213,"_process":207,"buffer":195,"core-util-is":218,"inherits":204,"stream":223}],218:[function(require,module,exports){
 module.exports=require(66)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":149}],173:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":195}],219:[function(require,module,exports){
 module.exports = require("./lib/_stream_passthrough.js")
 
-},{"./lib/_stream_passthrough.js":168}],174:[function(require,module,exports){
+},{"./lib/_stream_passthrough.js":214}],220:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Readable = exports;
 exports.Writable = require('./lib/_stream_writable.js');
@@ -20924,13 +25696,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":167,"./lib/_stream_passthrough.js":168,"./lib/_stream_readable.js":169,"./lib/_stream_transform.js":170,"./lib/_stream_writable.js":171}],175:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":213,"./lib/_stream_passthrough.js":214,"./lib/_stream_readable.js":215,"./lib/_stream_transform.js":216,"./lib/_stream_writable.js":217}],221:[function(require,module,exports){
 module.exports = require("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":170}],176:[function(require,module,exports){
+},{"./lib/_stream_transform.js":216}],222:[function(require,module,exports){
 module.exports = require("./lib/_stream_writable.js")
 
-},{"./lib/_stream_writable.js":171}],177:[function(require,module,exports){
+},{"./lib/_stream_writable.js":217}],223:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -21059,9 +25831,9 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":153,"inherits":158,"readable-stream/duplex.js":166,"readable-stream/passthrough.js":173,"readable-stream/readable.js":174,"readable-stream/transform.js":175,"readable-stream/writable.js":176}],178:[function(require,module,exports){
+},{"events":199,"inherits":204,"readable-stream/duplex.js":212,"readable-stream/passthrough.js":219,"readable-stream/readable.js":220,"readable-stream/transform.js":221,"readable-stream/writable.js":222}],224:[function(require,module,exports){
 module.exports=require(69)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":149}],179:[function(require,module,exports){
+},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":195}],225:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -21770,14 +26542,14 @@ function isNullOrUndefined(arg) {
   return  arg == null;
 }
 
-},{"punycode":162,"querystring":165}],180:[function(require,module,exports){
+},{"punycode":208,"querystring":211}],226:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],181:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -22367,4 +27139,4 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":180,"_process":161,"inherits":158}]},{},[1]);
+},{"./support/isBuffer":226,"_process":207,"inherits":204}]},{},[1]);

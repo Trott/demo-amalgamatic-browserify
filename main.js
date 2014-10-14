@@ -14,16 +14,17 @@ drupal6.setOptions({
 
 amalgamatic.add('drupal6', drupal6);
 
+var pubmed = require('amalgamatic-pubmed');
+amalgamatic.add('pubmed', pubmed);
+
 
 
     // var millennium = require('amalgamatic-millennium');
     // var libguides = require('amalgamatic-libguides');
-    // var pubmed = require('amalgamatic-pubmed');
     // var dbs = require('amalgamatic-ucsflibdbs');
 
 // amalgamatic.add('millennium', millennium);
 // amalgamatic.add('libguides', libguides);
-// amalgamatic.add('pubmed', pubmed);
 // amalgamatic.add('dbs', dbs);
 
 
