@@ -2,19 +2,16 @@ var amalgamatic = require('amalgamatic');
 
 var sfx = require('amalgamatic-sfx');
 sfx.setOptions({
-    host: 'cors-anywhere.herokuapp.com',
-    port: 80,
-    path: '/ucelinks.cdlib.org:8888/sfx_ucsf/az',
-    withCredentials: false
+    url: 'http://cors-anywhere.herokuapp.com/ucelinks.cdlib.org:8888/sfx_ucsf/az'
 });
+
 amalgamatic.add('sfx', sfx);
 
 var drupal6 = require('amalgamatic-drupal6');
 drupal6.setOptions({
-    host: 'cors-anywhere.herokuapp.com',
-    path: '/www.library.ucsf.edu/search/node',
-    withCredentials: false
-})
+    url: 'http://cors-anywhere.herokuapp.com/www.library.ucsf.edu/search/node'
+});
+
 amalgamatic.add('drupal6', drupal6);
 
 
