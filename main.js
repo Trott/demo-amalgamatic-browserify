@@ -17,17 +17,8 @@ amalgamatic.add('drupal6', drupal6);
 var pubmed = require('amalgamatic-pubmed');
 amalgamatic.add('pubmed', pubmed);
 
-
-
-    // var millennium = require('amalgamatic-millennium');
-    // var libguides = require('amalgamatic-libguides');
-    // var dbs = require('amalgamatic-ucsflibdbs');
-
-// amalgamatic.add('millennium', millennium);
-// amalgamatic.add('libguides', libguides);
+// var dbs = require('amalgamatic-ucsflibdbs');
 // amalgamatic.add('dbs', dbs);
-
-
 
 var realDomain = {
     sfx: 'http://ucelinks.cdlib.org:8888'
@@ -86,7 +77,7 @@ if (searchTerms) {
 
         search(searchTerms);
 
-        var resultIds = Object.keys(realDomain);
+        var resultIds = ['pubmed', 'sfx', 'drupal6'];
         var progress = document.createElement('progress');
         var resultElem;
         for (i=0, l=resultIds.length; i<l; i++) {
