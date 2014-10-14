@@ -11,14 +11,13 @@ var drupal6 = require('amalgamatic-drupal6');
 drupal6.setOptions({
     url: 'http://cors-anywhere.herokuapp.com/www.library.ucsf.edu/search/node'
 });
-
 amalgamatic.add('drupal6', drupal6);
 
 var pubmed = require('amalgamatic-pubmed');
 amalgamatic.add('pubmed', pubmed);
 
-// var dbs = require('amalgamatic-ucsflibdbs');
-// amalgamatic.add('dbs', dbs);
+var dbs = require('amalgamatic-ucsflibdbs');
+amalgamatic.add('dbs', dbs);
 
 var realDomain = {
     sfx: 'http://ucelinks.cdlib.org:8888'
