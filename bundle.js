@@ -40,20 +40,24 @@ var search = function (searchTerm, res) {
                 if (err) {
                     elem.textContent = err.message;
                 } else {
-                    var ol = document.createElement('ol');
-                    var li, a;
-                    var href, name;
-                    for (var i = 0, l = result.data.length; i < l; i++) {
-                        li = document.createElement('li');
-                        a = document.createElement('a');
-                        href = result.data[i].url.match(/^(https?:)?\/\/[\w:\/\?&%=\.\-~\+]+$/)[0];
-                        href = href.replace(/^http:\/\/cors-anywhere.herokuapp.com(:80)?/, realDomain[result.name]);
-                        a.setAttribute('href', href);
-                        a.textContent = result.data[i].name;
-                        li.appendChild(a);
-                        ol.appendChild(li);
+                    if (result.data.length) {
+                        var ol = document.createElement('ol');
+                        var li, a;
+                        var href, name;
+                        for (var i = 0, l = result.data.length; i < l; i++) {
+                            li = document.createElement('li');
+                            a = document.createElement('a');
+                            href = result.data[i].url.match(/^(https?:)?\/\/[\w:\/\?&%=\.\-~\+]+$/)[0];
+                            href = href.replace(/^http:\/\/cors-anywhere.herokuapp.com(:80)?/, realDomain[result.name]);
+                            a.setAttribute('href', href);
+                            a.textContent = result.data[i].name;
+                            li.appendChild(a);
+                            ol.appendChild(li);
+                        }
+                        elem.appendChild(ol);
+                    } else {
+                        elem.innerHTML = '<i>No results. :-(</i>';
                     }
-                    elem.appendChild(ol);
                 }
 
             } else {
