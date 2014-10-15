@@ -30,7 +30,7 @@ var search = function (searchTerm, res) {
     var callback = null;
 
     var options = {
-        searchTerm: searchTerm,
+        searchTerm: searchTerm.toLowerCase(),
         pluginCallback: function (err, result) {
             var elem = document.getElementById(result.name);
             if (elem) {
