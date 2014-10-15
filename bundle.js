@@ -81,12 +81,11 @@ if (searchTerms) {
         search(searchTerms);
 
         var resultIds = ['pubmed', 'sfx', 'drupal6', 'dbs'];
-        var progress = document.createElement('progress');
         var resultElem;
         for (i=0, l=resultIds.length; i<l; i++) {
             resultElem = document.getElementById(resultIds[i]);
             if (resultElem) {
-                resultElem.appendChild(progress);
+                resultElem.appendChild(document.createElement('progress'));
             }
         }
 

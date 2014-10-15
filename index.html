@@ -1,15 +1,65 @@
 <!doctype html>
 <html>
-	<head>
-		<title>Amalgamatic Browserify Demo</title>
-		<meta charset="utf-8">
-		<script src="bundle.js"></script>
-	</head>
-	<body>
-		<form action="index.html"><input class="amalgamatic-search" type="search" name="q"><input type="submit"></form>
-		<div id="pubmed"></div>
-		<div id="sfx"></div>
-		<div id="drupal6"></div>
-		<div id="dbs"></div>
-	</body>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Amalgamatic Browserify Demo</title>
+	<link rel="stylesheet" href="css/foundation.min.css" />
+	<script src="bundle.js"></script>
+</head>
+
+<body>
+	<h1>Demo: Amalgamatic + Browserify</h1>
+	<form action="index.html">
+		<div class="row">
+			<div class="large-12 columns">
+				<div class="row collapse">
+	        <div class="small-10 columns">
+						<input name="q" class="amalgamatic-search" type="search" title="Search terms" placeholder="Find Stuff" />
+					</div>
+					<div class="small-2 columns">
+						<input class="button postfix" type="submit" value="Search" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div data-alert id="didyoumean" class="row hide"></div>
+
+	<div class="row results-row">
+    <div class="large-3 columns">
+      <div class="panel radius">
+        <h2>PubMed</h2>
+        <div class="results-list" id="pubmed">
+        </div>        			
+      </div>
+    </div>
+    
+    <div class="large-3 columns">
+      <div class="panel radius">
+      	<h2>SFX</h2>
+        <div class="results-list" id="sfx">
+        </div>
+      </div>
+    </div>
+
+    <div class="large-3 columns">
+      <div class="panel radius">
+        <h2>Databases</h2>
+        <div class="results-list" id="dbs">
+        </div>        			
+      </div>
+    </div>
+    
+    <div class="large-3 columns">
+      <div class="panel radius">
+      	<h2>Website</h2>
+        <div class="results-list" id="drupal6">
+        </div>
+      </div>
+    </div>
+ 	</div>
+
+</body>
 </html>
