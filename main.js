@@ -17,6 +17,9 @@ var pubmed = require('amalgamatic-pubmed');
 amalgamatic.add('pubmed', pubmed);
 
 var dbs = require('amalgamatic-ucsflibdbs');
+dbs.setOptions({
+    url: 'http://cors-anywhere.herokuapp.com/www.library.ucsf.edu/db'
+});
 amalgamatic.add('dbs', dbs);
 
 var realDomain = {
@@ -76,7 +79,7 @@ if (searchTerms) {
 
         search(searchTerms);
 
-        var resultIds = ['pubmed', 'sfx', 'drupal6'];
+        var resultIds = ['pubmed', 'sfx', 'drupal6', 'dbs'];
         var progress = document.createElement('progress');
         var resultElem;
         for (i=0, l=resultIds.length; i<l; i++) {

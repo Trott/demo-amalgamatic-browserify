@@ -18,6 +18,9 @@ var pubmed = require('amalgamatic-pubmed');
 amalgamatic.add('pubmed', pubmed);
 
 var dbs = require('amalgamatic-ucsflibdbs');
+dbs.setOptions({
+    url: 'http://cors-anywhere.herokuapp.com/www.library.ucsf.edu/db'
+});
 amalgamatic.add('dbs', dbs);
 
 var realDomain = {
@@ -77,7 +80,7 @@ if (searchTerms) {
 
         search(searchTerms);
 
-        var resultIds = ['pubmed', 'sfx', 'drupal6'];
+        var resultIds = ['pubmed', 'sfx', 'drupal6', 'dbs'];
         var progress = document.createElement('progress');
         var resultElem;
         for (i=0, l=resultIds.length; i<l; i++) {
@@ -94,7 +97,7 @@ if (searchTerms) {
     });
 }
 
-},{"amalgamatic":263,"amalgamatic-drupal6":2,"amalgamatic-pubmed":74,"amalgamatic-sfx":120,"amalgamatic-ucsflibdbs":192}],2:[function(require,module,exports){
+},{"amalgamatic":264,"amalgamatic-drupal6":2,"amalgamatic-pubmed":74,"amalgamatic-sfx":120,"amalgamatic-ucsflibdbs":192}],2:[function(require,module,exports){
 var cheerio = require('cheerio');
 var http = require('http');
 var extend = require('util-extend');
@@ -150,7 +153,7 @@ exports.search = function (query, callback) {
         callback(e);
     });
 };
-},{"cheerio":3,"http":271,"url":297,"util-extend":73}],3:[function(require,module,exports){
+},{"cheerio":3,"http":272,"url":298,"util-extend":73}],3:[function(require,module,exports){
 /**
  * Export cheerio (with )
  */
@@ -1530,7 +1533,7 @@ var isNode = function(obj) {
   return obj.name || obj.type === 'text' || obj.type === 'comment';
 };
 
-},{"./api/attributes":4,"./api/css":5,"./api/manipulation":6,"./api/traversing":7,"./parse":9,"./static":10,"lodash":71,"path":278}],9:[function(require,module,exports){
+},{"./api/attributes":4,"./api/css":5,"./api/manipulation":6,"./api/traversing":7,"./parse":9,"./static":10,"lodash":71,"path":279}],9:[function(require,module,exports){
 (function (Buffer){
 /*
   Module Dependencies
@@ -1627,7 +1630,7 @@ var update = exports.update = function(arr, parent) {
 // module.exports = $.extend(exports);
 
 }).call(this,require("buffer").Buffer)
-},{"./utils":11,"buffer":266,"htmlparser2":46}],10:[function(require,module,exports){
+},{"./utils":11,"buffer":267,"htmlparser2":46}],10:[function(require,module,exports){
 /**
  * Module dependencies
  */
@@ -3552,7 +3555,7 @@ function renderComment(elem) {
 
 },{"domelementtype":30,"entities":31}],30:[function(require,module,exports){
 module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],31:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],31:[function(require,module,exports){
 var encode = require("./lib/encode.js"),
     decode = require("./lib/decode.js");
 
@@ -3926,7 +3929,7 @@ FeedHandler.prototype.onend = function() {
 
 module.exports = FeedHandler;
 
-},{"./index.js":46,"util":299}],41:[function(require,module,exports){
+},{"./index.js":46,"util":300}],41:[function(require,module,exports){
 var Tokenizer = require("./Tokenizer.js");
 
 /*
@@ -4265,7 +4268,7 @@ Parser.prototype.done = Parser.prototype.end;
 
 module.exports = Parser;
 
-},{"./Tokenizer.js":44,"events":270,"util":299}],42:[function(require,module,exports){
+},{"./Tokenizer.js":44,"events":271,"util":300}],42:[function(require,module,exports){
 module.exports = ProxyHandler;
 
 function ProxyHandler(cbs){
@@ -4329,7 +4332,7 @@ Object.keys(EVENTS).forEach(function(name){
 		throw Error("wrong number of arguments!");
 	}
 });
-},{"../":46,"./WritableStream.js":45,"util":299}],44:[function(require,module,exports){
+},{"../":46,"./WritableStream.js":45,"util":300}],44:[function(require,module,exports){
 module.exports = Tokenizer;
 
 var decodeCodePoint = require("entities/lib/decode_codepoint.js"),
@@ -5250,7 +5253,7 @@ WritableStream.prototype._write = function(chunk, encoding, cb){
 	this._parser.write(chunk);
 	cb();
 };
-},{"./Parser.js":41,"readable-stream":70,"stream":295,"util":299}],46:[function(require,module,exports){
+},{"./Parser.js":41,"readable-stream":70,"stream":296,"util":300}],46:[function(require,module,exports){
 var Parser = require("./Parser.js"),
     DomHandler = require("domhandler");
 
@@ -5321,8 +5324,21 @@ module.exports = {
 };
 
 },{"./CollectingHandler.js":39,"./FeedHandler.js":40,"./Parser.js":41,"./ProxyHandler.js":42,"./Stream.js":43,"./Tokenizer.js":44,"./WritableStream.js":45,"domelementtype":47,"domhandler":48,"domutils":49}],47:[function(require,module,exports){
-module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],48:[function(require,module,exports){
+//Types of elements found in the DOM
+module.exports = {
+	Text: "text", //Text
+	Directive: "directive", //<? ... ?>
+	Comment: "comment", //<!-- ... -->
+	Script: "script", //<script> tags
+	Style: "style", //<style> tags
+	Tag: "tag", //Any tag
+	CDATA: "cdata", //<![CDATA[ ... ]]>
+
+	isTag: function(elem){
+		return elem.type === "tag" || elem.type === "script" || elem.type === "style";
+	}
+};
+},{}],48:[function(require,module,exports){
 var ElementType = require("domelementtype");
 
 var re_whitespace = /\s+/g;
@@ -5537,7 +5553,7 @@ module.exports = DomHandler;
 
 },{"domelementtype":47}],49:[function(require,module,exports){
 arguments[4][21][0].apply(exports,arguments)
-},{"./lib/helpers":50,"./lib/legacy":51,"./lib/manipulation":52,"./lib/querying":53,"./lib/stringify":54,"./lib/traversal":55,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],50:[function(require,module,exports){
+},{"./lib/helpers":50,"./lib/legacy":51,"./lib/manipulation":52,"./lib/querying":53,"./lib/stringify":54,"./lib/traversal":55,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],50:[function(require,module,exports){
 // removeSubsets
 // Given an array of nodes, remove any member that is contained by another.
 exports.removeSubsets = function(nodes) {
@@ -5681,26 +5697,26 @@ exports.uniqueSort = function(nodes) {
 };
 
 },{}],51:[function(require,module,exports){
-module.exports=require(23)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":47}],52:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":47}],52:[function(require,module,exports){
 module.exports=require(24)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],53:[function(require,module,exports){
-module.exports=require(25)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":47}],54:[function(require,module,exports){
-module.exports=require(26)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":47}],55:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],53:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":47}],54:[function(require,module,exports){
+arguments[4][26][0].apply(exports,arguments)
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":47}],55:[function(require,module,exports){
 module.exports=require(27)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],56:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],56:[function(require,module,exports){
 module.exports=require(33)
-},{"../maps/decode.json":57,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],57:[function(require,module,exports){
+},{"../maps/decode.json":57,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],57:[function(require,module,exports){
 module.exports=require(35)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],58:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],58:[function(require,module,exports){
 module.exports=require(36)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],59:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],59:[function(require,module,exports){
 module.exports=require(37)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],60:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],60:[function(require,module,exports){
 module.exports=require(38)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],61:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],61:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5793,7 +5809,7 @@ function forEach (xs, f) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_readable":63,"./_stream_writable":65,"_process":279,"core-util-is":66,"inherits":67}],62:[function(require,module,exports){
+},{"./_stream_readable":63,"./_stream_writable":65,"_process":280,"core-util-is":66,"inherits":67}],62:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6796,7 +6812,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":61,"_process":279,"buffer":266,"core-util-is":66,"events":270,"inherits":67,"isarray":68,"stream":295,"string_decoder/":69,"util":265}],64:[function(require,module,exports){
+},{"./_stream_duplex":61,"_process":280,"buffer":267,"core-util-is":66,"events":271,"inherits":67,"isarray":68,"stream":296,"string_decoder/":69,"util":266}],64:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7488,7 +7504,7 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":61,"_process":279,"buffer":266,"core-util-is":66,"inherits":67,"stream":295}],66:[function(require,module,exports){
+},{"./_stream_duplex":61,"_process":280,"buffer":267,"core-util-is":66,"inherits":67,"stream":296}],66:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -7598,7 +7614,7 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 }).call(this,require("buffer").Buffer)
-},{"buffer":266}],67:[function(require,module,exports){
+},{"buffer":267}],67:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -7851,7 +7867,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":266}],70:[function(require,module,exports){
+},{"buffer":267}],70:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = require('stream');
 exports.Readable = exports;
@@ -7860,7 +7876,7 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":61,"./lib/_stream_passthrough.js":62,"./lib/_stream_readable.js":63,"./lib/_stream_transform.js":64,"./lib/_stream_writable.js":65,"stream":295}],71:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":61,"./lib/_stream_passthrough.js":62,"./lib/_stream_readable.js":63,"./lib/_stream_transform.js":64,"./lib/_stream_writable.js":65,"stream":296}],71:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -14914,7 +14930,7 @@ exports.search = function (query, callback) {
         callback(err, results);
     });
 };
-},{"async":75,"http":271,"querystring":283,"url":297,"util-extend":76,"xml2js":79}],75:[function(require,module,exports){
+},{"async":75,"http":272,"querystring":284,"url":298,"util-extend":76,"xml2js":79}],75:[function(require,module,exports){
 (function (process){
 /*!
  * async
@@ -16041,9 +16057,9 @@ exports.search = function (query, callback) {
 }());
 
 }).call(this,require('_process'))
-},{"_process":279}],76:[function(require,module,exports){
+},{"_process":280}],76:[function(require,module,exports){
 module.exports=require(73)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/util-extend/extend.js":73}],77:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/util-extend/extend.js":73}],77:[function(require,module,exports){
 // Generated by CoffeeScript 1.7.1
 (function() {
   var xml2js;
@@ -16521,7 +16537,7 @@ module.exports=require(73)
 }).call(this);
 
 }).call(this,require('_process'))
-},{"./bom":77,"./processors":78,"_process":279,"events":270,"sax":80,"xmlbuilder":97}],80:[function(require,module,exports){
+},{"./bom":77,"./processors":78,"_process":280,"events":271,"sax":80,"xmlbuilder":97}],80:[function(require,module,exports){
 (function (Buffer){
 // wrapper for non-node envs
 ;(function (sax) {
@@ -17935,7 +17951,7 @@ if (!String.fromCodePoint) {
 })(typeof exports === "undefined" ? sax = {} : exports);
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":266,"stream":295,"string_decoder":296}],81:[function(require,module,exports){
+},{"buffer":267,"stream":296,"string_decoder":297}],81:[function(require,module,exports){
 // Generated by CoffeeScript 1.6.3
 (function() {
   var XMLAttribute, create;
@@ -20715,153 +20731,162 @@ exports.search = function (query, callback) {
         callback(e);
     });
 };
-},{"cheerio":121,"http":271,"querystring":283,"url":297,"util-extend":191}],121:[function(require,module,exports){
+},{"cheerio":121,"http":272,"querystring":284,"url":298,"util-extend":191}],121:[function(require,module,exports){
 module.exports=require(3)
-},{"./lib/cheerio":126,"./package":190,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/index.js":3}],122:[function(require,module,exports){
+},{"./lib/cheerio":126,"./package":190,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/index.js":3}],122:[function(require,module,exports){
 module.exports=require(4)
-},{"../utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/attributes.js":4,"lodash":189}],123:[function(require,module,exports){
+},{"../utils":129,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/attributes.js":4,"lodash":189}],123:[function(require,module,exports){
 module.exports=require(5)
-},{"../utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/css.js":5,"lodash":189}],124:[function(require,module,exports){
+},{"../utils":129,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/css.js":5,"lodash":189}],124:[function(require,module,exports){
 module.exports=require(6)
-},{"../parse":127,"../static":128,"../utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/manipulation.js":6,"lodash":189}],125:[function(require,module,exports){
+},{"../parse":127,"../static":128,"../utils":129,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/manipulation.js":6,"lodash":189}],125:[function(require,module,exports){
 module.exports=require(7)
-},{"../utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/traversing.js":7,"CSSselect":130,"htmlparser2":164,"lodash":189}],126:[function(require,module,exports){
+},{"../utils":129,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/traversing.js":7,"CSSselect":130,"htmlparser2":164,"lodash":189}],126:[function(require,module,exports){
 module.exports=require(8)
-},{"./api/attributes":122,"./api/css":123,"./api/manipulation":124,"./api/traversing":125,"./parse":127,"./static":128,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/cheerio.js":8,"lodash":189,"path":278}],127:[function(require,module,exports){
+},{"./api/attributes":122,"./api/css":123,"./api/manipulation":124,"./api/traversing":125,"./parse":127,"./static":128,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/cheerio.js":8,"lodash":189,"path":279}],127:[function(require,module,exports){
 module.exports=require(9)
-},{"./utils":129,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/parse.js":9,"buffer":266,"htmlparser2":164}],128:[function(require,module,exports){
+},{"./utils":129,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/parse.js":9,"buffer":267,"htmlparser2":164}],128:[function(require,module,exports){
 module.exports=require(10)
-},{"./cheerio":126,"./parse":127,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/static.js":10,"CSSselect":130,"dom-serializer":147,"lodash":189}],129:[function(require,module,exports){
+},{"./cheerio":126,"./parse":127,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/static.js":10,"CSSselect":130,"dom-serializer":147,"lodash":189}],129:[function(require,module,exports){
 module.exports=require(11)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/utils.js":11}],130:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/utils.js":11}],130:[function(require,module,exports){
 module.exports=require(12)
-},{"./lib/basefunctions.js":132,"./lib/compile.js":133,"./lib/pseudos.js":136,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/index.js":12,"domutils":139}],131:[function(require,module,exports){
+},{"./lib/basefunctions.js":132,"./lib/compile.js":133,"./lib/pseudos.js":136,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/index.js":12,"domutils":139}],131:[function(require,module,exports){
 module.exports=require(13)
-},{"./basefunctions.js":132,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/attributes.js":13,"domutils":139}],132:[function(require,module,exports){
+},{"./basefunctions.js":132,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/attributes.js":13,"domutils":139}],132:[function(require,module,exports){
 module.exports=require(14)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/basefunctions.js":14}],133:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/basefunctions.js":14}],133:[function(require,module,exports){
 module.exports=require(15)
-},{"./basefunctions.js":132,"./general.js":134,"./pseudos.js":136,"./sort.js":137,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/compile.js":15,"CSSwhat":138,"domutils":139}],134:[function(require,module,exports){
+},{"./basefunctions.js":132,"./general.js":134,"./pseudos.js":136,"./sort.js":137,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/compile.js":15,"CSSwhat":138,"domutils":139}],134:[function(require,module,exports){
 module.exports=require(16)
-},{"./attributes.js":131,"./pseudos.js":136,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/general.js":16,"domutils":139}],135:[function(require,module,exports){
+},{"./attributes.js":131,"./pseudos.js":136,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/general.js":16,"domutils":139}],135:[function(require,module,exports){
 module.exports=require(17)
-},{"./basefunctions.js":132,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/nth-check.js":17}],136:[function(require,module,exports){
+},{"./basefunctions.js":132,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/nth-check.js":17}],136:[function(require,module,exports){
 module.exports=require(18)
-},{"./attributes.js":131,"./basefunctions.js":132,"./nth-check.js":135,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/pseudos.js":18,"domutils":139}],137:[function(require,module,exports){
+},{"./attributes.js":131,"./basefunctions.js":132,"./nth-check.js":135,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/pseudos.js":18,"domutils":139}],137:[function(require,module,exports){
 module.exports=require(19)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/sort.js":19}],138:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/sort.js":19}],138:[function(require,module,exports){
 module.exports=require(20)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/CSSwhat/index.js":20}],139:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/CSSwhat/index.js":20}],139:[function(require,module,exports){
 module.exports=require(21)
-},{"./lib/helpers":140,"./lib/legacy":141,"./lib/manipulation":142,"./lib/querying":143,"./lib/stringify":144,"./lib/traversal":145,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],140:[function(require,module,exports){
+},{"./lib/helpers":140,"./lib/legacy":141,"./lib/manipulation":142,"./lib/querying":143,"./lib/stringify":144,"./lib/traversal":145,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],140:[function(require,module,exports){
 module.exports=require(22)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/helpers.js":22}],141:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/helpers.js":22}],141:[function(require,module,exports){
 module.exports=require(23)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":146}],142:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":146}],142:[function(require,module,exports){
 module.exports=require(24)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],143:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],143:[function(require,module,exports){
 module.exports=require(25)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":146}],144:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":146}],144:[function(require,module,exports){
 module.exports=require(26)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":146}],145:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":146}],145:[function(require,module,exports){
 module.exports=require(27)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],146:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],146:[function(require,module,exports){
 module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],147:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],147:[function(require,module,exports){
 module.exports=require(29)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/dom-serializer/index.js":29,"domelementtype":148,"entities":149}],148:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/dom-serializer/index.js":29,"domelementtype":148,"entities":149}],148:[function(require,module,exports){
 module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],149:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],149:[function(require,module,exports){
 module.exports=require(31)
-},{"./lib/decode.js":150,"./lib/encode.js":152,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/index.js":31}],150:[function(require,module,exports){
+},{"./lib/decode.js":150,"./lib/encode.js":152,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/index.js":31}],150:[function(require,module,exports){
 module.exports=require(32)
-},{"../maps/entities.json":154,"../maps/legacy.json":155,"../maps/xml.json":156,"./decode_codepoint.js":151,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode.js":32}],151:[function(require,module,exports){
+},{"../maps/entities.json":154,"../maps/legacy.json":155,"../maps/xml.json":156,"./decode_codepoint.js":151,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode.js":32}],151:[function(require,module,exports){
 module.exports=require(33)
-},{"../maps/decode.json":153,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],152:[function(require,module,exports){
+},{"../maps/decode.json":153,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],152:[function(require,module,exports){
 module.exports=require(34)
-},{"../maps/entities.json":154,"../maps/xml.json":156,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/encode.js":34}],153:[function(require,module,exports){
+},{"../maps/entities.json":154,"../maps/xml.json":156,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/encode.js":34}],153:[function(require,module,exports){
 module.exports=require(35)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],154:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],154:[function(require,module,exports){
 module.exports=require(36)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],155:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],155:[function(require,module,exports){
 module.exports=require(37)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],156:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],156:[function(require,module,exports){
 module.exports=require(38)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],157:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],157:[function(require,module,exports){
 module.exports=require(39)
-},{"./":164,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/CollectingHandler.js":39}],158:[function(require,module,exports){
+},{"./":164,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/CollectingHandler.js":39}],158:[function(require,module,exports){
 module.exports=require(40)
-},{"./index.js":164,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/FeedHandler.js":40,"util":299}],159:[function(require,module,exports){
+},{"./index.js":164,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/FeedHandler.js":40,"util":300}],159:[function(require,module,exports){
 module.exports=require(41)
-},{"./Tokenizer.js":162,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Parser.js":41,"events":270,"util":299}],160:[function(require,module,exports){
+},{"./Tokenizer.js":162,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Parser.js":41,"events":271,"util":300}],160:[function(require,module,exports){
 module.exports=require(42)
-},{"./":164,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/ProxyHandler.js":42}],161:[function(require,module,exports){
+},{"./":164,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/ProxyHandler.js":42}],161:[function(require,module,exports){
 module.exports=require(43)
-},{"../":164,"./WritableStream.js":163,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Stream.js":43,"util":299}],162:[function(require,module,exports){
+},{"../":164,"./WritableStream.js":163,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Stream.js":43,"util":300}],162:[function(require,module,exports){
 module.exports=require(44)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Tokenizer.js":44,"entities/lib/decode_codepoint.js":174,"entities/maps/entities.json":176,"entities/maps/legacy.json":177,"entities/maps/xml.json":178}],163:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Tokenizer.js":44,"entities/lib/decode_codepoint.js":174,"entities/maps/entities.json":176,"entities/maps/legacy.json":177,"entities/maps/xml.json":178}],163:[function(require,module,exports){
 module.exports=require(45)
-},{"./Parser.js":159,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/WritableStream.js":45,"readable-stream":188,"stream":295,"util":299}],164:[function(require,module,exports){
+},{"./Parser.js":159,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/WritableStream.js":45,"readable-stream":188,"stream":296,"util":300}],164:[function(require,module,exports){
 module.exports=require(46)
-},{"./CollectingHandler.js":157,"./FeedHandler.js":158,"./Parser.js":159,"./ProxyHandler.js":160,"./Stream.js":161,"./Tokenizer.js":162,"./WritableStream.js":163,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/index.js":46,"domelementtype":165,"domhandler":166,"domutils":167}],165:[function(require,module,exports){
-module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],166:[function(require,module,exports){
+},{"./CollectingHandler.js":157,"./FeedHandler.js":158,"./Parser.js":159,"./ProxyHandler.js":160,"./Stream.js":161,"./Tokenizer.js":162,"./WritableStream.js":163,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/index.js":46,"domelementtype":165,"domhandler":166,"domutils":167}],165:[function(require,module,exports){
+module.exports=require(47)
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domelementtype/index.js":47}],166:[function(require,module,exports){
 module.exports=require(48)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domhandler/index.js":48,"domelementtype":165}],167:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domhandler/index.js":48,"domelementtype":165}],167:[function(require,module,exports){
 arguments[4][21][0].apply(exports,arguments)
-},{"./lib/helpers":168,"./lib/legacy":169,"./lib/manipulation":170,"./lib/querying":171,"./lib/stringify":172,"./lib/traversal":173,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],168:[function(require,module,exports){
+},{"./lib/helpers":168,"./lib/legacy":169,"./lib/manipulation":170,"./lib/querying":171,"./lib/stringify":172,"./lib/traversal":173,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],168:[function(require,module,exports){
 module.exports=require(50)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domutils/lib/helpers.js":50}],169:[function(require,module,exports){
-module.exports=require(23)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":165}],170:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domutils/lib/helpers.js":50}],169:[function(require,module,exports){
+arguments[4][23][0].apply(exports,arguments)
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":165}],170:[function(require,module,exports){
 module.exports=require(24)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],171:[function(require,module,exports){
-module.exports=require(25)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":165}],172:[function(require,module,exports){
-module.exports=require(26)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":165}],173:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],171:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":165}],172:[function(require,module,exports){
+arguments[4][26][0].apply(exports,arguments)
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":165}],173:[function(require,module,exports){
 module.exports=require(27)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],174:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],174:[function(require,module,exports){
 module.exports=require(33)
-},{"../maps/decode.json":175,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],175:[function(require,module,exports){
+},{"../maps/decode.json":175,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],175:[function(require,module,exports){
 module.exports=require(35)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],176:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],176:[function(require,module,exports){
 module.exports=require(36)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],177:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],177:[function(require,module,exports){
 module.exports=require(37)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],178:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],178:[function(require,module,exports){
 module.exports=require(38)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],179:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],179:[function(require,module,exports){
 module.exports=require(61)
-},{"./_stream_readable":181,"./_stream_writable":183,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":279,"core-util-is":184,"inherits":185}],180:[function(require,module,exports){
+},{"./_stream_readable":181,"./_stream_writable":183,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":280,"core-util-is":184,"inherits":185}],180:[function(require,module,exports){
 module.exports=require(62)
-},{"./_stream_transform":182,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":184,"inherits":185}],181:[function(require,module,exports){
+},{"./_stream_transform":182,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":184,"inherits":185}],181:[function(require,module,exports){
 module.exports=require(63)
-},{"./_stream_duplex":179,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_readable.js":63,"_process":279,"buffer":266,"core-util-is":184,"events":270,"inherits":185,"isarray":186,"stream":295,"string_decoder/":187,"util":265}],182:[function(require,module,exports){
+},{"./_stream_duplex":179,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_readable.js":63,"_process":280,"buffer":267,"core-util-is":184,"events":271,"inherits":185,"isarray":186,"stream":296,"string_decoder/":187,"util":266}],182:[function(require,module,exports){
 module.exports=require(64)
-},{"./_stream_duplex":179,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_transform.js":64,"core-util-is":184,"inherits":185}],183:[function(require,module,exports){
+},{"./_stream_duplex":179,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_transform.js":64,"core-util-is":184,"inherits":185}],183:[function(require,module,exports){
 module.exports=require(65)
-},{"./_stream_duplex":179,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_writable.js":65,"_process":279,"buffer":266,"core-util-is":184,"inherits":185,"stream":295}],184:[function(require,module,exports){
+},{"./_stream_duplex":179,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_writable.js":65,"_process":280,"buffer":267,"core-util-is":184,"inherits":185,"stream":296}],184:[function(require,module,exports){
 module.exports=require(66)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":266}],185:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":267}],185:[function(require,module,exports){
 module.exports=require(67)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],186:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],186:[function(require,module,exports){
 module.exports=require(68)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],187:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],187:[function(require,module,exports){
 module.exports=require(69)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":266}],188:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":267}],188:[function(require,module,exports){
 module.exports=require(70)
-},{"./lib/_stream_duplex.js":179,"./lib/_stream_passthrough.js":180,"./lib/_stream_readable.js":181,"./lib/_stream_transform.js":182,"./lib/_stream_writable.js":183,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/readable.js":70,"stream":295}],189:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":179,"./lib/_stream_passthrough.js":180,"./lib/_stream_readable.js":181,"./lib/_stream_transform.js":182,"./lib/_stream_writable.js":183,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/readable.js":70,"stream":296}],189:[function(require,module,exports){
 module.exports=require(71)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/lodash/dist/lodash.js":71}],190:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/lodash/dist/lodash.js":71}],190:[function(require,module,exports){
 module.exports=require(72)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/package.json":72}],191:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/package.json":72}],191:[function(require,module,exports){
 module.exports=require(73)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/util-extend/extend.js":73}],192:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/util-extend/extend.js":73}],192:[function(require,module,exports){
 var querystring = require('querystring');
 var cheerio = require('cheerio');
 var https = require('https');
 var url = require('url');
+var extend = require('util-extend');
+
+var options = {
+    url: 'https://www.library.ucsf.edu/db'
+};
+
+exports.setOptions = function (newOptions) {
+    options = extend(options, newOptions);
+};
 
 exports.search = function (query, callback) {
     'use strict';
@@ -20871,17 +20896,17 @@ exports.search = function (query, callback) {
         return;
     }
 
-    var myUrl = 'https://www.library.ucsf.edu/db?' +
+    var myUrl = options.url + '?' +
         querystring.stringify({
             filter0: query.searchTerm,
             apage: '',
             filter2: 'All'
         });
 
-    var options = url.parse(myUrl);
-    options.withCredentials = false;
+    var myOptions = url.parse(myUrl);
+    myOptions.withCredentials = false;
 
-    https.get(options, function (resp) {
+    https.get(myOptions, function (resp) {
         var rawData = '';
 
         resp.on('data', function (chunk) {
@@ -20904,147 +20929,360 @@ exports.search = function (query, callback) {
         callback(e);
     });
 };
-},{"cheerio":193,"https":275,"querystring":283,"url":297}],193:[function(require,module,exports){
+},{"cheerio":193,"https":276,"querystring":284,"url":298,"util-extend":263}],193:[function(require,module,exports){
 module.exports=require(3)
-},{"./lib/cheerio":198,"./package":262,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/index.js":3}],194:[function(require,module,exports){
+},{"./lib/cheerio":198,"./package":262,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/index.js":3}],194:[function(require,module,exports){
 module.exports=require(4)
-},{"../utils":201,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/attributes.js":4,"lodash":261}],195:[function(require,module,exports){
+},{"../utils":201,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/attributes.js":4,"lodash":261}],195:[function(require,module,exports){
 module.exports=require(5)
-},{"../utils":201,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/css.js":5,"lodash":261}],196:[function(require,module,exports){
+},{"../utils":201,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/css.js":5,"lodash":261}],196:[function(require,module,exports){
 module.exports=require(6)
-},{"../parse":199,"../static":200,"../utils":201,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/manipulation.js":6,"lodash":261}],197:[function(require,module,exports){
-module.exports=require(7)
-},{"../utils":201,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/traversing.js":7,"CSSselect":202,"htmlparser2":236,"lodash":261}],198:[function(require,module,exports){
+},{"../parse":199,"../static":200,"../utils":201,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/manipulation.js":6,"lodash":261}],197:[function(require,module,exports){
+arguments[4][7][0].apply(exports,arguments)
+},{"../utils":201,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/api/traversing.js":7,"CSSselect":202,"htmlparser2":236,"lodash":261}],198:[function(require,module,exports){
 module.exports=require(8)
-},{"./api/attributes":194,"./api/css":195,"./api/manipulation":196,"./api/traversing":197,"./parse":199,"./static":200,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/cheerio.js":8,"lodash":261,"path":278}],199:[function(require,module,exports){
-module.exports=require(9)
-},{"./utils":201,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/parse.js":9,"buffer":266,"htmlparser2":236}],200:[function(require,module,exports){
+},{"./api/attributes":194,"./api/css":195,"./api/manipulation":196,"./api/traversing":197,"./parse":199,"./static":200,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/cheerio.js":8,"lodash":261,"path":279}],199:[function(require,module,exports){
+arguments[4][9][0].apply(exports,arguments)
+},{"./utils":201,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/parse.js":9,"buffer":267,"htmlparser2":236}],200:[function(require,module,exports){
 module.exports=require(10)
-},{"./cheerio":198,"./parse":199,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/static.js":10,"CSSselect":202,"dom-serializer":219,"lodash":261}],201:[function(require,module,exports){
+},{"./cheerio":198,"./parse":199,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/static.js":10,"CSSselect":202,"dom-serializer":219,"lodash":261}],201:[function(require,module,exports){
 module.exports=require(11)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/utils.js":11}],202:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/lib/utils.js":11}],202:[function(require,module,exports){
 module.exports=require(12)
-},{"./lib/basefunctions.js":204,"./lib/compile.js":205,"./lib/pseudos.js":208,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/index.js":12,"domutils":211}],203:[function(require,module,exports){
+},{"./lib/basefunctions.js":204,"./lib/compile.js":205,"./lib/pseudos.js":208,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/index.js":12,"domutils":211}],203:[function(require,module,exports){
 module.exports=require(13)
-},{"./basefunctions.js":204,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/attributes.js":13,"domutils":211}],204:[function(require,module,exports){
+},{"./basefunctions.js":204,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/attributes.js":13,"domutils":211}],204:[function(require,module,exports){
 module.exports=require(14)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/basefunctions.js":14}],205:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/basefunctions.js":14}],205:[function(require,module,exports){
 module.exports=require(15)
-},{"./basefunctions.js":204,"./general.js":206,"./pseudos.js":208,"./sort.js":209,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/compile.js":15,"CSSwhat":210,"domutils":211}],206:[function(require,module,exports){
+},{"./basefunctions.js":204,"./general.js":206,"./pseudos.js":208,"./sort.js":209,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/compile.js":15,"CSSwhat":210,"domutils":211}],206:[function(require,module,exports){
 module.exports=require(16)
-},{"./attributes.js":203,"./pseudos.js":208,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/general.js":16,"domutils":211}],207:[function(require,module,exports){
+},{"./attributes.js":203,"./pseudos.js":208,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/general.js":16,"domutils":211}],207:[function(require,module,exports){
 module.exports=require(17)
-},{"./basefunctions.js":204,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/nth-check.js":17}],208:[function(require,module,exports){
+},{"./basefunctions.js":204,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/nth-check.js":17}],208:[function(require,module,exports){
 module.exports=require(18)
-},{"./attributes.js":203,"./basefunctions.js":204,"./nth-check.js":207,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/pseudos.js":18,"domutils":211}],209:[function(require,module,exports){
+},{"./attributes.js":203,"./basefunctions.js":204,"./nth-check.js":207,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/pseudos.js":18,"domutils":211}],209:[function(require,module,exports){
 module.exports=require(19)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/sort.js":19}],210:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/lib/sort.js":19}],210:[function(require,module,exports){
 module.exports=require(20)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/CSSwhat/index.js":20}],211:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/CSSwhat/index.js":20}],211:[function(require,module,exports){
 module.exports=require(21)
-},{"./lib/helpers":212,"./lib/legacy":213,"./lib/manipulation":214,"./lib/querying":215,"./lib/stringify":216,"./lib/traversal":217,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],212:[function(require,module,exports){
+},{"./lib/helpers":212,"./lib/legacy":213,"./lib/manipulation":214,"./lib/querying":215,"./lib/stringify":216,"./lib/traversal":217,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],212:[function(require,module,exports){
 module.exports=require(22)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/helpers.js":22}],213:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/helpers.js":22}],213:[function(require,module,exports){
 module.exports=require(23)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":218}],214:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":218}],214:[function(require,module,exports){
 module.exports=require(24)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],215:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],215:[function(require,module,exports){
 module.exports=require(25)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":218}],216:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":218}],216:[function(require,module,exports){
 module.exports=require(26)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":218}],217:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":218}],217:[function(require,module,exports){
 module.exports=require(27)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],218:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],218:[function(require,module,exports){
 module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],219:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],219:[function(require,module,exports){
 module.exports=require(29)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/dom-serializer/index.js":29,"domelementtype":220,"entities":221}],220:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/dom-serializer/index.js":29,"domelementtype":220,"entities":221}],220:[function(require,module,exports){
 module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],221:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],221:[function(require,module,exports){
 module.exports=require(31)
-},{"./lib/decode.js":222,"./lib/encode.js":224,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/index.js":31}],222:[function(require,module,exports){
+},{"./lib/decode.js":222,"./lib/encode.js":224,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/index.js":31}],222:[function(require,module,exports){
 module.exports=require(32)
-},{"../maps/entities.json":226,"../maps/legacy.json":227,"../maps/xml.json":228,"./decode_codepoint.js":223,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode.js":32}],223:[function(require,module,exports){
+},{"../maps/entities.json":226,"../maps/legacy.json":227,"../maps/xml.json":228,"./decode_codepoint.js":223,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode.js":32}],223:[function(require,module,exports){
 module.exports=require(33)
-},{"../maps/decode.json":225,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],224:[function(require,module,exports){
+},{"../maps/decode.json":225,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],224:[function(require,module,exports){
 module.exports=require(34)
-},{"../maps/entities.json":226,"../maps/xml.json":228,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/encode.js":34}],225:[function(require,module,exports){
+},{"../maps/entities.json":226,"../maps/xml.json":228,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/encode.js":34}],225:[function(require,module,exports){
 module.exports=require(35)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],226:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],226:[function(require,module,exports){
 module.exports=require(36)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],227:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],227:[function(require,module,exports){
 module.exports=require(37)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],228:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],228:[function(require,module,exports){
 module.exports=require(38)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],229:[function(require,module,exports){
-module.exports=require(39)
-},{"./":236,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/CollectingHandler.js":39}],230:[function(require,module,exports){
-module.exports=require(40)
-},{"./index.js":236,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/FeedHandler.js":40,"util":299}],231:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],229:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"./":236,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/CollectingHandler.js":39}],230:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"./index.js":236,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/FeedHandler.js":40,"util":300}],231:[function(require,module,exports){
 module.exports=require(41)
-},{"./Tokenizer.js":234,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Parser.js":41,"events":270,"util":299}],232:[function(require,module,exports){
-module.exports=require(42)
-},{"./":236,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/ProxyHandler.js":42}],233:[function(require,module,exports){
-module.exports=require(43)
-},{"../":236,"./WritableStream.js":235,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Stream.js":43,"util":299}],234:[function(require,module,exports){
+},{"./Tokenizer.js":234,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Parser.js":41,"events":271,"util":300}],232:[function(require,module,exports){
+arguments[4][42][0].apply(exports,arguments)
+},{"./":236,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/ProxyHandler.js":42}],233:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"../":236,"./WritableStream.js":235,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Stream.js":43,"util":300}],234:[function(require,module,exports){
 module.exports=require(44)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Tokenizer.js":44,"entities/lib/decode_codepoint.js":246,"entities/maps/entities.json":248,"entities/maps/legacy.json":249,"entities/maps/xml.json":250}],235:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/Tokenizer.js":44,"entities/lib/decode_codepoint.js":246,"entities/maps/entities.json":248,"entities/maps/legacy.json":249,"entities/maps/xml.json":250}],235:[function(require,module,exports){
 module.exports=require(45)
-},{"./Parser.js":231,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/WritableStream.js":45,"readable-stream":260,"stream":295,"util":299}],236:[function(require,module,exports){
-module.exports=require(46)
-},{"./CollectingHandler.js":229,"./FeedHandler.js":230,"./Parser.js":231,"./ProxyHandler.js":232,"./Stream.js":233,"./Tokenizer.js":234,"./WritableStream.js":235,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/index.js":46,"domelementtype":237,"domhandler":238,"domutils":239}],237:[function(require,module,exports){
+},{"./Parser.js":231,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/WritableStream.js":45,"readable-stream":260,"stream":296,"util":300}],236:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"./CollectingHandler.js":229,"./FeedHandler.js":230,"./Parser.js":231,"./ProxyHandler.js":232,"./Stream.js":233,"./Tokenizer.js":234,"./WritableStream.js":235,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/lib/index.js":46,"domelementtype":237,"domhandler":238,"domutils":239}],237:[function(require,module,exports){
 module.exports=require(28)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],238:[function(require,module,exports){
-module.exports=require(48)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domhandler/index.js":48,"domelementtype":237}],239:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/node_modules/domelementtype/index.js":28}],238:[function(require,module,exports){
+var ElementType = require("domelementtype");
+
+var re_whitespace = /\s+/g;
+
+function DomHandler(callback, options, elementCB){
+	if(typeof callback === "object"){
+		elementCB = options;
+		options = callback;
+		callback = null;
+	} else if(typeof options === "function"){
+		elementCB = options;
+		options = defaultOpts;
+	}
+	this._callback = callback;
+	this._options = options || defaultOpts;
+	this._elementCB = elementCB;
+	this.dom = [];
+	this._done = false;
+	this._tagStack = [];
+}
+
+//default options
+var defaultOpts = {
+	normalizeWhitespace: false //Replace all whitespace with single spaces
+};
+
+//Resets the handler back to starting state
+DomHandler.prototype.onreset = function(){
+	DomHandler.call(this, this._callback, this._options, this._elementCB);
+};
+
+//Signals the handler that parsing is done
+DomHandler.prototype.onend = function(){
+	if(this._done) return;
+	this._done = true;
+	this._handleCallback(null);
+};
+
+DomHandler.prototype._handleCallback =
+DomHandler.prototype.onerror = function(error){
+	if(typeof this._callback === "function"){
+		this._callback(error, this.dom);
+	} else {
+		if(error) throw error;
+	}
+};
+
+DomHandler.prototype.onclosetag = function(){
+	//if(this._tagStack.pop().name !== name) this._handleCallback(Error("Tagname didn't match!"));
+	var elem = this._tagStack.pop();
+	if(this._elementCB) this._elementCB(elem);
+};
+
+DomHandler.prototype._addDomElement = function(element){
+	var parent = this._tagStack[this._tagStack.length - 1];
+	var siblings = parent ? parent.children : this.dom;
+	var previousSibling = siblings[siblings.length - 1];
+
+	element.next = null;
+
+	if (this._options.withDomLvl1) {
+		element.__proto__ = NodePrototype;
+	}
+
+	if(previousSibling){
+		element.prev = previousSibling;
+		previousSibling.next = element;
+	} else {
+		element.prev = null;
+	}
+
+	siblings.push(element);
+	element.parent = parent || null;
+};
+
+// This object will be used as the prototype for Nodes when creating a
+// DOM-Level-1-compliant structure.
+var NodePrototype = {
+	get firstChild() {
+		var children = this.children;
+		return children && children[0] || null;
+	},
+	get lastChild() {
+		var children = this.children;
+		return children && children[children.length - 1] || null;
+	},
+	get nodeType() {
+		return nodeTypes[this.type] || nodeTypes.element;
+	}
+};
+var domLvl1 = {
+	tagName: "name",
+	childNodes: "children",
+	parentNode: "parent",
+	previousSibling: "prev",
+	nextSibling: "next",
+	nodeValue: "data"
+};
+var nodeTypes = {
+	element: 1,
+	text: 3,
+	cdata: 4,
+	comment: 8
+};
+Object.keys(domLvl1).forEach(function(key) {
+	var shorthand = domLvl1[key];
+	Object.defineProperty(NodePrototype, key, {
+		get: function() {
+			return this[shorthand] || null;
+		},
+		set: function(val) {
+			this[shorthand] = val;
+			return val;
+		}
+	});
+});
+
+DomHandler.prototype.onopentag = function(name, attribs){
+	var element = {
+		type: name === "script" ? ElementType.Script : name === "style" ? ElementType.Style : ElementType.Tag,
+		name: name,
+		attribs: attribs,
+		children: []
+	};
+
+	this._addDomElement(element);
+
+	this._tagStack.push(element);
+};
+
+DomHandler.prototype.ontext = function(data){
+	//the ignoreWhitespace is officially dropped, but for now,
+	//it's an alias for normalizeWhitespace
+	var normalize = this._options.normalizeWhitespace || this._options.ignoreWhitespace;
+
+	var lastTag;
+
+	if(!this._tagStack.length && this.dom.length && (lastTag = this.dom[this.dom.length-1]).type === ElementType.Text){
+		if(normalize){
+			lastTag.data = (lastTag.data + data).replace(re_whitespace, " ");
+		} else {
+			lastTag.data += data;
+		}
+	} else {
+		if(
+			this._tagStack.length &&
+			(lastTag = this._tagStack[this._tagStack.length - 1]) &&
+			(lastTag = lastTag.children[lastTag.children.length - 1]) &&
+			lastTag.type === ElementType.Text
+		){
+			if(normalize){
+				lastTag.data = (lastTag.data + data).replace(re_whitespace, " ");
+			} else {
+				lastTag.data += data;
+			}
+		} else {
+			if(normalize){
+				data = data.replace(re_whitespace, " ");
+			}
+
+			this._addDomElement({
+				data: data,
+				type: ElementType.Text
+			});
+		}
+	}
+};
+
+DomHandler.prototype.oncomment = function(data){
+	var lastTag = this._tagStack[this._tagStack.length - 1];
+
+	if(lastTag && lastTag.type === ElementType.Comment){
+		lastTag.data += data;
+		return;
+	}
+
+	var element = {
+		data: data,
+		type: ElementType.Comment
+	};
+
+	this._addDomElement(element);
+	this._tagStack.push(element);
+};
+
+DomHandler.prototype.oncdatastart = function(){
+	var element = {
+		children: [{
+			data: "",
+			type: ElementType.Text
+		}],
+		type: ElementType.CDATA
+	};
+
+	this._addDomElement(element);
+	this._tagStack.push(element);
+};
+
+DomHandler.prototype.oncommentend = DomHandler.prototype.oncdataend = function(){
+	this._tagStack.pop();
+};
+
+DomHandler.prototype.onprocessinginstruction = function(name, data){
+	this._addDomElement({
+		name: name,
+		data: data,
+		type: ElementType.Directive
+	});
+};
+
+module.exports = DomHandler;
+
+},{"domelementtype":237}],239:[function(require,module,exports){
 arguments[4][21][0].apply(exports,arguments)
-},{"./lib/helpers":240,"./lib/legacy":241,"./lib/manipulation":242,"./lib/querying":243,"./lib/stringify":244,"./lib/traversal":245,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],240:[function(require,module,exports){
+},{"./lib/helpers":240,"./lib/legacy":241,"./lib/manipulation":242,"./lib/querying":243,"./lib/stringify":244,"./lib/traversal":245,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/index.js":21}],240:[function(require,module,exports){
 module.exports=require(50)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domutils/lib/helpers.js":50}],241:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/domutils/lib/helpers.js":50}],241:[function(require,module,exports){
 module.exports=require(23)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":237}],242:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/legacy.js":23,"domelementtype":237}],242:[function(require,module,exports){
 module.exports=require(24)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],243:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/manipulation.js":24}],243:[function(require,module,exports){
 module.exports=require(25)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":237}],244:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/querying.js":25,"domelementtype":237}],244:[function(require,module,exports){
 module.exports=require(26)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":237}],245:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/stringify.js":26,"domelementtype":237}],245:[function(require,module,exports){
 module.exports=require(27)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],246:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/CSSselect/node_modules/domutils/lib/traversal.js":27}],246:[function(require,module,exports){
 module.exports=require(33)
-},{"../maps/decode.json":247,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],247:[function(require,module,exports){
+},{"../maps/decode.json":247,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/lib/decode_codepoint.js":33}],247:[function(require,module,exports){
 module.exports=require(35)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],248:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/decode.json":35}],248:[function(require,module,exports){
 module.exports=require(36)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],249:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/entities.json":36}],249:[function(require,module,exports){
 module.exports=require(37)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],250:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/legacy.json":37}],250:[function(require,module,exports){
 module.exports=require(38)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],251:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/entities/maps/xml.json":38}],251:[function(require,module,exports){
 module.exports=require(61)
-},{"./_stream_readable":253,"./_stream_writable":255,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":279,"core-util-is":256,"inherits":257}],252:[function(require,module,exports){
+},{"./_stream_readable":253,"./_stream_writable":255,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":280,"core-util-is":256,"inherits":257}],252:[function(require,module,exports){
 module.exports=require(62)
-},{"./_stream_transform":254,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":256,"inherits":257}],253:[function(require,module,exports){
+},{"./_stream_transform":254,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":256,"inherits":257}],253:[function(require,module,exports){
 module.exports=require(63)
-},{"./_stream_duplex":251,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_readable.js":63,"_process":279,"buffer":266,"core-util-is":256,"events":270,"inherits":257,"isarray":258,"stream":295,"string_decoder/":259,"util":265}],254:[function(require,module,exports){
+},{"./_stream_duplex":251,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_readable.js":63,"_process":280,"buffer":267,"core-util-is":256,"events":271,"inherits":257,"isarray":258,"stream":296,"string_decoder/":259,"util":266}],254:[function(require,module,exports){
 module.exports=require(64)
-},{"./_stream_duplex":251,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_transform.js":64,"core-util-is":256,"inherits":257}],255:[function(require,module,exports){
+},{"./_stream_duplex":251,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_transform.js":64,"core-util-is":256,"inherits":257}],255:[function(require,module,exports){
 module.exports=require(65)
-},{"./_stream_duplex":251,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_writable.js":65,"_process":279,"buffer":266,"core-util-is":256,"inherits":257,"stream":295}],256:[function(require,module,exports){
+},{"./_stream_duplex":251,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_writable.js":65,"_process":280,"buffer":267,"core-util-is":256,"inherits":257,"stream":296}],256:[function(require,module,exports){
 module.exports=require(66)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":266}],257:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":267}],257:[function(require,module,exports){
 module.exports=require(67)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],258:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],258:[function(require,module,exports){
 module.exports=require(68)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],259:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],259:[function(require,module,exports){
 module.exports=require(69)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":266}],260:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":267}],260:[function(require,module,exports){
 module.exports=require(70)
-},{"./lib/_stream_duplex.js":251,"./lib/_stream_passthrough.js":252,"./lib/_stream_readable.js":253,"./lib/_stream_transform.js":254,"./lib/_stream_writable.js":255,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/readable.js":70,"stream":295}],261:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":251,"./lib/_stream_passthrough.js":252,"./lib/_stream_readable.js":253,"./lib/_stream_transform.js":254,"./lib/_stream_writable.js":255,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/readable.js":70,"stream":296}],261:[function(require,module,exports){
 module.exports=require(71)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/lodash/dist/lodash.js":71}],262:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/lodash/dist/lodash.js":71}],262:[function(require,module,exports){
 module.exports=require(72)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/package.json":72}],263:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/package.json":72}],263:[function(require,module,exports){
+module.exports=require(73)
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/util-extend/extend.js":73}],264:[function(require,module,exports){
 var async = require('async');
 
 var collections = {};
@@ -21112,11 +21350,11 @@ exports.add = function (name, plugin) {
   
   collections[name] = plugin;
 };
-},{"async":264}],264:[function(require,module,exports){
+},{"async":265}],265:[function(require,module,exports){
 module.exports=require(75)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-pubmed/node_modules/async/lib/async.js":75,"_process":279}],265:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-pubmed/node_modules/async/lib/async.js":75,"_process":280}],266:[function(require,module,exports){
 
-},{}],266:[function(require,module,exports){
+},{}],267:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -22168,7 +22406,7 @@ function decodeUtf8Char (str) {
   }
 }
 
-},{"base64-js":267,"ieee754":268,"is-array":269}],267:[function(require,module,exports){
+},{"base64-js":268,"ieee754":269,"is-array":270}],268:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -22290,7 +22528,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],268:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 exports.read = function(buffer, offset, isLE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -22376,7 +22614,7 @@ exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],269:[function(require,module,exports){
+},{}],270:[function(require,module,exports){
 
 /**
  * isArray
@@ -22411,7 +22649,7 @@ module.exports = isArray || function (val) {
   return !! val && '[object Array]' == str.call(val);
 };
 
-},{}],270:[function(require,module,exports){
+},{}],271:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -22714,7 +22952,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],271:[function(require,module,exports){
+},{}],272:[function(require,module,exports){
 var http = module.exports;
 var EventEmitter = require('events').EventEmitter;
 var Request = require('./lib/request');
@@ -22860,7 +23098,7 @@ http.STATUS_CODES = {
     510 : 'Not Extended',               // RFC 2774
     511 : 'Network Authentication Required' // RFC 6585
 };
-},{"./lib/request":272,"events":270,"url":297}],272:[function(require,module,exports){
+},{"./lib/request":273,"events":271,"url":298}],273:[function(require,module,exports){
 var Stream = require('stream');
 var Response = require('./response');
 var Base64 = require('Base64');
@@ -23071,7 +23309,7 @@ var isXHR2Compatible = function (obj) {
     if (typeof FormData !== 'undefined' && obj instanceof FormData) return true;
 };
 
-},{"./response":273,"Base64":274,"inherits":276,"stream":295}],273:[function(require,module,exports){
+},{"./response":274,"Base64":275,"inherits":277,"stream":296}],274:[function(require,module,exports){
 var Stream = require('stream');
 var util = require('util');
 
@@ -23193,7 +23431,7 @@ var isArray = Array.isArray || function (xs) {
     return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{"stream":295,"util":299}],274:[function(require,module,exports){
+},{"stream":296,"util":300}],275:[function(require,module,exports){
 ;(function () {
 
   var object = typeof exports != 'undefined' ? exports : this; // #8: web workers
@@ -23255,7 +23493,7 @@ var isArray = Array.isArray || function (xs) {
 
 }());
 
-},{}],275:[function(require,module,exports){
+},{}],276:[function(require,module,exports){
 var http = require('http');
 
 var https = module.exports;
@@ -23270,11 +23508,11 @@ https.request = function (params, cb) {
     return http.request.call(this, params, cb);
 }
 
-},{"http":271}],276:[function(require,module,exports){
+},{"http":272}],277:[function(require,module,exports){
 module.exports=require(67)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],277:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":67}],278:[function(require,module,exports){
 module.exports=require(68)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],278:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/isarray/index.js":68}],279:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -23502,7 +23740,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":279}],279:[function(require,module,exports){
+},{"_process":280}],280:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -23590,7 +23828,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],280:[function(require,module,exports){
+},{}],281:[function(require,module,exports){
 (function (global){
 /*! http://mths.be/punycode v1.2.4 by @mathias */
 ;(function(root) {
@@ -24101,7 +24339,7 @@ process.chdir = function (dir) {
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],281:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -24187,7 +24425,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],282:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -24274,20 +24512,20 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],283:[function(require,module,exports){
+},{}],284:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":281,"./encode":282}],284:[function(require,module,exports){
+},{"./decode":282,"./encode":283}],285:[function(require,module,exports){
 module.exports = require("./lib/_stream_duplex.js")
 
-},{"./lib/_stream_duplex.js":285}],285:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":286}],286:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
-},{"./_stream_readable":287,"./_stream_writable":289,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":279,"core-util-is":290,"inherits":276}],286:[function(require,module,exports){
+},{"./_stream_readable":288,"./_stream_writable":290,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_duplex.js":61,"_process":280,"core-util-is":291,"inherits":277}],287:[function(require,module,exports){
 arguments[4][62][0].apply(exports,arguments)
-},{"./_stream_transform":288,"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":290,"inherits":276}],287:[function(require,module,exports){
+},{"./_stream_transform":289,"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/lib/_stream_passthrough.js":62,"core-util-is":291,"inherits":277}],288:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -25273,7 +25511,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"_process":279,"buffer":266,"core-util-is":290,"events":270,"inherits":276,"isarray":277,"stream":295,"string_decoder/":296}],288:[function(require,module,exports){
+},{"_process":280,"buffer":267,"core-util-is":291,"events":271,"inherits":277,"isarray":278,"stream":296,"string_decoder/":297}],289:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -25485,7 +25723,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"./_stream_duplex":285,"core-util-is":290,"inherits":276}],289:[function(require,module,exports){
+},{"./_stream_duplex":286,"core-util-is":291,"inherits":277}],290:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -25875,12 +26113,12 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":285,"_process":279,"buffer":266,"core-util-is":290,"inherits":276,"stream":295}],290:[function(require,module,exports){
+},{"./_stream_duplex":286,"_process":280,"buffer":267,"core-util-is":291,"inherits":277,"stream":296}],291:[function(require,module,exports){
 module.exports=require(66)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":266}],291:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/core-util-is/lib/util.js":66,"buffer":267}],292:[function(require,module,exports){
 module.exports = require("./lib/_stream_passthrough.js")
 
-},{"./lib/_stream_passthrough.js":286}],292:[function(require,module,exports){
+},{"./lib/_stream_passthrough.js":287}],293:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Readable = exports;
 exports.Writable = require('./lib/_stream_writable.js');
@@ -25888,13 +26126,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":285,"./lib/_stream_passthrough.js":286,"./lib/_stream_readable.js":287,"./lib/_stream_transform.js":288,"./lib/_stream_writable.js":289}],293:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":286,"./lib/_stream_passthrough.js":287,"./lib/_stream_readable.js":288,"./lib/_stream_transform.js":289,"./lib/_stream_writable.js":290}],294:[function(require,module,exports){
 module.exports = require("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":288}],294:[function(require,module,exports){
+},{"./lib/_stream_transform.js":289}],295:[function(require,module,exports){
 module.exports = require("./lib/_stream_writable.js")
 
-},{"./lib/_stream_writable.js":289}],295:[function(require,module,exports){
+},{"./lib/_stream_writable.js":290}],296:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -26023,9 +26261,9 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":270,"inherits":276,"readable-stream/duplex.js":284,"readable-stream/passthrough.js":291,"readable-stream/readable.js":292,"readable-stream/transform.js":293,"readable-stream/writable.js":294}],296:[function(require,module,exports){
+},{"events":271,"inherits":277,"readable-stream/duplex.js":285,"readable-stream/passthrough.js":292,"readable-stream/readable.js":293,"readable-stream/transform.js":294,"readable-stream/writable.js":295}],297:[function(require,module,exports){
 module.exports=require(69)
-},{"/Users/trott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":266}],297:[function(require,module,exports){
+},{"/Users/richtrott/demo-amalgamatic-browserify/node_modules/amalgamatic-drupal6/node_modules/cheerio/node_modules/htmlparser2/node_modules/readable-stream/node_modules/string_decoder/index.js":69,"buffer":267}],298:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -26734,14 +26972,14 @@ function isNullOrUndefined(arg) {
   return  arg == null;
 }
 
-},{"punycode":280,"querystring":283}],298:[function(require,module,exports){
+},{"punycode":281,"querystring":284}],299:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],299:[function(require,module,exports){
+},{}],300:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -27331,4 +27569,4 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":298,"_process":279,"inherits":276}]},{},[1]);
+},{"./support/isBuffer":299,"_process":280,"inherits":277}]},{},[1]);
