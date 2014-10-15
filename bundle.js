@@ -59,10 +59,38 @@ var search = function (searchTerm, res) {
             } else {
                 console.log('Error: #' + result.name + ' not found');
             }
+
+            if (result.name === "pubmed" && result.suggestedTerms instanceof Array) {
+                showSuggestedTerms(result.suggestedTerms[0]);
+            } 
         }
     };
 
     amalgamatic.search(options);
+};
+
+var showSuggestedTerms = function (suggestedTerms) {
+    if (suggestedTerms) {
+        var termsLink = document.createElement('a');
+        termsLink.setAttribute('href', '?q=' + encodeURIComponent(suggestedTerms));
+        var em = document.createElement('em');
+        em.textContent = suggestedTerms;
+        termsLink.appendChild(em);
+
+        var didyoumean = document.getElementById('didyoumean');
+        didyoumean.setAttribute('class', 'row');
+        var alertBox = document.createElement('div');
+        alertBox.setAttribute('class', 'alert-box info');
+
+        var span = document.createElement('span');
+        var startText = document.createTextNode('Did you mean ');
+        var endText = document.createTextNode('?');
+        span.appendChild(startText);
+        span.appendChild(termsLink);
+        span.appendChild(endText);
+        alertBox.appendChild(span);
+        didyoumean.appendChild(alertBox);
+    }
 };
 
 var searchTermsRegExp = new RegExp("[\\?&]q=([^&#]*)");
