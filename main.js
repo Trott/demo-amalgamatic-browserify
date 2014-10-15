@@ -54,6 +54,14 @@ var search = function (searchTerm, res) {
                             ol.appendChild(li);
                         }
                         elem.appendChild(ol);
+
+                        if (typeof result.url === "string") {
+                            var realUrl = result.url.replace(/^(https?:\/\/)cors-anywhere.herokuapp.com/, function (match, p1) { return p1; });
+                            var allResults = document.createElement('a');
+                            allResults.setAttribute('href', realUrl);
+                            allResults.appendChild(document.createTextNode('All results'));
+                            elem.appendChild(allResults);
+                        }
                     } else {
                         elem.innerHTML = '<i>No results. :-(</i>';
                     }
